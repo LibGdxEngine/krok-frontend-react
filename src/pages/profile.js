@@ -18,6 +18,7 @@ import {
   getUserHistoryExams,
   updateProfile,
   getUniversities,
+  getSpecificities,
 } from "@/components/services/questions";
 import FavCard from "@/pages/components/Favourites/FavCard";
 import { toast } from "react-toastify";

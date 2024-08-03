@@ -43,9 +43,9 @@ export const getLevels = async (token) => {
     }
 };
 
-export const getYears = async (token) => {
+export const getYears = async (token, state) => {
     try {
-        const response = await axiosInstance.get('questions/years/', {
+        const response = await axiosInstance.get(`questions/years/?language=${state.language}&specificity=${state.specificity}&level=${state.level}`, {
             headers: {
                 Authorization: `Token ${token}`
             }
@@ -57,9 +57,9 @@ export const getYears = async (token) => {
     }
 };
 
-export const getSubjects = async (token) => {
+export const getSubjects = async (token, state) => {
     try {
-        const response = await axiosInstance.get('questions/subjects/', {
+        const response = await axiosInstance.get(`questions/subjects/?language=${state.language}&specificity=${state.specificity}&level=${state.level}`, {
             headers: {
                 Authorization: `Token ${token}`
             }
@@ -71,9 +71,9 @@ export const getSubjects = async (token) => {
     }
 };
 
-export const getSystems = async (token) => {
+export const getSystems = async (token, state) => {
     try {
-        const response = await axiosInstance.get('questions/systems/', {
+        const response = await axiosInstance.get(`questions/systems/?language=${state.language}&specificity=${state.specificity}&level=${state.level}`, {
             headers: {
                 Authorization: `Token ${token}`
             }
@@ -86,9 +86,9 @@ export const getSystems = async (token) => {
 };
 
 
-export const getTopics = async (token) => {
+export const getTopics = async (token, state) => {
     try {
-        const response = await axiosInstance.get('questions/topics/', {
+        const response = await axiosInstance.get(`questions/topics/?language=${state.language}&specificity=${state.specificity}&level=${state.level}`, {
             headers: {
                 Authorization: `Token ${token}`
             }

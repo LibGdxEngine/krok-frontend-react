@@ -21,14 +21,15 @@ const Year = () => {
     const [years, setYears] = useState([]);
 
     useEffect(() => {
-        if (token) {
-            getYears(token).then((response) => {
+        if (token && state) {
+            console.log(state)
+            getYears(token, state).then((response) => {
                 setYears(response);
             }).catch((error) => {
                 console.error('Error fetching years:', error);
             });
         }
-    }, [token]);
+    }, [token, state]);
 
     useEffect(() => {
         setState(JSON.parse(localStorage.getItem("state")));

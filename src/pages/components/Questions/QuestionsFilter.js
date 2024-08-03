@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const QuestionsFilter = ({ onChange = null }) => {
-    // Initialize state as a dictionary
     const [checkboxState, setCheckboxState] = useState({
         'All': true,
         'Unused Questions': true,
@@ -14,7 +13,6 @@ const QuestionsFilter = ({ onChange = null }) => {
         let updatedState;
 
         if (text === 'All') {
-            // If "All" checkbox is changed, update all checkboxes
             updatedState = {
                 'All': checked,
                 'Unused Questions': checked,
@@ -23,10 +21,7 @@ const QuestionsFilter = ({ onChange = null }) => {
                 'Incorrect Questions': checked
             };
         } else {
-            // Update the specific checkbox
             updatedState = { ...checkboxState, [text]: checked };
-
-            // If any checkbox other than "All" is changed, update "All" checkbox accordingly
             const allChecked = Object.keys(updatedState)
                 .filter(key => key !== 'All')
                 .every(key => updatedState[key]);
@@ -36,7 +31,6 @@ const QuestionsFilter = ({ onChange = null }) => {
 
         setCheckboxState(updatedState);
 
-        // Call the onChange callback if provided
         if (onChange) {
             onChange(updatedState);
         }

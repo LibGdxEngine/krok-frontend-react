@@ -25,14 +25,14 @@ const Topic = () => {
     }, []);
 
     useEffect(() => {
-        if (token) {
-            getTopics(token).then((response) => {
+        if (token && state) {
+            getTopics(token, state).then((response) => {
                 setTopics(response);
             }).catch((error) => {
                 console.error('Error fetching topics:', error);
             });
         }
-    }, [token]);
+    }, [token, state]);
 
     function handleNext() {
         if(selectedTopics.length === 0) {

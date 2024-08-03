@@ -24,14 +24,14 @@ const Subject = () => {
     }, []);
 
     useEffect(() => {
-        if (token) {
-            getSubjects(token).then((response) => {
+        if (token && state) {
+            getSubjects(token, state).then((response) => {
                 setSubjects(response);
             }).catch((error) => {
                 console.error('Error fetching years:', error);
             });
         }
-    }, [token]);
+    }, [token, state]);
 
     function handleNext() {
         if(selectedSubjects.length === 0) {

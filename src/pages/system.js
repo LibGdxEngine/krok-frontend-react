@@ -26,14 +26,14 @@ const System = () => {
     }, []);
 
     useEffect(() => {
-        if (token) {
-            getSystems(token).then((response) => {
+        if (token && state) {
+            getSystems(token, state).then((response) => {
                 setSystems(response);
             }).catch((error) => {
                 console.error('Error fetching systems:', error);
             });
         }
-    }, [token]);
+    }, [token, state]);
 
     function handleNext() {
         if(selectedSystems.length === 0) {
