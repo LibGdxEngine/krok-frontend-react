@@ -63,7 +63,7 @@ const Year = () => {
                         />
                     })}
                 </div>
-                <div onClick={handleNext} id={`next-btn`} className={`w-1/2 sm:w-full mt-10`}>
+                <div onClick={handleNext} id={`next-btn`} className={`w-1/2 sm:w-full mt-10`} style={{alignSelf:"end"}}>
                     <ActionButton text={`Next`}/>
                 </div>
             </div>

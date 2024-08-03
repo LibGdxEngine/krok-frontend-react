@@ -56,14 +56,14 @@ const Filter = () => {
             <SectionsHeader/>
         </div>
         <NavBar/>
-        <div className={`w-full`}>
+        <div className={`w-full h-full`}>
 
             <div className="w-full h-full  flex flex-col items-center justify-center">
 
                 <div className={`w-full px-6 pt-10`}>
                     <KrokSpecifics/>
                 </div>
-                {JSON.stringify(numberOfSelectedQuestions)}
+                {/* {JSON.stringify(numberOfSelectedQuestions)} */}
                 <div className="w-full grid grid-cols-2 md:grid-cols-1 gap-6 p-6 bg-white rounded-lg ">
                     <QuestionsFilter onChange={(event) => {
                         if (event['All'] === true) {

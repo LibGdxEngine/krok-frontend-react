@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import Image from "next/image";
 import loginBtn from "../../../../public/login_button.svg";
 import loginFace from "../../../../public/login_face.svg";
+import loginApple from "../../../../public/apple-icon.webp";
 
 const SocialLoginButton = ({provider, clientId, redirectUri}) => {
     const router = useRouter();
@@ -28,10 +29,10 @@ const SocialLoginButton = ({provider, clientId, redirectUri}) => {
 
     return (
         <div className={`mt-4`} onClick={handleSocialLogin}>
-            {provider === "google" ?
-                <Image style={{cursor: "pointer"}} src={loginBtn} alt={``} width={440} height={40}/> : null}
-            {provider === "facebook" ?
-                <Image style={{cursor: "pointer"}} src={loginFace} alt={``} width={440} height={40}/> : null}
+            {provider === "google" ?<Image style={{cursor: "pointer"}} src={loginBtn} alt={``} width={440} height={40}/> : null}
+            {provider === "facebook" ?<Image style={{cursor: "pointer"}} src={loginFace} alt={``} width={440} height={40}/> : null}
+            {provider === "apple" ?<Image style={{cursor: "pointer"}} src={loginApple} alt={``} width={440} height={40}/> : null}
+
         </div>
     );
 };

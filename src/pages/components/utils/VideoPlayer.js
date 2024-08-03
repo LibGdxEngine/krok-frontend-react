@@ -1,5 +1,6 @@
 // Component.jsx
 const VideoPlayer = () => (
+    
     <div id="home-video" className="w-full sm:w-screen bg-light h-full flex justify-center">
         <div className="aspect-w-16 aspect-h-9 w-full">
             <iframe
