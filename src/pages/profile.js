@@ -185,7 +185,11 @@ const History = React.memo(({ examObject: defaultExams }) => {
   if (loading || !examObject) {
     return <SplashScreen />;
   }
+  if (examObject[0] === undefined){
+    return <div className={`w-full h-full`}>
 
+    </div>
+  }
   const first_question = examObject[0]["questions"][0];
   const level = first_question.level.name;
   const language = first_question.language.name;
