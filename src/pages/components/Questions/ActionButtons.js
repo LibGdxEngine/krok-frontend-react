@@ -7,6 +7,11 @@ const ActionButtons = ({onClick = null}) => {
         if (onClick) {
             onClick(isExam);
         }
+        // if(isExam){
+        //     localStorage.setItem('type' , 'exam');
+        // }else{
+        //     localStorage.setItem('type' , 'study');
+        // }
     }
     return (
         <div className="w-full flex space-x-4 mt-6">

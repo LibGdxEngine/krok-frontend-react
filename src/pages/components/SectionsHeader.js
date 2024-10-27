@@ -8,7 +8,7 @@ export default function SectionsHeader() {
         <div id="sections-header"
              className="w-full relative mt-2 flex flex-col lg:flex-row items-center justify-center px-4"
         >
-            <div style={{cursor: "pointer"}} className="w-full sm:w-auto flex-1 rounded-lg px-5 py-1 text-navyBlue
+            <div style={{cursor: "pointer"}} className="w-full sm:w-auto flex-1 rounded-lg px-5 py-1 text-white
              border border-0.5 border-lightDark mx-1 mb-2 sm:mb-0"
                  onClick={() => {
                      router.push('/');
@@ -19,7 +19,7 @@ export default function SectionsHeader() {
                  onClick={() => {
                      router.push('/profile');
                  }}
-                className="w-full sm:w-auto flex-1 rounded-lg px-5 py-1 text-navyBlue border border-0.5 border-lightDark mx-1 mb-2 sm:mb-0">
+                className="w-full sm:w-auto flex-1 rounded-lg px-5 py-1 text-white border border-0.5 border-lightDark mx-1 mb-2 sm:mb-0">
                 {t("Profile")}
             </div>
             <div
@@ -27,7 +27,7 @@ export default function SectionsHeader() {
                 onClick={() => {
                     router.push('/start');
                 }}
-                className="w-full sm:w-auto flex-1 rounded-lg px-5 py-1 text-navyBlue border border-0.5 border-lightDark mx-1 mb-2 sm:mb-0 cursor-pointer"
+                className="w-full sm:w-auto flex-1 rounded-lg px-5 py-1 text-white border border-0.5 border-lightDark mx-1 mb-2 sm:mb-0 cursor-pointer"
             >
                 {t("Quiz")}
             </div>

@@ -21,6 +21,8 @@ const Quiz = () => {
   const [examObject, setExamObject] = useState(null);
   const [progress, setProgress] = useState(examObject?.progress);
   let length = examObject ? examObject.questions.length : 1;
+  console.log(examObject?.progress);
+  
   useEffect(() => {
     if (token && id) {
       getExamJourney(token, id)
@@ -63,6 +65,7 @@ const Quiz = () => {
         {examObject && (
           <QuestionWindow
             examJourneyId={id}
+            length={length}
             questions={examObject.questions[q]}
             numbers={Array.from({ length }, (v, i) => i + 1)}
             questionIndex={q}
@@ -79,17 +82,19 @@ const Quiz = () => {
                     answer: selectedAnswerIndex,
                   },
                 },
+                current_question_text: examObject.questions[q].text,
                 current_question: parseInt(q) + 1,
               })
                 .then((response) => {
+                  console.log(response);
                   handleProgressUpdate(q.toString(), {
                     question_text: examObject.questions[q].text,
                     answer: selectedAnswerIndex,
                     is_correct: response.is_correct,
                     correct_answer: response.progress[q]["correct_answer"],
+                    isDisabled: true,
                   });
-
-                  if (q < length - 1) {
+                  if (q < length - 1 && examObject?.type === 'exam') {
                     router.push(`/quiz?id=${id}&q=${parseInt(q) + 1}`);
                   }
                 })
@@ -98,6 +103,7 @@ const Quiz = () => {
                 });
             }}
           />
+          
         )}
       </div>
       <Footer />

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import NumberItem from "@/pages/components/Quiz/NumberItem";
 
-const NumberScroll = ({numbers, selected = 0, onNumberClicked, skipped = [], answers = null}) => {
+const NumberScroll = ({numbers, selected = 0, onNumberClicked, skipped = [], answers = null , historyProgress}) => {
     const [selectedNumber, setSelectedNumber] = useState(null);
 
     const handleNumberClick = (number) => {
@@ -26,6 +26,7 @@ const NumberScroll = ({numbers, selected = 0, onNumberClicked, skipped = [], ans
               isSelected={number === selected + 1}
               isSkipped={skipped.includes(number - 1)}
               onClick={handleNumberClick}
+              isNotSelected={historyProgress[(number-1).toString()]?.isDisabled}
             />
           ))}
       </div>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import sliderImage from "../../../../public/sliderImage.svg";
+import sliderImage from "../../../../public/sliderImage2.svg";
 import arrowDown from "../../../../public/arrowdown2.svg";
 import homeBackground from "../../../../public/home_background.svg";
 import actionButton from "../../../../public/Button Primary Color.svg";
@@ -22,8 +22,8 @@ import userIcon from "../../../../public/profile.svg";
 import {useAuth} from "@/context/AuthContext";
 
 function HomeSlider({onClick}) {
-    return <div onClick={onClick} id={`home-slider`} className={`w-full h-fit px-4 mt-4`}>
-        <Image src={sliderImage} width={750} height={650} alt={``}/>
+    return <div onClick={onClick} id={`home-slider`} className={`w-full h-fit px-[0px] mt-4`}>
+        <Image  src={sliderImage} width={750} height={650} className="w-full mb-0" alt={``}/>
     </div>;
 }
 
@@ -42,9 +42,20 @@ function HomePage() {
     if (user) {
         userProfilePhoto = user.profile_photo.toString().length <= 50 ? userIcon : user.profile_photo;
     }
+    const style = {
+      background: `linear-gradient(
+        to right,
+    #4EAACA 40.7%,
+    #4E9ED1 72.97%,
+    #4EACC9 81.56%,
+    #4DB9C1 91.47%,
+    #4DD4B2 100%
+      )`
+    }
     return (
       <div id={`home-container`} className={`w-full h-full`}>
-        <div className="hidden lg:block">
+        <div className="hidden  lg:block">
+        <div  className="pt-4 mb-0 bg-[url('/home_background.svg')] bg-cover">
           <div
             className={`w-full h-full flex items-center justify-between px-4 mt-1`}
           >
@@ -68,14 +79,14 @@ function HomePage() {
                 <div className={`flex flex-col`}>
                   {token ? (
                     <>
-                      <div className={`text-xs text-black`}>
+                      <div className={`text-xs text-gray-200`}>
                         {t("Hello")}, {user?.first_name}
                       </div>
-                      <div className={`text-sm text-black`}>{t("Welcome")}</div>
+                      <div className={`text-sm text-gray-200`}>{t("Welcome")}</div>
                     </>
                   ) : (
                     <div>
-                      <div className={`text-sm text-black`}>{t("SignIn")}</div>
+                      <div className={`text-sm text-gray-200`}>{t("SignIn")}</div>
                     </div>
                   )}
                 </div>
@@ -86,13 +97,14 @@ function HomePage() {
                            className={`w-4 h-4 rounded-full m-2`}/> */}
             </div>
           </div>
-          <SearchBar />
-          <SectionsHeader />
-          <HomeSlider
-            onClick={() => {
-              router.push("/start");
-            }}
-          />
+            <SearchBar />
+            <SectionsHeader />
+            <HomeSlider
+              onClick={() => {
+                router.push("/start");
+              }}
+            />
+          </div>
           <br />
           <VideoPlayer />
           <br />

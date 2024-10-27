@@ -20,6 +20,7 @@ import SplashScreen from "@/pages/components/SplashScreen";
 import HighlightedText from "@/pages/components/Questions/HighlightedText";
 import {useTranslation} from "react-i18next";
 
+
 const QuestionWindow = ({
   examJourneyId,
   questions,
@@ -28,7 +29,8 @@ const QuestionWindow = ({
   numbers,
   questionIndex,
   time,
-  onCheck
+  onCheck,
+  length,
 }) => {
   const { t, i18n } = useTranslation("common");
   const router = useRouter();
@@ -38,6 +40,7 @@ const QuestionWindow = ({
   const [showHint, setShowHint] = useState(false);
   const [isLastQuestion, setIsLastQuestion] = useState(false);
   const [showVideoHint, setShowVideoHint] = useState(false);
+  const [answerCounter , setAnswerCounter] = useState(0);
   const skipped = [];
   const openModal = () => setModalOpen(true);
   const openNotesModal = () => setNotesModalOpen(true);
@@ -47,7 +50,21 @@ const QuestionWindow = ({
   const closeReportsModal = () => setReportsModalOpen(false);
 
   
-  
+  const handleNextQuestion = () => {
+    console.log(questionIndex);
+
+    if (parseInt(questionIndex) === numbers.length - 1) {
+      if(answerCounter < length){
+        toast.error(t("AnswerAllQuestions"));
+        return false;
+      }
+      setShowResults(true);
+      return;
+    }
+    if (questionIndex < length - 1) {
+      router.push(`/quiz?id=${examJourneyId}&q=${parseInt(questionIndex) + 1}`);
+    }
+  }
   if (numbers) {
       if (time) {
         // Split the time string into hours, minutes, and seconds
@@ -128,20 +145,54 @@ const QuestionWindow = ({
   });
 
   const handleAnswerClicked = () => {
-    if (parseInt(questionIndex) === numbers.length - 1 && isLastQuestion) {
-      setShowResults(true);
-      return;
-    }
+    console.log(progress)
 
-    if (selectedAnswer === null && !isLastQuestion) {
+    if (selectedAnswer === null && !historyProgress[questionIndex]?.isDisabled) {
       if (toast.isActive) {
         toast.dismiss();
         toast.error(t("PleaseSelectAtLeastOne"));
       }
       return;
     }
+    // console.log(numOfAnswers , length);
+    console.log(answerCounter+1 , length);
+    console.log(parseInt(questionIndex) === numbers.length - 1);
+    
+    if (parseInt(questionIndex) === numbers.length - 1) {
+      if(selectedAnswer !== null && !historyProgress[questionIndex]?.isDisabled){
+        onCheck(questions.answers[selectedAnswer].answer, selectedAnswer, timeLeft);
+        setAnswerCounter(answerCounter+1);
+      }
+      console.log(answerCounter , length);
+      
+      if(answerCounter+1 < length && selectedAnswer !== null){
+        if(type === 'exam'){
+          toast.error(t("AnswerAllQuestions"));
+        }
+        setSelectedAnswer(null);
+        return;
+      }
+      if(answerCounter +1 <= length && selectedAnswer === null){
+        toast.error(t("AnswerAllQuestions"));
+        return;
+      }
+      
+      if(type === 'exam'){
+        setShowResults(true);
+      }
+      return;
+    }
+    console.log('hello55');
+    
+    if(!historyProgress[questionIndex]?.isDisabled){
+      onCheck(questions.answers[selectedAnswer].answer, selectedAnswer, timeLeft);
+      console.log('hello');
+      setAnswerCounter(answerCounter+1);
+    }else{
+      router.push(`/quiz?id=${examJourneyId}&q=${parseInt(questionIndex) + 1}`);
+    }
 
-    onCheck(questions.answers[selectedAnswer].answer, selectedAnswer, timeLeft);
+    
     setSelectedAnswer(null);
     if (parseInt(questionIndex) === numbers.length - 1 && !isLastQuestion) {
        setIsLastQuestion(true);
@@ -342,6 +393,7 @@ const QuestionWindow = ({
         <div className="w-full flex mt-4 max-h-screen">
           {showResults ? (
             <>
+            {console.log(progress)}
               <div className="w-full mt-2 flex flex-col rounded-xl text-black p-4 mx-4 text-3xl text-center">
                 <div>
                   {JSON.stringify(calculateTruePercentage(progress)) === "null"
@@ -363,7 +415,12 @@ const QuestionWindow = ({
                   numbers={numbers}
                   selected={parseInt(questionIndex)}
                   skipped={skipped}
+                  historyProgress={historyProgress}
                   onNumberClicked={(questionNumber) => {
+                    if(!historyProgress[questionIndex]?.isDisabled){
+                      setSelectedAnswer(null);
+                      
+                    }
                     router.push(
                       `/quiz?id=${examJourneyId}&q=${
                         parseInt(questionNumber) - 1
@@ -420,6 +477,9 @@ const QuestionWindow = ({
                           isSelected={is_selected || is_answered}
                           key={index}
                           onAnswer={handleAnswer}
+                          isDisabled={
+                            historyProgress[questionIndex]?.isDisabled || false
+                          }
                         />
                       );
                     })}
@@ -438,6 +498,10 @@ const QuestionWindow = ({
                 if (questionIndex <= 0) {
                   return;
                 }
+                if(!historyProgress[questionIndex]?.isDisabled){
+                  setSelectedAnswer(null);
+                  
+                }
                 router.push(
                   `/quiz?id=${examJourneyId}&q=${parseInt(questionIndex) - 1}`
                 );
@@ -452,6 +516,10 @@ const QuestionWindow = ({
               onClick={() => {
                 if (questionIndex >= numbers.length - 1) {
                   return;
+                }
+                if(!historyProgress[questionIndex]?.isDisabled){
+                  setSelectedAnswer(null);
+                  
                 }
                 router.push(
                   `/quiz?id=${examJourneyId}&q=${parseInt(questionIndex) + 1}`
@@ -485,12 +553,34 @@ const QuestionWindow = ({
                 Go to home
               </button>
             ) : (
-              <button
-                onClick={handleAnswerClicked}
-                className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"
-              >
-                {actionBtnText}
-              </button>
+              <>
+                {historyProgress[questionIndex]?.isDisabled &&
+                  type !== "exam" && (
+                    <button
+                      onClick={handleNextQuestion}
+                      className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"
+                    >
+                      {parseInt(questionIndex) === length - 1 ? t("Finish") : t("Next")}
+                    </button>
+                  )}
+                {!historyProgress[questionIndex]?.isDisabled &&
+                  type !== "exam" && (
+                    <button
+                      onClick={handleAnswerClicked}
+                      className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"
+                    >
+                      {actionBtnText}
+                    </button>
+                  )}
+                {type === "exam" && (
+                  <button
+                    onClick={handleAnswerClicked}
+                    className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"
+                  >
+                    {parseInt(questionIndex) === length - 1 ? t("Finish") : t("Next")}
+                  </button>
+                )}
+              </>
             )}
           </div>
         </div>

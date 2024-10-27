@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NumberItem = ({ number,answer, isSelected,isSkipped=false, onClick }) => {
+const NumberItem = ({ number,answer, isSelected,isSkipped=false, onClick ,isNotSelected=false}) => {
     let answerState = 0;
     
     if (answer === null || answer === undefined){
@@ -8,10 +8,10 @@ const NumberItem = ({ number,answer, isSelected,isSkipped=false, onClick }) => {
     }else if (answer === true){
         answerState = "border-green-500";
     }else{
-        answerState = "border-red-500";
+        answerState = "border-green-500";
     }
-    if (isSkipped){
-        answerState = "border-blue-500";
+    if (!isNotSelected && !isSelected){
+        answerState = "border-orange-500 bg-orange-500 text-white";
     }
     return (
       <div

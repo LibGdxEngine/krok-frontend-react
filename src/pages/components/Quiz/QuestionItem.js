@@ -8,19 +8,28 @@ const QuestionItem = ({
   isSelected,
   onAnswer,
   answerState,
+  isDisabled = false,
 }) => {
   const handleClick = () => {
     if (onAnswer) {
       onAnswer(index);
+      let numOfAnswers = localStorage.getItem("numOfAnswers");
+      if(!numOfAnswers || numOfAnswers === undefined){
+        localStorage.setItem("numOfAnswers", 1);
+      }else{
+        numOfAnswers = parseInt(numOfAnswers) + 1;
+        localStorage.setItem("numOfAnswers", numOfAnswers);
+      }
     }
   };
   const textStyle = answerState === "correct" ? "text-green-500" : answerState === "wrong" ? "text-red-500" : "text-black";
 
   return (
-    <div
+    <button
       onClick={handleClick}
       style={{ cursor: "pointer" }}
       className="w-full flex items-start rounded-2xl border border-white px-2 py-2 my-1"
+      disabled={isDisabled}
     >
       <Image
         className="mx-2"
@@ -30,7 +39,7 @@ const QuestionItem = ({
         height={25}
       />
       <div className={`font-bold ${textStyle}`}>{question}</div>
-    </div>
+    </button>
   );
 };
 
