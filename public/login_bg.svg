@@ -1,0 +1,20 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1420 1167" width="1420" height="1167">
+	<title>login_bg-svg</title>
+	<defs>
+		<linearGradient id="g1" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(971.531,169.956,-179.859,1028.143,-2,168.056)">
+			<stop offset="0" stop-color="#4dd4b2" stop-opacity="1"/>
+			<stop offset=".135" stop-color="#4eaaca" stop-opacity="1"/>
+			<stop offset=".264" stop-color="#4e95d6" stop-opacity="1"/>
+			<stop offset=".405" stop-color="#4e90d9" stop-opacity="1"/>
+			<stop offset=".527" stop-color="#4e92d8" stop-opacity=".92"/>
+			<stop offset=".628" stop-color="#4e9ed1" stop-opacity=".76"/>
+			<stop offset=".768" stop-color="#4eacc9" stop-opacity=".56"/>
+			<stop offset=".852" stop-color="#4db9c1" stop-opacity=".38"/>
+			<stop offset="1" stop-color="#4dd4b2" stop-opacity="0"/>
+		</linearGradient>
+	</defs>
+	<style>
+		.s0 { fill: url(#g1) } 
+	</style>
+	<path id="Layer" class="s0" d="m-2-20h1095v1187h-1095z"/>
+</svg>
