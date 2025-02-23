@@ -15,7 +15,7 @@ const NavbarContainer = () => {
   const router = useRouter();
   if (user) {
     userProfilePhoto =
-      user.profile_photo? .toString().length <= 50
+      user.profile_photo?.toString().length <= 50
         ? userIcon
         : user.profile_photo;
   }
