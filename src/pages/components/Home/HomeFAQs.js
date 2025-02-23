@@ -32,24 +32,24 @@ function FaqItem({question, answer}) {
 }
 
 
-function HomeFAQs() {
+function HomeFAQs({faqs}) {
     const {t, i18n} = useTranslation("common");
-    const faqData = [
-        {
-            question: "Question 1",
-            answer: "Answer to question 1",
-        },
-        {
-            question: "Question 2",
-            answer: "Answer to question 2",
-        },
-        {
-            question: "Question 3",
-            answer: "Answer to question 3",
-        },
-        // Add more questions and answers as needed
-    ];
-
+    // const faqData = [
+    //     {
+    //         question: "Question 1",
+    //         answer: "Answer to question 1",
+    //     },
+    //     {
+    //         question: "Question 2",
+    //         answer: "Answer to question 2",
+    //     },
+    //     {
+    //         question: "Question 3",
+    //         answer: "Answer to question 3",
+    //     },
+    //     // Add more questions and answers as needed
+    // ];
+    const faqData = faqs;
     return (
         <div id="faqs" className="mx-28 sm:mx-4 mt-2">
             <div className="w-full font-bold mb-10 sm:mb-2 text-4xl sm:text-2xl text-black">
@@ -57,7 +57,7 @@ function HomeFAQs() {
             </div>
             <div className="w-full h-full grid grid-cols-2 gap-4 lg:grid-cols-1">
                 {faqData.map((faq, index) => (
-                    <FaqItem key={index} question={faq.question} answer={faq.answer}/>
+                        <FaqItem key={index} question={faq.faq} answer={faq.answer}/>
                 ))}
             </div>
         </div>

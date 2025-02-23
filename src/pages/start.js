@@ -32,7 +32,7 @@ const Start = () => {
     const [levels, setLevels] = useState([]);
     let userProfilePhoto = userIcon;
     if (user) {
-        userProfilePhoto = user.profile_photo.toString().length <= 50 ? userIcon : user.profile_photo;
+        userProfilePhoto = user.profile_photo?.toString().length <= 50 ? userIcon : user.profile_photo;
     }
     useEffect(() => {
         const existingState = JSON.parse(localStorage.getItem("state"));

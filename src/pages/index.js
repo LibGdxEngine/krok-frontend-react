@@ -2,6 +2,10 @@ import HomePage from "@/pages/components/Home/HomePage";
 import HomeFAQs from "@/pages/components/Home/HomeFAQs";
 import Footer from "@/pages/components/Footer";
 import VideoPlayer from "@/pages/components/utils/VideoPlayer";
+import { useEffect, useState } from "react";
+import {
+    getHomeData,
+} from "@/components/services/questions";
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -10,6 +14,17 @@ const Home = () => {
     const emailActivated = searchParams.get('activated');
     const emailMessage = searchParams.get('message');
     const router = useRouter();
+    const [faqs, setFaqs] = useState([]);
+    const [video, setVideo] = useState(null);
+    useEffect(() => {
+        getHomeData().then((data) => {
+            console.log(data);
+            setFaqs(data.faqs);
+            setVideo(data.video_url);
+        });
+    }, []);
+
+
     const redirectFunction = () => {
       setTimeout(() => {
         if(emailActivated === 'true'){
@@ -22,6 +37,9 @@ const Home = () => {
     if(emailMessage){
       redirectFunction();
     }
+
+
+
     return (
       <>
         {emailMessage?<div className="h-screen w-full bg-white flex justify-center items-center">
@@ -42,11 +60,11 @@ const Home = () => {
             <br />
           </div>
           <div className={`w-full h-full`}>
-            <VideoPlayer />
+            <VideoPlayer videoUrl={video} />
           </div>
 
           <div className={`block bg-white w-full h-full z-20`}>
-            <HomeFAQs />
+            <HomeFAQs faqs={faqs} />
           </div>
 
           <div className="w-full mt-14">

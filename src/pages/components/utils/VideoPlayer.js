@@ -1,7 +1,7 @@
 // Component.jsx
 import {useTranslation} from "react-i18next";
 
-const VideoPlayer = () => {
+const VideoPlayer = ({videoUrl = ""}) => {
     const {t, i18n} = useTranslation("common");
     return <div id="home-video"
                 className="w-full flex flex-col sm:w-screen  h-screen sm:h-80 items-center justify-center">
@@ -10,7 +10,7 @@ const VideoPlayer = () => {
 
             <iframe
                 className="w-full h-full"
-                src="https://www.youtube.com/embed/CjcRacjsmYY"
+                src={videoUrl}
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

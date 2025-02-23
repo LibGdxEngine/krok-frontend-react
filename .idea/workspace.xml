@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="eae15c0b-eb83-4f29-9e80-f2a6a46586f5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/axiosInstance.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/axiosInstance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/services/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/services/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/services/questions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/services/questions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/context/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/context/AuthContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/Favourites/FavCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Favourites/FavCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/Favourites/QuestionCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Favourites/QuestionCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/Home/HomeFAQs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Home/HomeFAQs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/NavbarContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/NavbarContainer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/Profile/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Profile/Sidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/Quiz/QuestionWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Quiz/QuestionWindow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/utils/SocialLoginButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/utils/SocialLoginButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/utils/VideoPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/utils/VideoPlayer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/quiz.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/quiz.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/signin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/start.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/start.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2srSizSNZbt3zmSCoeVggBJ1PsY" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/a.ramadan.ext/IdeaProjects/krok-front&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.nodejs&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="questions" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="questions" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Next js" type="NodeJSConfigurationType" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eae15c0b-eb83-4f29-9e80-f2a6a46586f5" name="Changes" comment="" />
+      <created>1739212334308</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739212334308</updated>
+      <workItem from="1739212336458" duration="424000" />
+      <workItem from="1739212802425" duration="361000" />
+      <workItem from="1739213193101" duration="35000" />
+      <workItem from="1739213230152" duration="12000" />
+      <workItem from="1739213244211" duration="67000" />
+      <workItem from="1739213334422" duration="143000" />
+      <workItem from="1739213491850" duration="477000" />
+      <workItem from="1739213975435" duration="5028000" />
+      <workItem from="1739492870667" duration="13000" />
+      <workItem from="1739524908699" duration="4000" />
+      <workItem from="1739703226279" duration="3504000" />
+      <workItem from="1739734660871" duration="569000" />
+      <workItem from="1740073545471" duration="4750000" />
+      <workItem from="1740155273887" duration="3282000" />
+      <workItem from="1740300170335" duration="12604000" />
+      <workItem from="1740317826969" duration="6073000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

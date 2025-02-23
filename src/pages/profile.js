@@ -26,6 +26,8 @@ import LoadingSpinner from "@/pages/components/utils/LoadingSpinner";
 import {useTranslation} from "react-i18next";
 import NavbarContainer from './components/NavbarContainer';
 
+
+
 const PersonalInfo = React.memo(({user, universities}) => {
     const {t, i18n} = useTranslation("common");
     const [profileImage, setProfileImage] = useState(user.profile_photo);
@@ -40,7 +42,7 @@ const PersonalInfo = React.memo(({user, universities}) => {
     });
 
     const {token} = useAuth();
-    const photo = (profileImage === null || profileImage.length <= 30) ? profilePlaceHolder : profileImage;
+    const photo = (profileImage === null || profileImage?.length <= 30) ? profilePlaceHolder : profileImage;
     const handleImageClick = () => {
         document.getElementById('profileImageInput').click();
     };
@@ -241,7 +243,6 @@ const History = React.memo(({examObject: defaultExams}) => {
     const calculateScorePercentage = (questions) => {
         const values = Object.values(questions); // Extract object values
         const totalQuestions = values.length; // Total number of questions
-        
         // If there are no questions, return 0.0 to avoid division by zero.
         if (totalQuestions === 0) {
             return 0.0;
@@ -290,7 +291,7 @@ const History = React.memo(({examObject: defaultExams}) => {
                           {parseFloat(
                             (
                               (parseInt(Object.keys(item.progress).length) /
-                                item.questions.length) *
+                                item.questions) *
                               100
                             ).toFixed(1)
                           )}
@@ -309,7 +310,7 @@ const History = React.memo(({examObject: defaultExams}) => {
                         onClick={() => {
                           router.push(
                             `/quiz?id=${item.id}&q=${parseInt(
-                              item.current_question
+                              item.currentQuestion ?? 0
                             )}`
                           );
                         }}
@@ -527,7 +528,7 @@ const Profile = React.memo(() => {
     useEffect(() => {
         if (token) {
             getUserHistoryExams(token).then((response) => {
-                setExamObject(response);
+                setExamObject(response.results);
             }).catch((error) => {
                 console.error('Error fetching exam:', error);
             });

@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from "../../../../src/components/axiosInstance";
 const QuestionCard = ({ number, question, answers, correctAnswer }) => {
- 
-        
+
+
         const [searchQuery, setSearchQuery] = useState(question);
         const [questionData, setQuestionData] = useState(null);
         const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ const QuestionCard = ({ number, question, answers, correctAnswer }) => {
 
             useEffect(() => {
                 if (searchQuery) {
-                    handleSearch();
+                    // handleSearch();
                 }
             }, [searchQuery]);
                 
@@ -61,7 +61,7 @@ const QuestionCard = ({ number, question, answers, correctAnswer }) => {
                 {question}
               </h2>
               <ul className="grid grid-cols-1 gap-4">
-                {questionData.answers.map((answer, index) => (
+                {answers.map((answer, index) => (
                   <li key={index} className="flex items-center">
                     <input
                       type="radio"
@@ -71,7 +71,7 @@ const QuestionCard = ({ number, question, answers, correctAnswer }) => {
                       className="mr-2"
                     />
                     <label htmlFor={`answer-${index}`} className="text-black">
-                      {answer.answer}
+                      {answer.answer_text}
                     </label>
                   </li>
                 ))}

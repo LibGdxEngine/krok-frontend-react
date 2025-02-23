@@ -23,7 +23,7 @@ const Sidebar = React.memo(({user, onTapClicked, currentTap}) => {
     ];
     let userProfilePhoto = profilePlaceHolder;
     if (user) {
-        userProfilePhoto = user.profile_photo.toString().length <= 50 ? profilePlaceHolder : user.profile_photo;
+        userProfilePhoto = user.profile_photo?.toString().length <= 50 ? profilePlaceHolder : user.profile_photo;
     }
 
     if (!user) return <>

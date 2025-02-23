@@ -20,31 +20,32 @@ import NavbarContainer from "./components/NavbarContainer";
 const Quiz = () => {
   const { t, i18n } = useTranslation("common");
   const router = useRouter();
-  const makeMyProgress = (progress) => {
-    const newProgress = {};
-    if (!progress || progress.length === 0) {
-      return {};
-    }
-    for (let i = 0; i < progress.length; i++) {
-      newProgress[progress[i].id.toString()] = progress[i];
-    }
-    return newProgress;
-  };
+  // const makeMyProgress = (progress) => {
+  //   const newProgress = {};
+  //   if (!progress || progress.length === 0) {
+  //     return {};
+  //   }
+  //
+  //   for (let i = 0; i < progress.length; i++) {
+  //     newProgress[i.toString()] = progress[i];
+  //   }
+  //   console.log(newProgress);
+  //   return newProgress;
+  // };
 
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();
   const [examObject, setExamObject] = useState(null);
-  const [progress, setProgress] = useState(
-    makeMyProgress(examObject?.progress)
-  );
+
+  const [progress, setProgress] = useState(examObject?.progress);
   const [reviewExam, setReviewExam] = useState(false);
   let { id, q } = router.query;
-  const [currentQuestion, setcurrentQuestion] = useState(q ? q : 0);
+  const [currentQuestionIndex, setcurrentQuestionIndex] = useState(q ? q : 0);
   let length = examObject ? examObject.questions.length : 1;
   if (!q) {
-    q = currentQuestion;
+    q = currentQuestionIndex;
   }
-  console.log(q);
+
   const rearrangeArrayById = (mainArray, priorityArray) => {
     // Extract elements from mainArray whose ids match those in priorityArray
     const prioritized = priorityArray
@@ -71,23 +72,19 @@ const Quiz = () => {
             response.questions,
             response.progress
           );
-          console.log(response.questions);
-
           response.questions = newArrayOfQWuistions;
-          console.log(newArrayOfQWuistions);
 
           setExamObject(response);
-          const outPutProgress = makeMyProgress(response.progress);
-          console.log(outPutProgress, response);
+          // const outPutProgress = makeMyProgress(response.progress);
 
-          setProgress(outPutProgress);
-          setcurrentQuestion(response.questions[0].id);
+          setProgress(response.progress);
+          //setcurrentQuestion(response.questions[0].id);
         })
         .catch((error) => {
           console.error("Error fetching exam:", error);
         })
         .finally(() => {
-          setLoading(false); 
+          setLoading(false);
         });
     }
   }, [token, id]);
@@ -96,6 +93,7 @@ const Quiz = () => {
   const handleProgressUpdate = (currentQuestion, updatedProgress) => {
     setProgress((prev) => ({
       ...prev,
+      // updatedProgress
       [currentQuestion.toString()]: updatedProgress,
     }));
     setExamObject((prev) => ({
@@ -110,7 +108,6 @@ const Quiz = () => {
   return (
     <div className={`w-full flex flex-col items-start justify-center bg-white`}>
       <NavbarContainer />
-
       <div className={`w-full h-full  items-start justify-center`}>
         {loading ? (
           <div className="w-full p-6">
@@ -127,38 +124,24 @@ const Quiz = () => {
             <QuestionWindow
               examJourneyId={id}
               length={length}
-              questions={examObject.questions.find((qu) => {
-                console.log(currentQuestion);
-
-                return parseInt(qu.id) === parseInt(currentQuestion);
-              })}
-              questionId={currentQuestion}
-              numbers={examObject.questions.map((qu) => parseInt(qu.id))}
-              questionIndex={currentQuestion}
+              questions={Object.entries(examObject.questions).find((question, index) => {
+                return index === parseInt(currentQuestionIndex);
+              })[1]}
+              questionId={currentQuestionIndex} //not important, remove
+              numbers={Object.keys(examObject.questions)}
+              questionIndex={currentQuestionIndex}z
               nextIndex={
-                examObject.questions[
-                  examObject.questions.indexOf(
-                    examObject.questions.find(
-                      (q) => parseInt(q.id) === parseInt(currentQuestion)
-                    )
-                  ) + 1
-                ]?.id
+                parseInt(currentQuestionIndex) + 1
               }
               prevIndex={
-                examObject.questions[
-                  examObject.questions.indexOf(
-                    examObject.questions.find(
-                      (q) => parseInt(q.id) === parseInt(currentQuestion)
-                    )
-                  ) - 1
-                ]?.id || examObject.questions[0].id
+                  parseInt(currentQuestionIndex) - 1
               }
               lastIndex={
-                examObject.questions[examObject.questions.length - 1].id
+                Object.entries(examObject.questions).length - 1
               }
               type={examObject.type}
               progress={progress}
-              setcurrentQuestion={setcurrentQuestion}
+              setcurrentQuestion={setcurrentQuestionIndex}
               reviewExam={reviewExam}
               setReviewExam={setReviewExam}
               time={
@@ -173,55 +156,54 @@ const Quiz = () => {
                   time_left,
                   progress: {
                     ...examObject.progress,
-                    [currentQuestion.toString()]: {
-                      question_text: examObject.questions.find(
-                        (qu) => parseInt(qu?.id) === parseInt(currentQuestion)
-                      ).text,
+                    [currentQuestionIndex.toString()]: {
+                      question_text: Object.entries(examObject.questions).find((question, index) => {
+                        return index === parseInt(currentQuestionIndex);
+                      })[1].text,
                       answer: selectedAnswerIndex,
-                      question_id: examObject.questions.find(
-                        (qu) => parseInt(qu?.id) === parseInt(currentQuestion)
-                      ).id,
-                      is_correct: examObject.questions.find(
-                        (qu) => parseInt(qu?.id) === parseInt(currentQuestion)
-                      ).is_correct,
+                      // question_id: Object.entries(examObject.questions).find((question, index) => {
+                      //   return index === parseInt(currentQuestionIndex);
+                      // })[1].id,
+                      // is_correct: examObject.questions.find(
+                      //   (qu) => parseInt(qu?.id) === parseInt(currentQuestionIndex)
+                      // ).is_correct,
                     },
                   },
-                  current_question_text: examObject.questions.find(
-                    (qu) => parseInt(qu?.id) === parseInt(currentQuestion)
-                  ).text,
-                  current_question: parseInt(currentQuestion),
+                  // current_question_text: Object.entries(examObject.questions).find((question, index) => {
+                  //   return index === parseInt(currentQuestionIndex);
+                  // })[1].text,
+                  current_question: parseInt(currentQuestionIndex),
                 })
                   .then((response) => {
-                    console.log(response);
-                    handleProgressUpdate(currentQuestion.toString(), {
-                      question_text: examObject.questions.find(
-                        (qu) => parseInt(qu.id) === parseInt(currentQuestion)
-                      ).text,
+                    handleProgressUpdate(currentQuestionIndex.toString(), {
+                      question_text: Object.entries(examObject.questions).find((question, index) => {
+                        return index === parseInt(currentQuestionIndex);
+                      })[1].text,
                       answer: selectedAnswerIndex,
-                      is_correct: response.is_correct,
-                      // correct_answer:
-                      //   response.progress[currentQuestion.toString()][
-                      //     "correct_answer"
-                      //   ],
+                      is_correct: response.progress[currentQuestionIndex.toString()].is_correct,
+                      correct_answer:
+                        response.progress[currentQuestionIndex.toString()][
+                          "correct_answer"
+                        ],
                       is_disabled: true,
                     });
-                    if (
-                      Object.keys(response.progress).length < length &&
-                      examObject?.type === "exam"
-                    ) {
-                      router.push(
-                        `/quiz?id=${id}&q=${
-                          examObject.questions[
-                            examObject.questions.indexOf(
-                              examObject.questions.find(
-                                (qu) =>
-                                  parseInt(qu.id) === parseInt(currentQuestion)
-                              )
-                            ) + 1
-                          ].id
-                        }`
-                      );
-                    }
+                    // if (
+                    //   Object.keys(response.progress).length < length &&
+                    //   examObject?.type === "exam"
+                    // ) {
+                    //   router.push(
+                    //     `/quiz?id=${id}&q=${
+                    //       examObject.questions[
+                    //         examObject.questions.indexOf(
+                    //           examObject.questions.find(
+                    //             (qu) =>
+                    //               parseInt(qu.id) === parseInt(currentQuestionIndex)
+                    //           )
+                    //         ) + 1
+                    //       ].id
+                    //     }`
+                    //   );
+                    // }
                   })
                   .catch((error) => {
                     console.error("Error updating exam:", error);

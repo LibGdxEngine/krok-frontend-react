@@ -131,11 +131,9 @@ export const createExamJourney = async (token, examData) => {
 
 export const updateExamJourney = async (token, examId, examData) => {
   try {
-    const response = await axiosInstance.patch(
-      `/v1/questions/update-exam-journey/${examId}/`,
-      {
+    const response = await axiosInstance.put(
+      `/v2/questions/exam-journeys/${examId}/update/`,
         examData,
-      },
       {
         headers: {
           Authorization: `Token ${token}`,
@@ -151,15 +149,16 @@ export const updateExamJourney = async (token, examId, examData) => {
 
 export const getExamJourney = async (token, examId) => {
   try {
+    console.log("exam journy :", examId , token);
     const response = await axiosInstance.get(
-      `/v1/questions/exam-journeys/${examId}/`,
+      `/v2/questions/exam-journeys/${examId}/`,
       {
         headers: {
           Authorization: `Token ${token}`,
         },
       }
     );
-    console.log("exam journy :", response.data);
+
 
     return response.data;
   } catch (error) {
@@ -170,7 +169,7 @@ export const getExamJourney = async (token, examId) => {
 
 export const getUserHistoryExams = async (token) => {
   try {
-    const response = await axiosInstance.get(`/v1/questions/exam-journeys/`, {
+    const response = await axiosInstance.get(`/v2/questions/exam-journeys/`, {
       headers: {
         Authorization: `Token ${token}`,
       },
@@ -185,7 +184,7 @@ export const getUserHistoryExams = async (token) => {
 export const deleteExamJourney = async (token, examId) => {
   try {
     const response = await axiosInstance.delete(
-      `/v1/questions/exam-journeys/${examId}/`,
+      `/v2/questions/exam-journeys/${examId}/`,
       {
         headers: {
           Authorization: `Token ${token}`,
@@ -208,6 +207,16 @@ export const getFavouritesLists = async (token) => {
     });
     console.log(response.data);
 
+    return response.data;
+  } catch (error) {
+    console.error("Error create exam:", error);
+    throw error;
+  }
+};
+
+export const getHomeData = async () => {
+  try {
+    const response = await axiosInstance.get("/v1/questions/home/");
     return response.data;
   } catch (error) {
     console.error("Error create exam:", error);

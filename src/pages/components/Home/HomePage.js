@@ -46,7 +46,7 @@ function HomePage() {
     const {token, user} = useAuth();
     let userProfilePhoto = userIcon;
     if (user) {
-        userProfilePhoto = user.profile_photo.toString().length <= 50 ? userIcon : user.profile_photo;
+        userProfilePhoto = user.profile_photo?.toString().length <= 50 ? userIcon : user.profile_photo;
     }
     const style = {
       background: `linear-gradient(
