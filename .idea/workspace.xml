@@ -4,35 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eae15c0b-eb83-4f29-9e80-f2a6a46586f5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/axiosInstance.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/axiosInstance.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/services/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/services/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/services/questions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/services/questions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/context/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/context/AuthContext.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/components/Favourites/FavCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Favourites/FavCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/components/Favourites/QuestionCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Favourites/QuestionCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/components/Home/HomeFAQs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Home/HomeFAQs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/components/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/NavBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/components/NavbarContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/NavbarContainer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/components/Profile/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Profile/Sidebar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/components/Quiz/QuestionWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Quiz/QuestionWindow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/components/utils/SocialLoginButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/utils/SocialLoginButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/components/utils/VideoPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/utils/VideoPlayer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/quiz.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/quiz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/signin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/start.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/start.js" afterDir="false" />
-    </list>
+    <list default="true" id="eae15c0b-eb83-4f29-9e80-f2a6a46586f5" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -125,7 +97,7 @@
       <workItem from="1740073545471" duration="4750000" />
       <workItem from="1740155273887" duration="3282000" />
       <workItem from="1740300170335" duration="12604000" />
-      <workItem from="1740317826969" duration="6073000" />
+      <workItem from="1740317826969" duration="6506000" />
     </task>
     <servers />
   </component>
