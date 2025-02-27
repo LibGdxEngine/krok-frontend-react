@@ -5,7 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({children}) => {
-    const { data: session } = useSession();
+    // const { data: session } = useSession();
     const [token, setToken] = useState(null);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -23,16 +23,16 @@ export const AuthProvider = ({children}) => {
             });
             setLoading(false);
         } else {
-            if (session){
-                console.log("You are logged in social auth");
-                console.log(session.accessToken);
-                setToken(session.accessToken);
-                setUser(session.user);
-                setLoading(false);
-            }
-            setLoading(false);
+            // if (session){
+            //     console.log("You are logged in social auth");
+            //     console.log(session.accessToken);
+            //     setToken(session.accessToken);
+            //     setUser(session.user);
+            //     setLoading(false);
+            // }
+            // setLoading(false);
         }
-    }, [session]);
+    }, []);
 
 
     const login = (token) => {
