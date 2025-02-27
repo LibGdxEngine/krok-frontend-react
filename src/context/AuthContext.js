@@ -1,7 +1,6 @@
 // contexts/AuthContext.js
 import {createContext, useState, useContext, useEffect} from 'react';
 import {getUser} from "@/components/services/auth";
-import { signIn, signOut } from "next-auth/react";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({children}) => {

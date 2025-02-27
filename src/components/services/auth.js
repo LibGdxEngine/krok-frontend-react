@@ -1,9 +1,8 @@
 // services/auth.js
 import axiosInstance from "../axiosInstance";
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import FacebookProvider from "next-auth/providers/facebook";
-import AppleProvider from "next-auth/providers/apple";
+// import GoogleProvider from "next-auth/providers/google";
+// import FacebookProvider from "next-auth/providers/facebook";
+// import AppleProvider from "next-auth/providers/apple";
 
 export const createUser = async (userData) => {
   try {

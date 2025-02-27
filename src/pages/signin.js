@@ -16,7 +16,6 @@ import Link from "next/link";
 import NavBar from "@/pages/components/NavBar";
 import SocialLoginButton from "@/pages/components/utils/SocialLoginButton";
 import {useTranslation} from "react-i18next";
-import { signIn, signOut, useSession } from "next-auth/react";
 
 const Signin = () => {
     const {t, i18n} = useTranslation("common");
@@ -27,15 +26,15 @@ const Signin = () => {
 
     const {login} = useAuth();
     const {token, loading} = useAuth();
-    const { data: session } = useSession();
-
-
-    useEffect(() => {
-        if(session){
-            console.log(session);
-            // router.replace("/");
-        }
-    }, [session]);
+    // const { data: session } = useSession();
+    //
+    //
+    // useEffect(() => {
+    //     if(session){
+    //         console.log(session);
+    //         // router.replace("/");
+    //     }
+    // }, [session]);
 
     if (loading) {
         return <SplashScreen/>;
