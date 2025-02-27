@@ -35,25 +35,25 @@ export default NextAuth({
     session: {
         strategy: "jwt",
     },
-    callbacks: {
-        async jwt({ token, account }) {
-            if (account) {
-                try {
-                    const response = await axios.post(
-                        `http://localhost:8000/auth/${account.provider}/`,
-                        { access_token: account.access_token }
-                    );
-                    console.log(response);
-                    token.accessToken = response.data.key; // Save Django token
-                } catch (error) {
-                    console.error("Django Authentication Error:", error.response?.data || error.message);
-                }
-            }
-            return token;
-        },
-        async session({ session, token }) {
-            session.accessToken = token.accessToken;
-            return session;
-        },
-    },
+    // callbacks: {
+    //     async jwt({ token, account }) {
+    //         if (account) {
+    //             try {
+    //                 const response = await axios.post(
+    //                     `http://localhost:8000/auth/${account.provider}/`,
+    //                     { access_token: account.access_token }
+    //                 );
+    //                 console.log(response);
+    //                 token.accessToken = response.data.key; // Save Django token
+    //             } catch (error) {
+    //                 console.error("Django Authentication Error:", error.response?.data || error.message);
+    //             }
+    //         }
+    //         return token;
+    //     },
+    //     async session({ session, token }) {
+    //         session.accessToken = token.accessToken;
+    //         return session;
+    //     },
+    // },
 });
