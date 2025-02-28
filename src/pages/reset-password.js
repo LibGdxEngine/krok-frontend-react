@@ -29,6 +29,7 @@ const ResetPassword = () => {
       setSuccessMessage("Password has been reset successfully.");
       router.push("/signin");
     } catch (err) {
+      console.log(err)
       setError("Failed to reset password. Please try again.");
     }
   };
