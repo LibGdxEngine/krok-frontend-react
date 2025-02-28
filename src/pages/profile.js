@@ -228,12 +228,14 @@ const History = React.memo(({examObject: defaultExams}) => {
     let level = null;
     let language = null;
     let specificity = null;
+    let year = null;
     if (examObject.length > 0) {
         try {
             first_question = examObject[0]['first_question'];
             level = first_question?.level;
             language = first_question?.language;
             specificity = first_question?.specificity;
+            year = first_question?.year;
         } catch (err) {
             console.error('Error parsing exam questions:', err);
         }
@@ -281,7 +283,7 @@ const History = React.memo(({examObject: defaultExams}) => {
                   <div className="flex justify-between items-center">
                     <div>
                       <h1 className="text-xl font-semibold text-black">
-                        {level} {language} {specificity} {t("Exam")}
+                        {level} {language} {specificity} {year} {t("Exam")}
                       </h1>
                       <h2 className="text-lg text-black">
                         Type ({item.type} mood)
