@@ -60,7 +60,7 @@ export default function SignUp() {
     } catch (error) {
       console.error("Error during signup:", error);
 
-      toast.error(JSON.stringify(error.response.data.email[0]));
+      toast.error(JSON.stringify(error['errors']['email'][0]));
     }
   };
 

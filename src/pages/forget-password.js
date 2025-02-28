@@ -19,6 +19,7 @@ const ForgetPassword = () => {
 
     try {
       const response = await passwordReset({ email });
+      toast.success(response.message);
       setSuccessMessage(response.message);
 
       // Modify the debug_url to use the new base URL

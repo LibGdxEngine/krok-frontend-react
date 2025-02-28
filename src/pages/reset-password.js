@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
+import {passwordResetVerify} from "@/components/services/auth";
 
 const ResetPassword = () => {
   const { t } = useTranslation("common");
@@ -11,7 +12,7 @@ const ResetPassword = () => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const router = useRouter();
-  const { debug_url } = router.query;
+  const { code } = router.query;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,10 +25,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await axios.post(debug_url, {
-        new_password: newPassword,
-        confirm_password: confirmPassword,
-      });
+      const response = await passwordResetVerify({newPassword: new_password , code})
       setSuccessMessage("Password has been reset successfully.");
       router.push("/signin");
     } catch (err) {
