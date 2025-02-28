@@ -28,7 +28,7 @@ export const AuthProvider = ({children}) => {
             //     setUser(session.user);
             //     setLoading(false);
             // }
-            // setLoading(false);
+            setLoading(false);
         }
     }, []);
 
