@@ -230,10 +230,10 @@ const History = React.memo(({examObject: defaultExams}) => {
     let specificity = null;
     if (examObject.length > 0) {
         try {
-            first_question = examObject[0]['questions'][0];
-            level = first_question?.level.name;
-            language = first_question?.language.name;
-            specificity = first_question?.specificity.name;
+            first_question = examObject[0]['first_question'];
+            level = first_question?.level;
+            language = first_question?.language;
+            specificity = first_question?.specificity;
         } catch (err) {
             console.error('Error parsing exam questions:', err);
         }
