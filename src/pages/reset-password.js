@@ -25,7 +25,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await passwordResetVerify({newPassword: new_password , code})
+      const response = await passwordResetVerify({new_password: newPassword , code})
       setSuccessMessage("Password has been reset successfully.");
       router.push("/signin");
     } catch (err) {
