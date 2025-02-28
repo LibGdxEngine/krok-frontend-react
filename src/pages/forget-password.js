@@ -21,20 +21,6 @@ const ForgetPassword = () => {
       const response = await passwordReset({ email });
       toast.success(response.message);
       setSuccessMessage(response.message);
-
-      // Modify the debug_url to use the new base URL
-      if (response.debug_url) {
-        const updatedDebugUrl = response.debug_url.replace(
-          "http://krokplus.com",
-          "https://app.krokplus.com/api/v1/user"
-        );
-
-        // Redirect to the reset password page with the updated debug_url
-        router.push({
-          pathname: "/reset-password",
-          query: { debug_url: updatedDebugUrl },
-        });
-      }
     } catch (err) {
       setError("Failed to send password reset link. Please try again.");
     }
