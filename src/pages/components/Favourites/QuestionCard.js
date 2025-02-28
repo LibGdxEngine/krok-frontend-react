@@ -36,7 +36,7 @@ const QuestionCard = ({number, question, answers}) => {
 
     useEffect(() => {
         if (searchQuery) {
-            // handleSearch();
+            handleSearch();
         }
     }, [searchQuery]);
 

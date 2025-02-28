@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eae15c0b-eb83-4f29-9e80-f2a6a46586f5" name="Changes" comment="" />
+    <list default="true" id="eae15c0b-eb83-4f29-9e80-f2a6a46586f5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/pages/forget-password.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/forget-password.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,7 +103,7 @@
       <workItem from="1740317826969" duration="7793000" />
       <workItem from="1740332574101" duration="2779000" />
       <workItem from="1740689211032" duration="8137000" />
-      <workItem from="1740755393463" duration="7689000" />
+      <workItem from="1740755393463" duration="8067000" />
     </task>
     <servers />
   </component>
