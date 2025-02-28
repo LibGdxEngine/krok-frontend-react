@@ -109,23 +109,23 @@ const Signin = () => {
                             {t("SignIn")}
                         </h1>
                         <div className={`w-full flex flex-col items-center justify-center`}>
-                            <SocialLoginButton
-                                provider="facebook"
-                                clientId="337527847157-rf90dg46v3vgf1i8pivqjer9mujl2urk.apps.googleusercontent.com"
-                                redirectUri="http://localhost:3000/signin/"
-                            />
+                            {/*<SocialLoginButton*/}
+                            {/*    provider="facebook"*/}
+                            {/*    clientId="337527847157-rf90dg46v3vgf1i8pivqjer9mujl2urk.apps.googleusercontent.com"*/}
+                            {/*    redirectUri="http://localhost:3000/signin/"*/}
+                            {/*/>*/}
 
-                            <SocialLoginButton
-                                onClick={handleGoogleSignIn}
-                                provider="google"
-                                clientId="527835727909-ih4vr6ofhac8jvv6k252hq4llk1plv9b.apps.googleusercontent.com"
-                                redirectUri="https://krokplus.com"
-                            />
-                            <SocialLoginButton
-                                provider="apple"
-                                clientId="337527847157-rf90dg46v3vgf1i8pivqjer9mujl2urk.apps.googleusercontent.com"
-                                redirectUri="http://localhost:3000/signin/"
-                            />
+                            {/*<SocialLoginButton*/}
+                            {/*    onClick={handleGoogleSignIn}*/}
+                            {/*    provider="google"*/}
+                            {/*    clientId="527835727909-ih4vr6ofhac8jvv6k252hq4llk1plv9b.apps.googleusercontent.com"*/}
+                            {/*    redirectUri="https://krokplus.com"*/}
+                            {/*/>*/}
+                            {/*<SocialLoginButton*/}
+                            {/*    provider="apple"*/}
+                            {/*    clientId="337527847157-rf90dg46v3vgf1i8pivqjer9mujl2urk.apps.googleusercontent.com"*/}
+                            {/*    redirectUri="http://localhost:3000/signin/"*/}
+                            {/*/>*/}
                         </div>
 
                         <form

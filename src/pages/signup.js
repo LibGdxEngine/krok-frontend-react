@@ -104,31 +104,31 @@ export default function SignUp() {
                 <div
                   className={`w-full flex flex-col items-center justify-center`}
                 >
-                  <Image
-                    style={{ cursor: "pointer" }}
-                    className={`my-4 w-96`}
-                    src={loginFace}
-                    alt={``}
-                    width={400}
-                    height={40}
-                  />
-                  <Image
-                    style={{ cursor: "pointer" }}
-                    src={loginBtn}
-                    className="w-96"
-                    alt={``}
-                    width={400}
-                    height={40}
-                  />
+                  {/*<Image*/}
+                  {/*  style={{ cursor: "pointer" }}*/}
+                  {/*  className={`my-4 w-96`}*/}
+                  {/*  src={loginFace}*/}
+                  {/*  alt={``}*/}
+                  {/*  width={400}*/}
+                  {/*  height={40}*/}
+                  {/*/>*/}
+                  {/*<Image*/}
+                  {/*  style={{ cursor: "pointer" }}*/}
+                  {/*  src={loginBtn}*/}
+                  {/*  className="w-96"*/}
+                  {/*  alt={``}*/}
+                  {/*  width={400}*/}
+                  {/*  height={40}*/}
+                  {/*/>*/}
 
-                  <Image
-                    style={{ cursor: "pointer" }}
-                    className={`my-4 mb-2 w-96`}
-                    src={loginApple}
-                    alt={``}
-                    width={400}
-                    height={40}
-                  />
+                  {/*<Image*/}
+                  {/*  style={{ cursor: "pointer" }}*/}
+                  {/*  className={`my-4 mb-2 w-96`}*/}
+                  {/*  src={loginApple}*/}
+                  {/*  alt={``}*/}
+                  {/*  width={400}*/}
+                  {/*  height={40}*/}
+                  {/*/>*/}
                 </div>
                 <form
                   onSubmit={handleSignup}
