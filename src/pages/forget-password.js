@@ -19,8 +19,8 @@ const ForgetPassword = () => {
 
     try {
       const response = await passwordReset({ email });
-      toast.success(response.message);
-      setSuccessMessage(response.message);
+      // toast.success(response.message);
+      setSuccessMessage("Code sent");
     } catch (err) {
       setError("Failed to send password reset link. Please try again.");
     }
