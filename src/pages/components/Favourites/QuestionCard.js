@@ -8,7 +8,9 @@ const QuestionCard = ({ number, question, answers, correctAnswer }) => {
         const [questionData, setQuestionData] = useState(null);
         const [loading, setLoading] = useState(false);
         const [error, setError] = useState(null);
-
+    console.log(question);
+    console.log(answers);
+    console.log(correctAnswer);
             const handleSearch = async () => {
               setLoading(true);
               setError(null);

@@ -458,7 +458,7 @@ const Favourites = React.memo(({favourites: myFav}) => {
                 X
               </button>
             </div>
-              {JSON.stringify(selectedFavourite)}
+              {JSON.stringify(selectedFavourite.questions)}
             {selectedFavourite.questions.map((question, index) => {
               return (
                 <QuestionCard
