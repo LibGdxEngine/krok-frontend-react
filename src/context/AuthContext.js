@@ -1,9 +1,12 @@
 // contexts/AuthContext.js
 import {createContext, useState, useContext, useEffect} from 'react';
+import {useSession, signIn, signOut} from 'next-auth/react';
 import {getUser} from "@/components/services/auth";
+
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({children}) => {
+    const {data: session} = useSession();
     const [token, setToken] = useState(null);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -11,26 +14,32 @@ export const AuthProvider = ({children}) => {
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
-            setToken(storedToken);
-            getUser(storedToken).then((user) => {
-                setUser(user.profile);
+            try {
+                setToken(storedToken);
+                getUser(storedToken).then((user) => {
+                    setUser(user.profile);
+                    setLoading(false);
+                }).catch((error) => {
+                    console.error('Error fetching user:', error);
+                    setLoading(false);
+                });
                 setLoading(false);
-            }).catch((error) => {
-                console.error('Error fetching user:', error);
-                setLoading(false);
-            });
-            setLoading(false);
-        } else {
-            // if (session){
-            //     console.log("You are logged in social auth");
-            //     console.log(session.accessToken);
-            //     setToken(session.accessToken);
-            //     setUser(session.user);
-            //     setLoading(false);
-            // }
-            setLoading(false);
+            } catch (error) {
+                // Token is invalid, remove it
+                localStorage.removeItem('token');
+                // Check if we have a session from NextAuth
+                if (session?.accessToken) {
+                    localStorage.setItem('token', session.accessToken);
+                    setUser(session.user);
+                }
+            }
+        } else if (session?.accessToken) {
+            // Use the token from NextAuth session
+            localStorage.setItem('token', session.accessToken);
+            setUser(session.user);
         }
-    }, []);
+        setLoading(false);
+    }, [session]);
 
 
     const login = (token) => {
@@ -45,6 +54,10 @@ export const AuthProvider = ({children}) => {
         localStorage.setItem('token', token);
     };
 
+    const socialLogin = async (provider) => {
+        await signIn(provider, {callbackUrl: "http://localhost:3000/auth/callback/google"});
+    };
+
     const logout = () => {
         setToken(null);
         localStorage.removeItem('token');
@@ -52,7 +65,7 @@ export const AuthProvider = ({children}) => {
     };
 
     return (
-        <AuthContext.Provider value={{user, token, login, logout, loading}}>
+        <AuthContext.Provider value={{user, token, login, socialLogin, logout, loading}}>
             {children}
         </AuthContext.Provider>
     );

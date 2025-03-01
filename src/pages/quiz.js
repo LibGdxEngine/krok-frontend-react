@@ -129,7 +129,7 @@ const Quiz = () => {
               })[1]}
               questionId={currentQuestionIndex} //not important, remove
               numbers={Object.keys(examObject.questions)}
-              questionIndex={currentQuestionIndex}z
+              questionIndex={currentQuestionIndex}
               nextIndex={
                 parseInt(currentQuestionIndex) + 1
               }
