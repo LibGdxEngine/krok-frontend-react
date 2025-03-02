@@ -10,6 +10,17 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://krokplus.com";
 export default NextAuth({
     useSecureCookies: true,
     secret: process.env.NEXTAUTH_SECRET,
+    cookies: {
+        sessionToken: {
+            name: `__Secure-next-auth.session-token`,
+            options: {
+                httpOnly: true,
+                sameSite: "lax",
+                path: "/",
+                secure: true,
+            },
+        },
+    },
     providers: [
         GoogleProvider({
             clientId: "794210030409-1jblj5njdfsn27qnjv0nk326fm0o5oi6.apps.googleusercontent.com",
