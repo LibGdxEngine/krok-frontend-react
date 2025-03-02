@@ -1,4 +1,3 @@
-
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
@@ -37,14 +36,14 @@ export default NextAuth({
     ],
     callbacks: {
 
-        async signIn({ user, account, profile }) {
+        async signIn({user, account, profile}) {
             if (account.provider === "google" || account.provider === "facebook" || account.provider === "apple") {
                 try {
                     // Make request to Django backend to authenticate with social provider
                     const response = await axios.post(`${API_URL}/api/v1/auth/${account.provider}/`, {
                         access_token: account.access_token,
                         id_token: account.id_token, // For Apple & Google
-                    });
+                    }, {withCredentials: true});
 
                     // Save the token to the user object to be used in the session
                     user.token = response.data.token;
@@ -57,7 +56,7 @@ export default NextAuth({
             }
             return true;
         },
-        async jwt({ token, user }) {
+        async jwt({token, user}) {
             // If user just signed in, add their token to the JWT
             if (user) {
                 token.token = user.token;
@@ -65,21 +64,24 @@ export default NextAuth({
             console.log("token", token);
             return token;
         },
-        async session({ session, token }) {
+        async session({session, token}) {
             // Add the token to the session that will be available client-side
             session.token = token.token;
             console.log("session", session);
             return session;
         },
-        async redirect({ url, baseUrl }) {
+        async redirect({url, baseUrl}) {
             console.log("Redirecting to:", url);
             return url.startsWith(baseUrl) ? url : baseUrl;
         }
     },
 
     events: {
-        async signIn({ user }) {
+        async signIn({user}) {
             // You can add custom events here if needed
+            console.log("Cookies:", document.cookie);
+            console.log("Account:", account);
+            return true;
         },
     },
     pages: {
