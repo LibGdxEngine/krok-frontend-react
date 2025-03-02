@@ -5,7 +5,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import AppleProvider from "next-auth/providers/apple";
 import axios from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://krokplus.com";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default NextAuth({
     providers: [
@@ -31,10 +31,9 @@ export default NextAuth({
                         access_token: account.access_token,
                         id_token: account.id_token, // For Apple & Google
                     });
-
                     // Save the token to the user object to be used in the session
-                    user.token = response.data.access_token;
-                    user.refreshToken = response.data.refresh_token;
+                    user.token = response.data.token;
+
                     return true;
                 } catch (error) {
                     console.error("Error during social sign in:", error);
@@ -45,19 +44,20 @@ export default NextAuth({
         },
         async jwt({ token, user }) {
             // If user just signed in, add their token to the JWT
+
             if (user) {
-                token.accessToken = user.token;
-                token.refreshToken = user.refreshToken;
+                token.token = user.token;
             }
             return token;
         },
         async session({ session, token }) {
             // Add the token to the session that will be available client-side
-            session.accessToken = token.accessToken;
-            session.refreshToken = token.refreshToken;
+            session.token = token.token;
             return session;
         },
+
     },
+
     events: {
         async signIn({ user }) {
             // You can add custom events here if needed

@@ -57,6 +57,8 @@ const QuestionWindow = ({
     const closeReportsModal = () => setReportsModalOpen(false);
 
     const handleNextQuestion = () => {
+        console.log("Hello");
+        console.log(questionIndex);
         if (questionIndex === numbers[numbers.length - 1]) {
             if (Object.keys(historyProgress).length < length) {
                 toast.error(t("AnswerAllQuestions"));
@@ -469,7 +471,6 @@ const QuestionWindow = ({
                 <div className="w-full flex flex-wrap gap-4 mt-4 ">
                     {showResults ? (
                         <>
-                            {console.log(progress)}
                             <div
                                 className="w-full mt-2 flex flex-col rounded-xl text-black p-4 mx-4 text-3xl text-center">
                                 <div>
@@ -676,10 +677,13 @@ const QuestionWindow = ({
                                     )}
                                 {type === "exam" && (
                                     <button
-                                        onClick={handleAnswerClicked}
+                                        onClick={questionIndex == numbers[numbers.length - 1] ? ()=> {
+                                            setShowResults(true);
+                                        }:handleAnswerClicked}
                                         className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"
                                     >
-                                        {questionIndex === numbers[numbers.length - 1]
+
+                                        {questionIndex == numbers[numbers.length - 1]
                                             ? t("Finish")
                                             : t("Next")}
                                     </button>

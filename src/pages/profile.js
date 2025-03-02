@@ -29,6 +29,7 @@ import NavbarContainer from './components/NavbarContainer';
 
 
 const PersonalInfo = React.memo(({user, universities}) => {
+
     const {t, i18n} = useTranslation("common");
     const [profileImage, setProfileImage] = useState(user.profile_photo);
     const [isLoading, setIsLoading] = useState(false);
@@ -45,6 +46,24 @@ const PersonalInfo = React.memo(({user, universities}) => {
     const photo = (profileImage === null || profileImage?.length <= 30) ? profilePlaceHolder : profileImage;
     const handleImageClick = () => {
         document.getElementById('profileImageInput').click();
+    };
+
+    const getLastErrorMessage = (error) => {
+        if (!error || typeof error !== 'object' || Object.keys(error).length === 0) {
+            return 'An unknown error occurred';
+        }
+
+        // Get the last key in the error object
+        const keys = Object.keys(error);
+        const lastKey = keys[keys.length - 1];
+        // Get the first message for this key (assuming it's an array of messages)
+        const errorMessages = error[lastKey];
+
+        if (Array.isArray(errorMessages) && errorMessages.length > 0) {
+            return lastKey + " " + errorMessages[0];
+        }
+
+        return 'An unknown error occurred';
     };
 
     // Handle file input change and convert to base64
@@ -199,7 +218,8 @@ const PersonalInfo = React.memo(({user, universities}) => {
                       setIsLoading(false);
                     })
                     .catch((error) => {
-                      toast.error("Error updating profile");
+                        const err = getLastErrorMessage(error.response.data);
+                      toast.error(err);
                       setIsLoading(false);
                     });
                 }}
