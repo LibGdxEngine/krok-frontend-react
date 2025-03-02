@@ -31,6 +31,7 @@ export default NextAuth({
                         access_token: account.access_token,
                         id_token: account.id_token, // For Apple & Google
                     });
+                    console.log(response);
                     // Save the token to the user object to be used in the session
                     user.token = response.data.token;
 
