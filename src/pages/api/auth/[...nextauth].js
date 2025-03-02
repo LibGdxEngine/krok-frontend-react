@@ -98,7 +98,7 @@ export default NextAuth({
         async redirect({url, baseUrl}) {
             console.log("Redirecting to:", url);
             console.log("Base URL:", baseUrl);
-            console.log("Headers:", JSON.stringify(headers, null, 2));
+            // console.log("Headers:", JSON.stringify(headers, null, 2));
             return url.startsWith(baseUrl) ? url : baseUrl;
         }
     },
