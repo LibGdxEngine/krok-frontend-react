@@ -25,6 +25,7 @@ export default NextAuth({
         }),
     ],
     callbacks: {
+
         async signIn({ user, account, profile }) {
             if (account.provider === "google" || account.provider === "facebook" || account.provider === "apple") {
                 try {
@@ -36,6 +37,7 @@ export default NextAuth({
 
                     // Save the token to the user object to be used in the session
                     user.token = response.data.token;
+                    console.log("user", user);
                     return true;
                 } catch (error) {
                     console.error("Error during social sign in:", error);
@@ -49,14 +51,19 @@ export default NextAuth({
             if (user) {
                 token.token = user.token;
             }
+            console.log("token", token);
             return token;
         },
         async session({ session, token }) {
             // Add the token to the session that will be available client-side
             session.token = token.token;
+            console.log("session", session);
             return session;
         },
-
+        async redirect({ url, baseUrl }) {
+            console.log("Redirecting to:", url);
+            return url.startsWith(baseUrl) ? url : baseUrl;
+        }
     },
 
     events: {
