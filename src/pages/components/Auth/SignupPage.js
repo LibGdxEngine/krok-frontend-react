@@ -23,7 +23,7 @@ function SignupPage() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isChecked, setIsChecked] = useState(true);
-    const {token, loading} = useAuth();
+    const {token, loading, socialLogin} = useAuth();
 
 
     if (loading) {
@@ -56,10 +56,14 @@ function SignupPage() {
             router.replace("/signin");
         } catch (error) {
             console.error('Error during signup:', error);
-            toast.error(JSON.stringify(error.response));
+            const lastKey = Object.keys(error.response.data.errors)[0];
+            toast.error(JSON.stringify(error.response.data.errors[lastKey]));
         }
     };
-
+    const handleGoogleSignIn = () => {
+        // signIn("google", { callbackUrl: "http://localhost:3000/api/auth/callback/google" });
+        socialLogin('google');
+    };
 
     return <div id={`signup-page`}
                 className={`w-full h-full flex flex-col items-center justify-start bg-white`}>
@@ -85,11 +89,11 @@ function SignupPage() {
             <span className="flex-grow h-0.5 bg-lightDark"></span>
         </div>
         <div className={`w-full flex flex-col items-center justify-center mt-4 px-10`}>
-            <Image style={{cursor: "pointer"}} src={loginBtn} alt={``} width={400} height={40}/>
-            <Image style={{cursor: "pointer"}} className={`my-4`}
-                   src={loginFace} alt={``} width={400} height={40}/>
-            <Image style={{cursor: "pointer"}} className={`my-0 mb-2`} src={loginApple} alt={``} width={400}
-                   height={40}/>
+            <Image  onClick={handleGoogleSignIn} style={{cursor: "pointer"}} src={loginBtn} alt={``} width={400} height={40}/>
+            {/*<Image style={{cursor: "pointer"}} className={`my-4`}*/}
+            {/*       src={loginFace} alt={``} width={400} height={40}/>*/}
+            {/*<Image style={{cursor: "pointer"}} className={`my-0 mb-2`} src={loginApple} alt={``} width={400}*/}
+            {/*       height={40}/>*/}
 
         </div>
         <div onClick={() => {
