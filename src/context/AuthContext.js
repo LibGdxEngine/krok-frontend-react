@@ -55,7 +55,7 @@ export const AuthProvider = ({children}) => {
     };
 
     const socialLogin = async (provider) => {
-        await signIn(provider, {callbackUrl: "http://localhost:3000/auth/callback/google"});
+        await signIn(provider, {callbackUrl: "https://krokplus.com/auth/callback/google"});
     };
 
     const logout = () => {
