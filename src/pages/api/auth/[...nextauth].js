@@ -10,7 +10,30 @@ export default NextAuth({
     useSecureCookies: true,
     secret: "gtb60gSbxPXbqxtr4qRAzqGCwUBb0Y-uRtZvgKXY-Wo",
     trustHost: true,
+    debug: true,
     cookies: {
+        // Keep the rest of your cookie config but add these options:
+        callbackUrl: {
+            options: {
+                sameSite: "none",
+                path: "/",
+                secure: true
+            }
+        },
+        csrfToken: {
+            options: {
+                sameSite: "none",
+                path: "/",
+                secure: true
+            }
+        },
+        pkceCodeVerifier: {
+            options: {
+                sameSite: "none",
+                path: "/",
+                secure: true
+            }
+        },
         sessionToken: {
             name: `__Secure-next-auth.session-token`,
             options: {
@@ -52,8 +75,8 @@ export default NextAuth({
                     console.log("user", user);
                     return true;
                 } catch (error) {
-                    console.error("Error during social sign in:", error);
-                    return false;
+                    console.error("Error details:", error.response?.data || error.message);
+                    return "/error?error=social_signin_failed";
                 }
             }
             return true;
@@ -74,16 +97,17 @@ export default NextAuth({
         },
         async redirect({url, baseUrl}) {
             console.log("Redirecting to:", url);
+            console.log("Base URL:", baseUrl);
+            console.log("Headers:", JSON.stringify(headers, null, 2));
             return url.startsWith(baseUrl) ? url : baseUrl;
         }
     },
 
     events: {
-        async signIn({user}) {
-            console.log("User signed in:", user.email);
-            if (account) {
-                console.log("Provider:", account.provider);
-            }
+        async signIn(params) {
+            const { user, account = {} } = params;
+            console.log("User signed in:", user?.email);
+            console.log("Provider:", account?.provider);
             return true;
         },
     },
