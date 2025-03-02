@@ -8,7 +8,6 @@ import axios from "axios";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://krokplus.com";
 
 export default NextAuth({
-    useSecureCookies: false,
     providers: [
         GoogleProvider({
             clientId: "794210030409-1jblj5njdfsn27qnjv0nk326fm0o5oi6.apps.googleusercontent.com",
@@ -45,7 +44,8 @@ export default NextAuth({
         },
         async jwt({ token, user }) {
             // If user just signed in, add their token to the JWT
-
+            console.log(token);
+            console.log(user);
             if (user) {
                 token.token = user.token;
             }
