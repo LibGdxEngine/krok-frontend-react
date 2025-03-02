@@ -95,9 +95,22 @@ export default NextAuth({
             console.log("session", session);
             return session;
         },
-
+        async redirect({url, baseUrl}) {
+            console.log("Redirecting to:", url);
+            console.log("Base URL:", baseUrl);
+            // console.log("Headers:", JSON.stringify(headers, null, 2));
+            return "https://krokplus.com/api/auth/callback/google";
+        }
     },
 
+    events: {
+        async signIn(params) {
+            const { user, account = {} } = params;
+            console.log("User signed in:", user?.email);
+            console.log("Provider:", account?.provider);
+            return true;
+        },
+    },
     pages: {
         signIn: '/signin',
         error: '/error',
