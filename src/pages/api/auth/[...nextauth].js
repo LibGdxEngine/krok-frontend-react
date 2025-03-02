@@ -8,6 +8,7 @@ import axios from "axios";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://krokplus.com";
 
 export default NextAuth({
+    useSecureCookies: true,
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
         GoogleProvider({
