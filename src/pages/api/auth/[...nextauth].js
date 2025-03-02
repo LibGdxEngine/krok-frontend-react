@@ -95,12 +95,12 @@ export default NextAuth({
             console.log("session", session);
             return session;
         },
-        async redirect({url, baseUrl}) {
-            console.log("Redirecting to:", url);
-            console.log("Base URL:", baseUrl);
-            // console.log("Headers:", JSON.stringify(headers, null, 2));
-            return url.startsWith(baseUrl) ? url : baseUrl;
-        }
+        // async redirect({url, baseUrl}) {
+        //     console.log("Redirecting to:", url);
+        //     console.log("Base URL:", baseUrl);
+        //     // console.log("Headers:", JSON.stringify(headers, null, 2));
+        //     return url.startsWith(baseUrl) ? url : baseUrl;
+        // }
     },
 
     events: {
