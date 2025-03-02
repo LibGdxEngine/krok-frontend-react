@@ -16,7 +16,7 @@ export default function GoogleCallback() {
             try {
                 // Get session information from NextAuth
                 const session = await getSession();
-                console.log(session);
+                console.log("session: ", session);
                 if (session && session.token) {
                     // Save the token from the session in localStorage
                     localStorage.setItem('token', session.token);

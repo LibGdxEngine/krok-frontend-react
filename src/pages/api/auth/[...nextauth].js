@@ -31,10 +31,11 @@ export default NextAuth({
                         access_token: account.access_token,
                         id_token: account.id_token, // For Apple & Google
                     });
-                    console.log(response);
+
                     // Save the token to the user object to be used in the session
                     user.token = response.data.token;
-
+                    console.log("response");
+                    console.log(response);
                     return true;
                 } catch (error) {
                     console.error("Error during social sign in:", error);
@@ -45,7 +46,9 @@ export default NextAuth({
         },
         async jwt({ token, user }) {
             // If user just signed in, add their token to the JWT
+            console.log("jwt token: ", token);
             console.log(token);
+            console.log("jwt user: ", user);
             console.log(user);
             if (user) {
                 token.token = user.token;
@@ -54,6 +57,7 @@ export default NextAuth({
         },
         async session({ session, token }) {
             // Add the token to the session that will be available client-side
+            console.log("session: ", session);
             session.token = token.token;
             return session;
         },
