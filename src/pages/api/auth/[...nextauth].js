@@ -27,7 +27,7 @@ export default NextAuth({
             if (account.provider === "google" || account.provider === "facebook" || account.provider === "apple") {
                 try {
                     // Make request to Django backend to authenticate with social provider
-                    const response = await axios.post(`${API_URL}/api/auth/${account.provider}/`, {
+                    const response = await axios.post(`${API_URL}/api/v1/auth/${account.provider}/`, {
                         access_token: account.access_token,
                         id_token: account.id_token, // For Apple & Google
                     });
