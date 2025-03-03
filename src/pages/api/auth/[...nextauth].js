@@ -27,6 +27,13 @@ export default NextAuth({
         GoogleProvider({
             clientId: "794210030409-1jblj5njdfsn27qnjv0nk326fm0o5oi6.apps.googleusercontent.com",
             clientSecret: "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",
+            authorization: {
+                params: {
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code",
+                },
+            },
         }),
         FacebookProvider({
             clientId: process.env.FACEBOOK_CLIENT_ID,
