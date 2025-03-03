@@ -8,7 +8,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://krokplus.com";
 
 export default NextAuth({
     // useSecureCookies: true,
-    // secret: "gtb60gSbxPXbqxtr4qRAzqGCwUBb0Y-uRtZvgKXY-Wo",
+    secret: "gtb60gSbxPXbqxtr4qRAzqGCwUBb0Y-uRtZvgKXY-Wo",
     trustHost: true,
     debug: true,
     cookies: {
