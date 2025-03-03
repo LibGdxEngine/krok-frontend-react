@@ -106,7 +106,7 @@ const Quiz = () => {
   };
 
   return (
-    <div className={`w-full flex flex-col items-start justify-center bg-white`}>
+    <div className={`w-full h-screen flex flex-col items-start justify-center bg-white`}>
       <NavbarContainer />
       <div className={`w-full h-full  items-start justify-center`}>
         {loading ? (

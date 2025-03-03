@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="eae15c0b-eb83-4f29-9e80-f2a6a46586f5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/axiosInstance.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/axiosInstance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/context/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/context/AuthContext.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/Auth/SignInPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Auth/SignInPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/Quiz/QuestionWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Quiz/QuestionWindow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/quiz.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/quiz.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,12 +123,16 @@
       <workItem from="1740830293566" duration="320000" />
       <workItem from="1740824164735" duration="1174000" />
       <workItem from="1740827153974" duration="6107000" />
-      <workItem from="1740917036279" duration="15411000" />
+      <workItem from="1740917036279" duration="16414000" />
+      <workItem from="1741034564953" duration="3122000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

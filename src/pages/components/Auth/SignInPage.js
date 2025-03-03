@@ -14,6 +14,8 @@ import loginFace from "../../../../public/login_face.svg";
 import loginApple from "../../../../public/Group 48095648.svg";
 import loginBtn from "../../../../public/login_button.svg";
 
+import Link from "next/link";
+
 function RememberMeCheckbox({text}) {
     return (
         <div className="flex items-center">
@@ -85,6 +87,14 @@ function SignInPage() {
                 {/*       src={loginFace} alt={``} width={400} height={40}/>*/}
                 {/*<Image style={{cursor: "pointer"}} className={`my-0 mb-2`} src={loginApple} alt={``} width={400} height={40}/>*/}
 
+            </div>
+            <div className={`mt-4`}>
+                <Link
+                    href="/forget-password"
+                    className="text-black hover:underline"
+                >
+                    {t("Forget Password")}
+                </Link>
             </div>
             <div onClick={() => {
                 router.push('/signup');

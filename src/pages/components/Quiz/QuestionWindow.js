@@ -669,7 +669,9 @@ const QuestionWindow = ({
                                 {!historyProgress[questionIndex]?.is_disabled &&
                                     type === "study" && (
                                         <button
-                                            onClick={handleAnswerClicked}
+                                            onClick={questionIndex == numbers[numbers.length - 1] ? ()=> {
+                                                setShowResults(true);
+                                            }:handleAnswerClicked}
                                             className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"
                                         >
                                             {actionBtnText}

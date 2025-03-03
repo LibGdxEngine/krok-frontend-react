@@ -33,9 +33,9 @@ export const AuthProvider = ({children}) => {
                     setUser(session.user);
                 }
             }
-        } else if (session?.accessToken) {
+        } else if (session?.token) {
             // Use the token from NextAuth session
-            localStorage.setItem('token', session.accessToken);
+            localStorage.setItem('token', session.token);
             setUser(session.user);
         }
         setLoading(false);

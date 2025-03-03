@@ -7,40 +7,18 @@ import axios from "axios";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://krokplus.com";
 
 export default NextAuth({
-    useSecureCookies: true,
-    secret: "gtb60gSbxPXbqxtr4qRAzqGCwUBb0Y-uRtZvgKXY-Wo",
+    // useSecureCookies: true,
+    // secret: "gtb60gSbxPXbqxtr4qRAzqGCwUBb0Y-uRtZvgKXY-Wo",
     trustHost: true,
     debug: true,
     cookies: {
-        // Keep the rest of your cookie config but add these options:
-        callbackUrl: {
-            options: {
-                sameSite: "none",
-                path: "/",
-                secure: true
-            }
-        },
-        csrfToken: {
-            options: {
-                sameSite: "none",
-                path: "/",
-                secure: true
-            }
-        },
-        pkceCodeVerifier: {
-            options: {
-                sameSite: "none",
-                path: "/",
-                secure: true
-            }
-        },
         sessionToken: {
             name: `__Secure-next-auth.session-token`,
             options: {
                 httpOnly: true,
-                sameSite: "lax",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
                 path: "/",
-                secure: true,
+                secure: process.env.NODE_ENV === "production",
             },
         },
     },
@@ -68,11 +46,10 @@ export default NextAuth({
                     const response = await axios.post(`${API_URL}/api/v1/auth/${account.provider}/`, {
                         access_token: account.access_token,
                         id_token: account.id_token, // For Apple & Google
-                    }, {withCredentials: true});
+                    });
 
                     // Save the token to the user object to be used in the session
                     user.token = response.data.token;
-                    console.log("user", user);
                     return true;
                 } catch (error) {
                     console.error("Error details:", error.response?.data || error.message);
@@ -86,28 +63,24 @@ export default NextAuth({
             if (user) {
                 token.token = user.token;
             }
-            console.log("token", token);
             return token;
         },
         async session({session, token}) {
             // Add the token to the session that will be available client-side
             session.token = token.token;
-            console.log("session", session);
             return session;
         },
-        async redirect({url, baseUrl}) {
-            console.log("Redirecting to:", url);
-            console.log("Base URL:", baseUrl);
-            // console.log("Headers:", JSON.stringify(headers, null, 2));
-            return "https://krokplus.com/api/auth/callback/google";
-        }
+        // async redirect({url, baseUrl}) {
+        //     console.log("Redirecting to:", url);
+        //     console.log("Base URL:", baseUrl);
+        //     // console.log("Headers:", JSON.stringify(headers, null, 2));
+        //     return "http://localhost:8000/api/auth/callback/google";
+        // }
     },
 
     events: {
         async signIn(params) {
             const { user, account = {} } = params;
-            console.log("User signed in:", user?.email);
-            console.log("Provider:", account?.provider);
             return true;
         },
     },
