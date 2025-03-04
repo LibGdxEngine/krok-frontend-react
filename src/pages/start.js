@@ -98,7 +98,7 @@ const Start = () => {
     }
 
     return (
-      <div className="w-full flex flex-col items-start justify-center ">
+      <div className="w-full h-screen flex flex-col items-start justify-center ">
         <NavbarContainer/>
         <div
           className="w-full flex flex-col 

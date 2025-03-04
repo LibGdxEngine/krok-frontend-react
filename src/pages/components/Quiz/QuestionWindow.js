@@ -670,6 +670,11 @@ const QuestionWindow = ({
                                     type === "study" && (
                                         <button
                                             onClick={questionIndex == numbers[numbers.length - 1] ? ()=> {
+                                                onCheck(
+                                                    questions.answers[selectedAnswer].answer,
+                                                    selectedAnswer,
+                                                    timeLeft
+                                                );
                                                 setShowResults(true);
                                             }:handleAnswerClicked}
                                             className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"
@@ -680,6 +685,11 @@ const QuestionWindow = ({
                                 {type === "exam" && (
                                     <button
                                         onClick={questionIndex == numbers[numbers.length - 1] ? ()=> {
+                                            onCheck(
+                                                questions.answers[selectedAnswer].answer,
+                                                selectedAnswer,
+                                                timeLeft
+                                            );
                                             setShowResults(true);
                                         }:handleAnswerClicked}
                                         className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"

@@ -51,7 +51,7 @@ const Year = () => {
 
     return (
       <div
-        className={`w-full flex flex-col items-start justify-between bg-white`}
+        className={`w-full h-screen flex flex-col items-start justify-between bg-white`}
       >
         <NavbarContainer/>
 

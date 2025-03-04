@@ -50,7 +50,7 @@ const Topic = () => {
 
     return (
       <div
-        className={`w-full flex flex-col items-start justify-start `}
+        className={`w-full h-screen flex flex-col items-start justify-start `}
       >
         <NavbarContainer/>
         <div className={`w-full h-full flex flex-col items-start p-8 my-[100px] md:my-[50px]`}>

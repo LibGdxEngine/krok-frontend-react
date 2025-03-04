@@ -50,7 +50,7 @@ const Subject = () => {
 
     return (
       <div
-        className={`w-full flex flex-col items-start justify-start bg-white`}
+        className={`w-full h-screen flex flex-col items-start justify-start bg-white`}
       >
       <NavbarContainer/>
 
