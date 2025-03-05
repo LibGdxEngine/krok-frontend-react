@@ -596,7 +596,9 @@ const QuestionWindow = ({
                     >
                         <button
                             onClick={() => {
+                                console.log("World");
                                 if (questionIndex === numbers[0] || questionIndex <= 0) {
+                                    console.log("Hello");
                                     return;
                                 }
                                 if (!historyProgress[questionIndex]?.is_disabled) {
@@ -614,7 +616,9 @@ const QuestionWindow = ({
                         </button>
                         <button
                             onClick={() => {
+                                console.log("World");
                                 if (questionIndex >= numbers.length - 1) {
+                                    console.log("World");
                                     return;
                                 }
                                 if (!historyProgress[questionIndex]?.is_disabled) {
