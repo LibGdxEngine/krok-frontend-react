@@ -87,7 +87,7 @@ const Filter = () => {
     return (
         <div className="w-full bg-white flex flex-col items-start justify-start">
             <NavbarContainer/>
-            <div className="w-full h-full">
+            <div className="w-full h-screen">
                 <div className="w-full h-full flex flex-col items-center justify-center">
                     <div className="w-full px-6 pt-10">
                         <KrokSpecifics/>
