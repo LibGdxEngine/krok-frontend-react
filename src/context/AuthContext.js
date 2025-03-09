@@ -2,6 +2,7 @@
 import {createContext, useState, useContext, useEffect} from 'react';
 import {useSession, signIn, signOut} from 'next-auth/react';
 import {getUser} from "@/components/services/auth";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext(null);
 
@@ -62,6 +63,12 @@ export const AuthProvider = ({children}) => {
         setToken(null);
         localStorage.removeItem('token');
         localStorage.removeItem('state');
+        // Clear session storage
+        sessionStorage.clear();
+        // Remove all cookies (if using js-cookie)
+        Object.keys(Cookies.get()).forEach(cookieName => {
+            Cookies.remove(cookieName);
+        });
     };
 
     return (
