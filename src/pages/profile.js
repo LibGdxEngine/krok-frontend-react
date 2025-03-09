@@ -328,12 +328,15 @@ const History = React.memo(({examObject: defaultExams}) => {
                       </div>
                     </div>
                     <div className="flex  space-x-2 md:space-x-0 sm:flex-col sm:space-y-2 items-center sm:items-center sm:justify-center">
-                      <button
+                        {JSON.stringify()}
+                        {JSON.stringify()}
+                        <button
                         onClick={() => {
                           router.push(
-                            `/quiz?id=${item.id}&q=${parseInt(
-                              item.currentQuestion ?? 0
-                            )}`
+                            `/quiz?id=${item.id}&q=${
+                                (parseInt(Object.keys(item.progress).length) /
+                                    item.questions) *
+                                100 == 100  ? item.progress.length - 1 : item.progress.length }`
                           );
                         }}
                         className={`h-fit bg-blue-500 text-white px-3 py-1 rounded-md sm:text-xs ${
@@ -366,8 +369,8 @@ const History = React.memo(({examObject: defaultExams}) => {
                       className="bg-blue-600 h-2.5 rounded-full"
                       style={{
                         width: `${
-                          (parseInt(Object.keys(item.progress).length) /
-                            item.questions.length) *
+                          (item.progress.length /
+                            item.questions) *
                           100
                         }%`,
                       }}

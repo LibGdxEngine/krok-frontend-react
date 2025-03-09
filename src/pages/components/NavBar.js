@@ -113,11 +113,12 @@ const NavBar = () => {
                 className="w-full h-full bg-white text-black py-2 focus:border-lightDark outline-none rounded-full lg:text-xs px-2 ps-12"
                 placeholder={`${t("Search")} ....`}
               />
-              <FontAwesomeIcon
-                className="absolute p-1 left-8 top-[28%] -translate-x-[50%]"
-                icon={faSearch}
-                style={{ color: "#0073D1" }}
-              />
+                <FontAwesomeIcon
+                    className="absolute p-1 left-8 top-[28%] -translate-x-[50%] text-blue-600"
+                    icon={faSearch}
+                    style={{ fontSize: "16px", width: "16px", height: "16px" }} // Set a fixed size
+                />
+
             </div>
             {inputValue && (
               <button

@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="eae15c0b-eb83-4f29-9e80-f2a6a46586f5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/Quiz/NumberItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Quiz/NumberItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/components/Quiz/NumberScroll.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Quiz/NumberScroll.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/components/Quiz/QuestionWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/components/Quiz/QuestionWindow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/filter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/filter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/quiz.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/quiz.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +126,8 @@
       <workItem from="1740917036279" duration="16414000" />
       <workItem from="1741034564953" duration="5840000" />
       <workItem from="1741086846135" duration="5218000" />
-      <workItem from="1741195250015" duration="610000" />
+      <workItem from="1741195250015" duration="1572000" />
+      <workItem from="1741511030339" duration="9746000" />
     </task>
     <servers />
   </component>
@@ -131,6 +136,17 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/components/Quiz/QuestionItem.js</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

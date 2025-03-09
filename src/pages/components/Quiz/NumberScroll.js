@@ -3,7 +3,7 @@ import NumberItem from "@/pages/components/Quiz/NumberItem";
 
 const NumberScroll = ({
   numbers,
-  selected = 0,
+  selected,
   onNumberClicked,
   skipped = [],
   answers = null,
@@ -14,14 +14,11 @@ const NumberScroll = ({
 
 
   const handleNumberClick = (number) => {
-    console.log(number);
-
     onNumberClicked(number);
     setSelectedNumber(number);
   };
   const itemRefs = useRef([]); // Array of refs to store each NumberItem ref
   const containerRef = useRef(null); // Ref for the parent scrollable container
-
   useEffect(() => {
     if (selectedNumber !== null && itemRefs.current[selectedNumber]) {
       itemRefs.current[selectedNumber].scrollIntoView({
@@ -42,16 +39,14 @@ const NumberScroll = ({
             <NumberItem
               number={index + 1}
               answer={
-                answers
-                  ? historyProgress[number.toString()]
-                    ? historyProgress[number.toString()].is_correct
-                    : null
+                historyProgress[number]
+                  ? historyProgress[number].is_correct
                   : null
               }
-              isSelected={number === selected}
+              isSelected={parseInt(number) === selected}
               isSkipped={skipped.includes(number)}
               onClick={() => handleNumberClick(number)}
-              isNotSelected={historyProgress[number.toString()]?.is_disabled}
+              // isNotSelected={historyProgress[number.toString()]?.is_disabled}
             />
           </div>
         ))}

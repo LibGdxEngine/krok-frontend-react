@@ -159,7 +159,7 @@ const QuestionWindow = ({
     });
 
     const handleAnswerClicked = () => {
-        if(type === "study" && actionBtnText === t("Next")){
+        if (type === "study" && actionBtnText === t("Next")) {
             setActionBtnText(t("check"));
             setcurrentQuestion(nextIndex);
             setSelectedNumber(nextIndex);
@@ -228,7 +228,7 @@ const QuestionWindow = ({
                 setSelectedNumber(nextIndex);
                 router.push(`/quiz?id=${examJourneyId}&q=${nextIndex}`);
             } else if (type === "study") {
-            //     do nothing
+                //     do nothing
             }
         }
 
@@ -356,6 +356,8 @@ const QuestionWindow = ({
                                 width={35}
                                 height={35}
                             />
+
+
                             {type === "study" ? (
                                 <Image
                                     style={{cursor: "pointer"}}
@@ -501,6 +503,7 @@ const QuestionWindow = ({
                         </>
                     ) : (
                         <>
+
                             <div className={`w-[10%] md:w-full max-h-[416px] md:h-auto pt-2`}>
                                 {/* TODO :: check the skipped items before the clicked number */}
                                 <NumberScroll
@@ -511,7 +514,7 @@ const QuestionWindow = ({
                                     selectedNumber={selectedNumber}
                                     setSelectedNumber={setSelectedNumber}
                                     onNumberClicked={(questionNumber) => {
-                                        if(type === "study" && actionBtnText === t("Next")) {
+                                        if (type === "study" && actionBtnText === t("Next")) {
                                             setActionBtnText(t("check"));
                                         }
                                         if (!historyProgress[questionIndex]?.is_disabled) {
@@ -530,6 +533,7 @@ const QuestionWindow = ({
                                 <p className="text-lg font-bold text-black">
                                     {showHint ? highlightedText : questions.text}
                                 </p>
+
                                 <div className="w-full mt-4">
                                     {questions &&
                                         historyProgress &&
@@ -579,7 +583,7 @@ const QuestionWindow = ({
                                                     key={index}
                                                     onAnswer={handleAnswer}
                                                     is_disabled={
-                                                        historyProgress[questionIndex]?.is_disabled || false
+                                                        historyProgress[questionIndex]?.question_text ==  questions.text
                                                     }
                                                 />
                                             );
@@ -589,7 +593,6 @@ const QuestionWindow = ({
                         </>
                     )}
                 </div>
-
                 <div className="w-full flex justify-between items-center mt-6 pe-4">
                     <div
                         className={`w-full flex items-center justify-center md:flex-col sm:space-y-2 `}
@@ -648,6 +651,7 @@ const QuestionWindow = ({
                                 {t("ResumeLater")}
                             </button>
                         )}
+
                         {showResults ? (
                             <button
                                 onClick={() => {
@@ -673,14 +677,19 @@ const QuestionWindow = ({
                                 {!historyProgress[questionIndex]?.is_disabled &&
                                     type === "study" && (
                                         <button
-                                            onClick={questionIndex == numbers[numbers.length - 1] ? ()=> {
-                                                onCheck(
-                                                    questions.answers[selectedAnswer].answer,
-                                                    selectedAnswer,
-                                                    timeLeft
-                                                );
-                                                setShowResults(true);
-                                            }:handleAnswerClicked}
+                                            onClick={questionIndex == numbers[numbers.length - 1] ? () => {
+                                                try {
+                                                    onCheck(
+                                                        questions.answers[selectedAnswer].answer,
+                                                        selectedAnswer,
+                                                        timeLeft
+                                                    );
+                                                    setShowResults(true);
+                                                } catch (e) {
+                                                    console.log(e);
+                                                }
+
+                                            } : handleAnswerClicked}
                                             className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"
                                         >
                                             {actionBtnText}
@@ -688,14 +697,19 @@ const QuestionWindow = ({
                                     )}
                                 {type === "exam" && (
                                     <button
-                                        onClick={questionIndex == numbers[numbers.length - 1] ? ()=> {
-                                            onCheck(
-                                                questions.answers[selectedAnswer].answer,
-                                                selectedAnswer,
-                                                timeLeft
-                                            );
+                                        onClick={questionIndex == numbers[numbers.length - 1] ? () => {
+                                            try {
+                                                onCheck(
+                                                    questions.answers[selectedAnswer].answer,
+                                                    selectedAnswer,
+                                                    timeLeft
+                                                );
+                                            } catch (e) {
+                                                console.log(e);
+                                            }
+
                                             setShowResults(true);
-                                        }:handleAnswerClicked}
+                                        } : handleAnswerClicked}
                                         className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"
                                     >
 

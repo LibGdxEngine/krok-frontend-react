@@ -106,9 +106,10 @@ const Quiz = () => {
   };
 
   return (
-    <div className={`w-full h-screen flex flex-col items-start justify-center bg-white`}>
+    <div className={`w-full h-full flex flex-col items-start justify-center bg-white`}>
       <NavbarContainer />
-      <div className={`w-full h-full  items-start justify-center`}>
+
+      <div className={`w-full h-screen items-start justify-center`}>
         {loading ? (
           <div className="w-full p-6">
             <Skeleton height={50} width={200} />
@@ -120,7 +121,7 @@ const Quiz = () => {
             </div>
           </div>
         ) : (
-          examObject && (
+            (examObject) && (
             <QuestionWindow
               examJourneyId={id}
               length={length}
