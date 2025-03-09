@@ -57,7 +57,8 @@ function HomeFAQs({faqs}) {
             </div>
             <div className="w-full h-full grid grid-cols-2 gap-4 lg:grid-cols-1">
                 {faqData && faqData.map((faq, index) => (
-                        <FaqItem key={index} question={faq.faq} answer={faq.answer}/>
+                    <FaqItem key={index} question={i18n.language == "en" ? faq.faq : faq.faq_uk}
+                             answer={i18n.language == "en" ? faq.answer : faq.answer_uk}/>
                 ))}
             </div>
         </div>

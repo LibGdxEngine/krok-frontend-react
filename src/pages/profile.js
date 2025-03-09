@@ -298,7 +298,7 @@ const History = React.memo(({examObject: defaultExams}) => {
               {t("History")}
             </h1>
             <div className="space-y-4">
-              {[...examObject].reverse().map((item, index) => (
+              {[...examObject].map((item, index) => (
                 <div key={index} className="bg-gray-50 p-4 rounded-lg shadow">
                   <div className="flex justify-between items-center">
                     <div>
@@ -469,7 +469,7 @@ const Favourites = React.memo(({favourites: myFav}) => {
     return (
       <>
         {showQuestions ? (
-          <div className="w-full h-fit  bg-white my-10 flex-1 flex flex-row flex-wrap justify-center gap-6 items-center">
+          <div className="w-full  bg-white my-10 flex-1 flex flex-row flex-wrap justify-center gap-6 items-center">
             <div className={`w-full `}>
               <button
                 onClick={() => {
