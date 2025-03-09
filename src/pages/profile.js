@@ -328,8 +328,7 @@ const History = React.memo(({examObject: defaultExams}) => {
                       </div>
                     </div>
                     <div className="flex  space-x-2 md:space-x-0 sm:flex-col sm:space-y-2 items-center sm:items-center sm:justify-center">
-                        {JSON.stringify()}
-                        {JSON.stringify()}
+
                         <button
                         onClick={() => {
                           router.push(

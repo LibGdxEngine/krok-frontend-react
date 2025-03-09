@@ -178,6 +178,9 @@ const Start = () => {
             <div
               onClick={handleNext}
               id="next-btn"
+              style={{
+                  cursor: 'pointer',
+              }}
               className="w-2/3  sm:w-full mt-10 "
             >
               <ActionButton text={`${t("Next")}`} />
