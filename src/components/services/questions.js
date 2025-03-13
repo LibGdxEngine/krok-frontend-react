@@ -410,7 +410,6 @@ export const getQuestionsCount = async (token, questionData) => {
 
 export const searchForquestions = async (token, query) => {
   try {
-    console.log("step-1");
 
     const response = await axiosInstance.get(
       `/v1/questions/search/?q=${query}`,
@@ -420,12 +419,9 @@ export const searchForquestions = async (token, query) => {
         },
       }
     );
-    console.log("step-2");
 
     return response.data;
   } catch (error) {
-    console.log("step-3");
-
     console.error("Error adding question to list:", error);
     throw error;
   }

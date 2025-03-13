@@ -8,7 +8,7 @@ import userIcon from "../../../public/profile.svg";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-const NavbarContainer = () => {
+const NavbarContainer = ({with_search_bar = true}) => {
   const { token, user } = useAuth();
   const {t, i18n} = useTranslation("common");
   let userProfilePhoto = userIcon;
@@ -69,7 +69,7 @@ const NavbarContainer = () => {
                            className={`w-4 h-4 rounded-full m-2`}/> */}
             </div>
           </div>
-          <SearchBar />
+          {with_search_bar && <SearchBar />}
           <SectionsHeader />
         </div>
       </div>

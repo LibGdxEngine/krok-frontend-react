@@ -7,12 +7,8 @@ import icon404 from '../../public/1.svg';
 import Image from 'next/image';
 
 
-
 const Shop = () => {
-
     const router = useRouter();
-
-
     return (
       <div className="w-full h-full">
         <NavBar />
