@@ -70,7 +70,7 @@ function SignInPage() {
             <LogoWithBlueName />
             <SigninInputs email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
             <div className={`w-full flex items-center justify-between px-3 mt-2`}>
-                <RememberMeCheckbox text={t("IAccept")} />
+                <RememberMeCheckbox text={t("Remember")} />
                 {/*<div className={`text-mRed text-xs`}>Forget password?</div>*/}
             </div>
             <div onClick={handleSignIn} className={`w-full px-3 mt-6`}>
