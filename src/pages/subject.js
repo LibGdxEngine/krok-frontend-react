@@ -67,7 +67,7 @@ const Subject = () => {
               router.push(`/${step}`);
             }}
           />
-          <div
+            <div
             className={`w-fit min-h-[100px] max-h-[60vh] overflow-y-auto bg-white rounded-lg shadow p-4 
               grid grid-cols-6 gap-2 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 mt-10`}
           >

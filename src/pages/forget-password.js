@@ -3,7 +3,7 @@ import NavBar from "./components/NavBar";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import { passwordReset } from "../components/services/auth";
-
+import { FaArrowLeft } from "react-icons/fa";
 const ForgetPassword = () => {
   const { t, i18n } = useTranslation("common");
   const [email, setEmail] = useState("");
@@ -29,7 +29,15 @@ const ForgetPassword = () => {
   return (
     <>
       <div className="w-full h-full">
-        <NavBar />
+        <div className="w-full bg-white shadow-md py-3 px-4 flex items-center">
+          <button
+            onClick={() => router.push("/signin")}
+            className="flex items-center text-gray-700 hover:text-blue-600 transition-colors"
+          >
+            <FaArrowLeft className="mr-2" />
+            <span className="font-medium">{t("Back to Sign In")}</span>
+          </button>
+        </div>
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
           <h1 className="text-2xl font-bold mb-4 text-black">{t("Forget Password")}</h1>
           <form
