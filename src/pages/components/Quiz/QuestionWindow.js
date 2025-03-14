@@ -254,7 +254,7 @@ const QuestionWindow = ({
         );
     }
     return (
-        <div className="w-full h-full  p-4 flex flex-col items-center justify-center">
+        <div className="w-full   p-4 flex flex-col items-center justify-center">
             <FavoritesModal
                 isOpen={isModalOpen}
                 onClose={closeModal}

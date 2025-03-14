@@ -109,7 +109,7 @@ const Quiz = () => {
     <div className={`w-full h-full flex flex-col items-start justify-center bg-white`}>
       <NavbarContainer />
 
-      <div className={`w-full h-screen items-start justify-center`}>
+      <div className={`w-full h-full items-start justify-center`}>
         {loading ? (
           <div className="w-full p-6">
             <Skeleton height={50} width={200} />
@@ -162,17 +162,9 @@ const Quiz = () => {
                         return index === parseInt(currentQuestionIndex);
                       })[1].text,
                       answer: selectedAnswerIndex,
-                      // question_id: Object.entries(examObject.questions).find((question, index) => {
-                      //   return index === parseInt(currentQuestionIndex);
-                      // })[1].id,
-                      // is_correct: examObject.questions.find(
-                      //   (qu) => parseInt(qu?.id) === parseInt(currentQuestionIndex)
-                      // ).is_correct,
+              
                     },
                   },
-                  // current_question_text: Object.entries(examObject.questions).find((question, index) => {
-                  //   return index === parseInt(currentQuestionIndex);
-                  // })[1].text,
                   current_question: parseInt(currentQuestionIndex),
                 })
                   .then((response) => {
@@ -214,6 +206,11 @@ const Quiz = () => {
           )
         )}
       </div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <Footer />
     </div>
   );
