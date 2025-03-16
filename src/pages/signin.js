@@ -47,6 +47,8 @@ const Signin = () => {
             router.replace("/start");
             // Handle successful signup (e.g., redirect to login)
         } catch (error) {
+            console.log(error.response?.data.non_field_errors[0]);
+            
             toast.error(error.response?.data.non_field_errors[0]);
         }
     };

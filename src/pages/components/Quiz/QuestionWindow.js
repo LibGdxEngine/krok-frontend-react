@@ -57,8 +57,6 @@ const QuestionWindow = ({
     const closeReportsModal = () => setReportsModalOpen(false);
 
     const handleNextQuestion = () => {
-        console.log("Hello");
-        console.log(questionIndex);
         if (questionIndex === numbers[numbers.length - 1]) {
             if (Object.keys(historyProgress).length < length) {
                 toast.error(t("AnswerAllQuestions"));
@@ -182,7 +180,7 @@ const QuestionWindow = ({
                 !historyProgress[questionIndex]?.is_disabled
             ) {
                 onCheck(
-                    questions.answers[selectedAnswer].answer,
+                    questions.answers[selectedAnswer].answer_text,
                     selectedAnswer,
                     timeLeft
                 );
@@ -218,7 +216,7 @@ const QuestionWindow = ({
 
         if (!historyProgress[questionIndex]?.is_disabled) {
             onCheck(
-                questions.answers[selectedAnswer].answer,
+                questions.answers[selectedAnswer].answer_text,
                 selectedAnswer,
                 timeLeft
             );
@@ -538,7 +536,6 @@ const QuestionWindow = ({
                                     {questions &&
                                         historyProgress &&
                                         questions.answers.map((option, index) => {
-
                                             const indexAsString = index?.toString();
 
                                             var answerState = "idle";
@@ -548,7 +545,7 @@ const QuestionWindow = ({
                                                 is_answered =
                                                     questions.text ===
                                                     historyProgress[questionIndex]["question_text"] &&
-                                                    historyProgress[questionIndex]["answer"] === index;
+                                                    historyProgress[questionIndex]["answer"] === option.answer_text;
                                                 // Determine if the selected answer is correct or wrong
                                                 if (
                                                     historyProgress[questionIndex]["correct_answer"] ===
@@ -599,9 +596,8 @@ const QuestionWindow = ({
                     >
                         <button
                             onClick={() => {
-                                console.log("World");
                                 if (questionIndex === numbers[0] || questionIndex <= 0) {
-                                    console.log("Hello");
+                                
                                     return;
                                 }
                                 if (!historyProgress[questionIndex]?.is_disabled) {
@@ -619,9 +615,7 @@ const QuestionWindow = ({
                         </button>
                         <button
                             onClick={() => {
-                                console.log("World");
                                 if (questionIndex >= numbers.length - 1) {
-                                    console.log("World");
                                     return;
                                 }
                                 if (!historyProgress[questionIndex]?.is_disabled) {
@@ -680,7 +674,7 @@ const QuestionWindow = ({
                                             onClick={questionIndex == numbers[numbers.length - 1] ? () => {
                                                 try {
                                                     onCheck(
-                                                        questions.answers[selectedAnswer].answer,
+                                                        questions.answers[selectedAnswer].answer_text,
                                                         selectedAnswer,
                                                         timeLeft
                                                     );
@@ -693,6 +687,7 @@ const QuestionWindow = ({
                                             className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"
                                         >
                                             {actionBtnText}
+                                            
                                         </button>
                                     )}
                                 {type === "exam" && (
@@ -700,7 +695,7 @@ const QuestionWindow = ({
                                         onClick={questionIndex == numbers[numbers.length - 1] ? () => {
                                             try {
                                                 onCheck(
-                                                    questions.answers[selectedAnswer].answer,
+                                                    questions.answers[selectedAnswer].answer_text,
                                                     selectedAnswer,
                                                     timeLeft
                                                 );

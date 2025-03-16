@@ -119,6 +119,7 @@ const Quiz = () => {
             <div className="mt-4">
               <Skeleton height={300} />
             </div>
+
           </div>
         ) : (
             (examObject) && (
@@ -161,7 +162,7 @@ const Quiz = () => {
                       question_text: Object.entries(examObject.questions).find((question, index) => {
                         return index === parseInt(currentQuestionIndex);
                       })[1].text,
-                      answer: selectedAnswerIndex,
+                      answer: selectedAnswerAsText,
               
                     },
                   },
@@ -172,7 +173,7 @@ const Quiz = () => {
                       question_text: Object.entries(examObject.questions).find((question, index) => {
                         return index === parseInt(currentQuestionIndex);
                       })[1].text,
-                      answer: selectedAnswerIndex,
+                      answer: selectedAnswerAsText,
                       is_correct: response.progress[currentQuestionIndex.toString()].is_correct,
                       correct_answer:
                         response.progress[currentQuestionIndex.toString()][

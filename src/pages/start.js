@@ -98,10 +98,19 @@ const Start = () => {
     }
 
     return (
-      <div className="w-full flex flex-col items-start justify-center ">
+      <div className="w-full h-full flex flex-col items-start justify-center ">
         <NavbarContainer/>
+        <div className="hidden lg:flex flex-col items-start justify-center ">
+          
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        
+        </div>
         <div
-          className="w-full h-full  flex flex-col
+          className="w-full h-screen  flex flex-col
         items-center justify-center px-10 py-10"
         >
           <div className="w-full h-full  px-20 sm:px-2 flex flex-col items-start justify-center">
@@ -187,6 +196,15 @@ const Start = () => {
             </div>
           </div>
         </div>
+        <div className="hidden lg:flex flex-col items-start justify-center ">
+          
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          
+          </div>
         <Footer />
       </div>
     );

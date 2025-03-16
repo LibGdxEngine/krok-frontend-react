@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
-import {toast} from "react-toastify";
-import {useAuth} from "@/context/AuthContext";
-import {createExamJourney, getQuestionsCount} from "@/components/services/questions";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { useAuth } from "@/context/AuthContext";
+import { createExamJourney, getQuestionsCount } from "@/components/services/questions";
 import ActionButtons from "@/pages/components/Questions/ActionButtons";
 import QuestionsPractice from "@/pages/components/Questions/QuestionsPractice";
 import QuestionsFilter from "@/pages/components/Questions/QuestionsFilter";
@@ -11,13 +11,13 @@ import NavBar from "@/pages/components/NavBar";
 import KrokSpecifics from "@/pages/components/Questions/KrokSpecifics";
 import SearchBar from "@/pages/components/Home/SearchBar";
 import SectionsHeader from "@/pages/components/SectionsHeader";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import NavbarContainer from "./components/NavbarContainer";
 
 const Filter = () => {
-    const {t, i18n} = useTranslation("common");
+    const { t, i18n } = useTranslation("common");
     const router = useRouter();
-    const {token, loading} = useAuth();
+    const { token, loading } = useAuth();
     const [state, setState] = useState(null);
     const [questionsCount, setQuestionsCount] = useState(0);
     const [numberOfSelectedQuestions, setNumberOfSelectedQuestions] = useState(0);
@@ -66,7 +66,7 @@ const Filter = () => {
             .then((response) => {
                 router.push({
                     pathname: "/quiz",
-                    query: {id: response.id},
+                    query: { id: response.id },
                 });
             })
             .catch((error) => {
@@ -86,14 +86,23 @@ const Filter = () => {
 
     return (
         <div className="w-full bg-white flex flex-col items-start justify-start">
-            <NavbarContainer/>
+            <NavbarContainer />
+            <div className="hidden lg:flex flex-col items-start justify-center ">
+
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+
+            </div>
             <div className="w-full h-screen">
                 <div className="w-full h-full flex flex-col items-center justify-center">
                     <div className="w-full px-6 pt-10">
-                        <KrokSpecifics/>
+                        <KrokSpecifics />
                     </div>
                     <div className="w-full grid grid-cols-2 md:grid-cols-1 gap-6 p-6 bg-white rounded-lg">
-                        <QuestionsFilter onChange={handleFilterChange}/>
+                        <QuestionsFilter onChange={handleFilterChange} />
                         <div className="w-full flex flex-col items-start justify-end">
                             <QuestionsPractice
                                 questionsCount={questionsCount}
@@ -102,15 +111,21 @@ const Filter = () => {
                                     setNumberOfSelectedQuestions(number);
                                 }}
                             />
-                            <ActionButtons onClick={handleOnCreateJourneyClicked}/>
+                            <ActionButtons onClick={handleOnCreateJourneyClicked} />
                         </div>
                     </div>
                 </div>
             </div>
-            <br/>
-            <br/>
-            <br/>
-            <Footer/>
+            <div className="hidden lg:flex flex-col items-start justify-center ">
+
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+
+            </div>
+            <Footer />
         </div>
     );
 };

@@ -11,6 +11,16 @@ const QuestionItem = ({
   answerState,
   is_disabled = false,
 }) => {
+  // console.log(
+  //   question,
+  //   image,
+  //   index,
+  //   isSelected,
+  //   onAnswer,
+  //   answerState,
+  //   is_disabled
+  // );
+  
   const handleClick = () => {
     if (onAnswer) {
       onAnswer(index);
