@@ -93,7 +93,7 @@ function SignInPage() {
                     href="/forget-password"
                     className="text-black hover:underline"
                 >
-                    {t("Forget Password")}
+                    {t("ForgetPassword")}
                 </Link>
             </div>
             <div onClick={() => {

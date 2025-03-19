@@ -427,7 +427,6 @@ const Notes = React.memo(() => {
     if (token) {
       // fetch notes
       getNotes(token).then((response) => {
-        console.log(response);
 
         setNotes(response);
       }).catch((error) => {
@@ -465,8 +464,7 @@ const Notes = React.memo(() => {
                       <div
                         className={`w-full bg-blue-100 rounded-full px-4 text-black`}
                       >{`Q- ${note.question.text}`}</div>
-                      {console.log(note)
-                      }
+                 
                       <p className="mt-4 text-green-700">
                         Correct Answer: {note.correct_answer}
                       </p>

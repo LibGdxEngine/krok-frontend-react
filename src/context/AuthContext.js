@@ -60,15 +60,16 @@ export const AuthProvider = ({children}) => {
     };
 
     const logout = () => {
-        setToken(null);
-        localStorage.removeItem('token');
-        localStorage.removeItem('state');
         // Clear session storage
         sessionStorage.clear();
+        localStorage.removeItem('token');
+        localStorage.removeItem('state');
         // Remove all cookies (if using js-cookie)
         Object.keys(Cookies.get()).forEach(cookieName => {
             Cookies.remove(cookieName);
         });
+        setToken(null);
+
     };
 
     return (

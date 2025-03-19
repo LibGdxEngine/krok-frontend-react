@@ -36,9 +36,9 @@ const Sidebar = React.memo(({user, onTapClicked, currentTap}) => {
         }} onConfirm={()=>{
           setIsLogginOut(false);
           logout();
-          router.replace("/signin").then(() => {
-            window.location.reload();
-          });
+          // router.replace("/signin").then(() => {
+          //   window.location.reload();
+          // });
         }} />
         <div className=" sm:hidden">
           <Image
