@@ -59,8 +59,9 @@ export const AuthProvider = ({children}) => {
         await signIn(provider);
     };
 
-    const logout = () => {
+    const logout = async () => {
         // Clear session storage
+        await signOut();
         sessionStorage.clear();
         localStorage.removeItem('token');
         localStorage.removeItem('state');
