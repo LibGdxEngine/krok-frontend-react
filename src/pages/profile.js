@@ -44,7 +44,7 @@ const PersonalInfo = React.memo(({ user, universities }) => {
 
   const { token } = useAuth();
   const photo = (profileImage === null || profileImage?.length <= 30) ? profilePlaceHolder : profileImage;
-  
+
   const handleImageClick = () => {
     document.getElementById('profileImageInput').click();
   };
@@ -271,23 +271,13 @@ const History = React.memo(({ examObject: defaultExams }) => {
   if (loading || !examObject) {
     return <SplashScreen />
   }
+
   let first_question = null;
   let level = null;
   let language = null;
   let specificity = null;
   let year = null;
-  if (examObject.length > 0) {
-    try {
-      first_question = examObject[0]['first_question'];
-      level = first_question?.level;
-      language = first_question?.language;
-      specificity = first_question?.specificity;
-      year = first_question?.year;
-    } catch (err) {
-      console.error('Error parsing exam questions:', err);
-    }
 
-  }
 
   const calculateScorePercentage = (questions) => {
     const values = Object.values(questions); // Extract object values
@@ -313,6 +303,16 @@ const History = React.memo(({ examObject: defaultExams }) => {
     return formattedPercentage;
   };
 
+  function sortStudiesByCreatedAt(studies) {
+    return studies.slice().sort((a, b) => {
+      const dateA = new Date(a.created_at);
+      const dateB = new Date(b.created_at);
+      return dateB - dateA; // Sort in descending order (most recent first)
+    });
+  }
+
+  const sortedStudies = sortStudiesByCreatedAt(examObject);
+
   return (
     <div className="w-full bg-white flex-1 flex flex-col items-center">
       {examObject.length === 0 ? (
@@ -334,8 +334,13 @@ const History = React.memo(({ examObject: defaultExams }) => {
             {t("History")}
           </h1>
           <div className="space-y-4">
-            {[...examObject].map((item, index) => (
-              <div key={index} className="bg-gray-50 p-4 rounded-lg shadow">
+            {[...sortedStudies].map((item, index) => {
+                first_question = examObject[index]['first_question'];
+                level = first_question?.level;
+                language = first_question?.language;
+                specificity = first_question?.specificity;
+                year = first_question?.year;
+              return <div key={index} className="bg-gray-50 p-4 rounded-lg shadow">
                 <div className="flex justify-between items-center">
                   <div>
                     <h1 className="text-xl font-semibold text-black">
@@ -409,7 +414,7 @@ const History = React.memo(({ examObject: defaultExams }) => {
                   ></div>
                 </div>
               </div>
-            ))}
+            })}
           </div>
         </div>
       )}
@@ -464,7 +469,7 @@ const Notes = React.memo(() => {
                       <div
                         className={`w-full bg-blue-100 rounded-full px-4 text-black`}
                       >{`Q- ${note.question.text}`}</div>
-                 
+
                       <p className="mt-4 text-green-700">
                         Correct Answer: {note.correct_answer}
                       </p>

@@ -20,18 +20,7 @@ import NavbarContainer from "./components/NavbarContainer";
 const Quiz = () => {
   const { t, i18n } = useTranslation("common");
   const router = useRouter();
-  // const makeMyProgress = (progress) => {
-  //   const newProgress = {};
-  //   if (!progress || progress.length === 0) {
-  //     return {};
-  //   }
-  //
-  //   for (let i = 0; i < progress.length; i++) {
-  //     newProgress[i.toString()] = progress[i];
-  //   }
-  //   console.log(newProgress);
-  //   return newProgress;
-  // };
+
 
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();

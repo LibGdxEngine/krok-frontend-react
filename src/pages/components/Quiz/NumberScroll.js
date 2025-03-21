@@ -40,7 +40,7 @@ const NumberScroll = ({
               number={index + 1}
               answer={
                 historyProgress[number]
-                  ? historyProgress[number].is_correct
+                  ? answers ? historyProgress[number].is_correct : null
                   : null
               }
               isSelected={parseInt(number) === selected}

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import NumberScroll from "@/pages/components/Quiz/NumberScroll";
 import QuestionItem from "@/pages/components/Quiz/QuestionItem";
 import Image from "next/image";
@@ -8,37 +8,36 @@ import icon3 from "../../../../public/icon_3.svg";
 import hint from "../../../../public/hint.svg";
 import video_hint from "../../../../public/video_hint.svg";
 import copy from "../../../../public/copy.svg";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import CountdownTimer from "@/pages/components/Quiz/CountdownTimer";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import FavoritesModal from "@/pages/components/Favourites/FavoritesModal";
 import YouTubePlayer from "@/pages/components/utils/YouTubePlayer";
 import NotesModal from "@/pages/components/utils/NotesModal";
 import CountUpTimer from "@/pages/components/Quiz/CountUpTimer";
 import ReportsModal from "@/pages/components/utils/ReportsModal";
 import SplashScreen from "@/pages/components/SplashScreen";
-import HighlightedText from "@/pages/components/Questions/HighlightedText";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const QuestionWindow = ({
-                            examJourneyId,
-                            questions,
-                            type,
-                            progress: historyProgress,
-                            numbers,
-                            questionIndex,
-                            time,
-                            onCheck,
-                            length,
-                            questionId,
-                            nextIndex,
-                            prevIndex,
-                            setcurrentQuestion,
-                            lastIndex,
-                            reviewExam,
-                            setReviewExam,
-                        }) => {
-    const {t, i18n} = useTranslation("common");
+    examJourneyId,
+    questions,
+    type,
+    progress: historyProgress,
+    numbers,
+    questionIndex,
+    time,
+    onCheck,
+    length,
+    questionId,
+    nextIndex,
+    prevIndex,
+    setcurrentQuestion,
+    lastIndex,
+    reviewExam,
+    setReviewExam,
+}) => {
+    const { t, i18n } = useTranslation("common");
     const router = useRouter();
     const [isModalOpen, setModalOpen] = useState(false);
     const [isNotesModalOpen, setNotesModalOpen] = useState(false);
@@ -134,12 +133,14 @@ const QuestionWindow = ({
         return parseFloat(percentage.toFixed(1));
     };
     const valuesToHighlight = questions?.hint
-        .split(",")
+        .split(" ")
         .map((value) => value.trim());
-
+    
     // Step 2: Split the text into words
     const text = questions && questions.text;
     const words = text ? text.split(" ") : [];
+    
+    
     const highlightedText = words.map((word, index) => {
         const isHighlighted = valuesToHighlight.includes(word);
         return (
@@ -147,12 +148,13 @@ const QuestionWindow = ({
                 key={index}
                 style={{
                     backgroundColor: isHighlighted ? "yellow" : "transparent",
+                    
                 }}
             >
-        {word}
+                {word}
                 {/* Adding a space after each word */}
                 {index < words.length - 1 ? " " : ""}
-      </span>
+            </span>
         );
     });
 
@@ -247,12 +249,12 @@ const QuestionWindow = ({
     if (!questions) {
         return (
             <div>
-                <SplashScreen/>
+                <SplashScreen />
             </div>
         );
     }
     return (
-        <div className="w-full   p-4 flex flex-col items-center justify-center">
+        <div className="w-full p-4 flex flex-col items-center justify-center">
             <FavoritesModal
                 isOpen={isModalOpen}
                 onClose={closeModal}
@@ -273,7 +275,7 @@ const QuestionWindow = ({
                     onClick={() => {
                         router.push("/start");
                     }}
-                    style={{cursor: "pointer"}}
+                    style={{ cursor: "pointer" }}
                     className="text-green-500 text-2xl hover:underline"
                 >
                     {t("BackToGenerateQuizPage")}
@@ -282,15 +284,15 @@ const QuestionWindow = ({
                     <div className="text-navyBlue text-3xl font-semibold">
                         {t("Quiz")}:{" "}
                         <span className="text-2xl text-gray-500">
-              {type === "study" ? t("StudyMood") : t("ExamMood")}
-            </span>
+                            {type === "study" ? t("StudyMood") : t("ExamMood")}
+                        </span>
                     </div>
                     {showResults ? (
                         ""
                     ) : (
                         <div className={`w-full flex items-center justify-center`}>
                             <Image
-                                style={{cursor: "pointer"}}
+                                style={{ cursor: "pointer" }}
                                 onClick={() => {
                                     openReportsModal();
                                 }}
@@ -303,7 +305,7 @@ const QuestionWindow = ({
                             {type === "study" ? (
                                 <>
                                     <Image
-                                        style={{cursor: "pointer"}}
+                                        style={{ cursor: "pointer" }}
                                         onClick={() => {
                                             setShowHint(!showHint);
                                             setShowVideoHint(false);
@@ -315,7 +317,7 @@ const QuestionWindow = ({
                                         height={35}
                                     />
                                     <Image
-                                        style={{cursor: "pointer"}}
+                                        style={{ cursor: "pointer" }}
                                         onClick={() => {
                                             setShowHint(false);
                                             setShowVideoHint(!showVideoHint);
@@ -332,7 +334,7 @@ const QuestionWindow = ({
                             )}
 
                             <Image
-                                style={{cursor: "pointer"}}
+                                style={{ cursor: "pointer" }}
                                 onClick={() => {
                                     //     add to favourites
                                     openModal();
@@ -344,7 +346,7 @@ const QuestionWindow = ({
                                 height={35}
                             />
                             <Image
-                                style={{cursor: "pointer"}}
+                                style={{ cursor: "pointer" }}
                                 onClick={() => {
                                     openNotesModal();
                                 }}
@@ -358,7 +360,7 @@ const QuestionWindow = ({
 
                             {type === "study" ? (
                                 <Image
-                                    style={{cursor: "pointer"}}
+                                    style={{ cursor: "pointer" }}
                                     onClick={() => {
                                         navigator.clipboard
                                             .writeText(questions.text)
@@ -422,7 +424,7 @@ const QuestionWindow = ({
                         )}
                         <div
                             id="hintLayer"
-                            style={{display: "none"}}
+                            style={{ display: "none" }}
                             className="fixed bg-black bg-opacity-20 z-[999999] top-0 start-0 end-0 bottom-0 justify-center items-center"
                         >
                             <div className="w-[40%] md:w-[90%] p-[32px] relative bg-white rounded-lg">
@@ -461,7 +463,7 @@ const QuestionWindow = ({
                         {questions.video_hint === "" ? (
                             t("NoVideoAvailable")
                         ) : (
-                            <YouTubePlayer url={`${questions.video_hint}`}/>
+                            <YouTubePlayer url={`${questions.video_hint}`} />
                         )}
                     </div>
                 ) : (
@@ -479,9 +481,8 @@ const QuestionWindow = ({
                                         : `Your score is ${calculateTruePercentage(progress)}%`}
                                 </div>
                                 <div>
-                                    {`${
-                                        progress.filter((value) => value === true).length
-                                    } correct answers out of ${numbers.length} questions`}
+                                    {`${progress.filter((value) => value === true).length
+                                        } correct answers out of ${numbers.length} questions`}
                                 </div>
                                 <div className="text-center mt-5 text-[20px]">
                                     {type === "exam" && (
@@ -523,7 +524,7 @@ const QuestionWindow = ({
                                             `/quiz?id=${examJourneyId}&q=${parseInt(questionNumber)}`
                                         );
                                     }}
-                                    answers={type === "study" || reviewExam ? progress : null}
+                                    answers={type === "study" || reviewExam}
                                 />
                             </div>
 
@@ -580,7 +581,7 @@ const QuestionWindow = ({
                                                     key={index}
                                                     onAnswer={handleAnswer}
                                                     is_disabled={
-                                                        historyProgress[questionIndex]?.question_text ==  questions.text
+                                                        historyProgress[questionIndex]?.question_text == questions.text
                                                     }
                                                 />
                                             );
@@ -597,7 +598,7 @@ const QuestionWindow = ({
                         <button
                             onClick={() => {
                                 if (questionIndex === numbers[0] || questionIndex <= 0) {
-                                
+
                                     return;
                                 }
                                 if (!historyProgress[questionIndex]?.is_disabled) {
@@ -607,9 +608,8 @@ const QuestionWindow = ({
                                 setSelectedNumber(prevIndex);
                                 router.push(`/quiz?id=${examJourneyId}&q=${prevIndex}`);
                             }}
-                            className={`w-40 bg-blue-100 text-blue-500 rounded-lg py-2 px-4 ${
-                                showResults ? "hidden" : ""
-                            }`}
+                            className={`w-40 bg-blue-100 text-blue-500 rounded-lg py-2 px-4 ${showResults ? "hidden" : ""
+                                }`}
                         >
                             {"<"}
                         </button>
@@ -625,9 +625,8 @@ const QuestionWindow = ({
                                 setSelectedNumber(nextIndex);
                                 router.push(`/quiz?id=${examJourneyId}&q=${nextIndex}`);
                             }}
-                            className={`w-40 mx-2 sm:mx-0 bg-blue-100 text-blue-500 rounded-lg py-2 px-4 ${
-                                showResults ? "hidden" : ""
-                            }`}
+                            className={`w-40 mx-2 sm:mx-0 bg-blue-100 text-blue-500 rounded-lg py-2 px-4 ${showResults ? "hidden" : ""
+                                }`}
                         >
                             {">"}
                         </button>
@@ -638,9 +637,8 @@ const QuestionWindow = ({
                                 onClick={() => {
                                     router.push(`/`);
                                 }}
-                                className={`w-40 sm:w-full bg-gray-200 text-gray-700 rounded-lg py-2 px-4 mr-2 ${
-                                    showResults ? "hidden" : ""
-                                }`}
+                                className={`w-40 sm:w-full bg-gray-200 text-gray-700 rounded-lg py-2 px-4 mr-2 ${showResults ? "hidden" : ""
+                                    }`}
                             >
                                 {t("ResumeLater")}
                             </button>
@@ -687,7 +685,7 @@ const QuestionWindow = ({
                                             className="w-40 sm:w-full bg-blue-500 text-white rounded-lg py-2 px-4"
                                         >
                                             {actionBtnText}
-                                            
+
                                         </button>
                                     )}
                                 {type === "exam" && (
