@@ -11,7 +11,7 @@ const QuestionItem = ({
   answerState,
   is_disabled = false,
 }) => {
-  
+
   const handleClick = () => {
     if (onAnswer) {
       onAnswer(index);
@@ -28,11 +28,11 @@ const QuestionItem = ({
     answerState === "correct"
       ? "text-green-500"
       : answerState === "wrong"
-      ? "text-red-500"
-      : "text-black";
+        ? "text-red-500"
+        : "text-black";
 
   return (
-    <div key={index}>
+    <div>
       <button
         onClick={handleClick}
         style={{ cursor: "pointer" }}
@@ -54,7 +54,8 @@ const QuestionItem = ({
           <Image className="mx-2" src={image} alt="" width={500} height={500} />
         </div>
       )}
-    </>
+    </div>
+
   );
 };
 
