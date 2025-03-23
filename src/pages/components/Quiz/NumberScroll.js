@@ -6,6 +6,7 @@ const NumberScroll = ({
   selected,
   onNumberClicked,
   skipped = [],
+  examType,
   answers = null,
   historyProgress,
   selectedNumber,
@@ -27,7 +28,8 @@ const NumberScroll = ({
       });
     }
   }, [selectedNumber]);
-
+  // console.log(skipped);
+  
   return (
     <div
       ref={containerRef}
@@ -36,15 +38,17 @@ const NumberScroll = ({
       {numbers &&
         numbers.map((number, index) => (
           <div key={number} ref={(el) => (itemRefs.current[number] = el)}>
+            
             <NumberItem
               number={index + 1}
+              examType={examType}
               answer={
                 historyProgress[number]
-                  ? answers ? historyProgress[number].is_correct : null
+                  ? answers ? historyProgress[number].is_correct : false
                   : null
               }
               isSelected={parseInt(number) === selected}
-              isSkipped={skipped.includes(number)}
+              isSkipped={skipped.includes(index)}
               onClick={() => handleNumberClick(number)}
               // isNotSelected={historyProgress[number.toString()]?.is_disabled}
             />

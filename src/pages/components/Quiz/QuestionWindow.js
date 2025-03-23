@@ -47,7 +47,7 @@ const QuestionWindow = ({
     const [showVideoHint, setShowVideoHint] = useState(false);
     const [answerCounter, setAnswerCounter] = useState(0);
     const [selectedNumber, setSelectedNumber] = useState(null);
-    const skipped = [];
+
     const openModal = () => setModalOpen(true);
     const openNotesModal = () => setNotesModalOpen(true);
     const openReportsModal = () => setReportsModalOpen(true);
@@ -103,21 +103,14 @@ const QuestionWindow = ({
     );
     // Create a list of keys
     const numbersOfAnsweredQuestions = Object.keys(mappedProgress);
+    
 
-    if (
-        !numbersOfAnsweredQuestions.includes(parseInt(questionIndex)?.toString())
-    ) {
-        numbersOfAnsweredQuestions.map((key) => {
-            if (key?.toString() !== questionIndex?.toString()) {
-                return skipped.push(parseInt(key));
-            } else {
-                if (skipped.includes(parseInt(key))) {
-                    return skipped.splice(skipped.indexOf(parseInt(key)), 1);
-                }
-            }
-        });
-    }
-
+    const getSkippedQuestions = (answeredIndexes, selectedIndex) => {
+        return Array.from({ length: selectedIndex }, (_, i) => i)
+          .filter(i => !answeredIndexes.includes(i.toString()));
+      };
+    const skipped = getSkippedQuestions(numbersOfAnsweredQuestions, questionIndex)
+    
     const progress = Object.keys(mappedProgress).map(
         (key) => mappedProgress[key]
     );
@@ -135,12 +128,12 @@ const QuestionWindow = ({
     const valuesToHighlight = questions?.hint
         .split(" ")
         .map((value) => value.trim());
-    
+
     // Step 2: Split the text into words
     const text = questions && questions.text;
     const words = text ? text.split(" ") : [];
-    
-    
+
+
     const highlightedText = words.map((word, index) => {
         const isHighlighted = valuesToHighlight.includes(word);
         return (
@@ -148,7 +141,7 @@ const QuestionWindow = ({
                 key={index}
                 style={{
                     backgroundColor: isHighlighted ? "yellow" : "transparent",
-                    
+
                 }}
             >
                 {word}
@@ -524,6 +517,7 @@ const QuestionWindow = ({
                                             `/quiz?id=${examJourneyId}&q=${parseInt(questionNumber)}`
                                         );
                                     }}
+                                    examType={type}
                                     answers={type === "study" || reviewExam}
                                 />
                             </div>

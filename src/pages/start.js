@@ -122,12 +122,12 @@ const Start = () => {
             </div>
             <div
               id="lang"
-              className="sm:w-full flex sm:flex-col sm:items-start items-center justify-center my-10"
+              className="sm:w-full  flex sm:flex-col sm:items-start items-center justify-center my-10"
             >
               <div className="w-32 sm:mx-4 font-semibold text-2xl text-ldarkBlue">
                 {t("Language")}
               </div>
-              <div className="sm:w-full grid grid-cols-3 lg:grid-cols-2 mx-10 sm:mx-0">
+              <div className="w-full sm:w-full  grid grid-cols-3 lg:grid-cols-2 mx-10 sm:mx-0">
                 {languages.map((language, index) => {
                   return (
                     <div key={index}>
@@ -155,7 +155,7 @@ const Start = () => {
               <div className="w-32 sm:w-full sm:mx-4 font-semibold text-2xl text-ldarkBlue">
                 {t("Specialty")}
               </div>
-              <div className="sm:w-full grid grid-cols-4 lg:grid-cols-2 mx-10 sm:mx-0">
+              <div className="w-full sm:w-full grid grid-cols-4 lg:grid-cols-2 mx-10 sm:mx-0">
                 {specificities.map((specific, index) => (
                   <CheckButton
                     key={index}
@@ -168,12 +168,12 @@ const Start = () => {
             </div>
             <div
               id="level"
-              className="sm:w-full w-fit flex sm:flex-col sm:items-start items-center justify-center my-0"
+              className=" sm:w-full  flex sm:flex-col sm:items-start items-center justify-center my-0"
             >
               <div className="w-32 sm:w-full sm:mx-4 font-semibold text-2xl text-ldarkBlue">
                 {t("Level")}
               </div>
-              <div className="sm:w-full  grid grid-cols-4 lg:grid-cols-2 mx-10 sm:mx-0">
+              <div className="w-full  sm:w-full  grid grid-cols-4 lg:grid-cols-2 mx-10 sm:mx-0">
                 {levels.map((level, index) => (
                   <CheckButton
                     key={index}
