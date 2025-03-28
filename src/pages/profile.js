@@ -279,9 +279,9 @@ const History = React.memo(({ examObject: defaultExams }) => {
   let year = null;
 
 
-  const calculateScorePercentage = (questions) => {
+  const calculateScorePercentage = (questions, totalQuestions) => {
     const values = Object.values(questions); // Extract object values
-    const totalQuestions = values.length; // Total number of questions
+    // const totalQuestions = values.length; // Total number of questions
     // If there are no questions, return 0.0 to avoid division by zero.
     if (totalQuestions === 0) {
       return 0.0;
@@ -363,7 +363,7 @@ const History = React.memo(({ examObject: defaultExams }) => {
                       -
                       <p className="text-gray-500 mx-2">
                         {" "}
-                        Score {calculateScorePercentage(item.progress) +
+                        Score {calculateScorePercentage(item.progress, item.questions) +
                           "%"}{" "}
                       </p>
                     </div>

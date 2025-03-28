@@ -57,10 +57,10 @@ const QuestionWindow = ({
 
     const handleNextQuestion = () => {
         if (questionIndex === numbers[numbers.length - 1]) {
-            if (Object.keys(historyProgress).length < length) {
-                toast.error(t("AnswerAllQuestions"));
-                return false;
-            }
+            // if (Object.keys(historyProgress).length < length) {
+            //     toast.error(t("AnswerAllQuestions"));
+            //     return false;
+            // }
             setShowResults(true);
             return;
         }
@@ -103,14 +103,14 @@ const QuestionWindow = ({
     );
     // Create a list of keys
     const numbersOfAnsweredQuestions = Object.keys(mappedProgress);
-    
+
 
     const getSkippedQuestions = (answeredIndexes, selectedIndex) => {
         return Array.from({ length: selectedIndex }, (_, i) => i)
-          .filter(i => !answeredIndexes.includes(i.toString()));
-      };
+            .filter(i => !answeredIndexes.includes(i.toString()));
+    };
     const skipped = getSkippedQuestions(numbersOfAnsweredQuestions, questionIndex)
-    
+
     const progress = Object.keys(mappedProgress).map(
         (key) => mappedProgress[key]
     );
@@ -174,6 +174,7 @@ const QuestionWindow = ({
                 selectedAnswer !== null &&
                 !historyProgress[questionIndex]?.is_disabled
             ) {
+               
                 onCheck(
                     questions.answers[selectedAnswer].answer_text,
                     selectedAnswer,
@@ -183,8 +184,9 @@ const QuestionWindow = ({
             }
 
             if (type === "exam") {
+             
                 if (Object.keys(historyProgress).length + 1 < length) {
-                    toast.error(t("AnswerAllQuestions"));
+                    toast.warning(t("AnswerAllQuestions"));
                 } else {
                     setShowResults(true);
                 }
@@ -665,6 +667,10 @@ const QuestionWindow = ({
                                         <button
                                             onClick={questionIndex == numbers[numbers.length - 1] ? () => {
                                                 try {
+                                                    if (Object.keys(historyProgress).length < length - 1) {
+                                                        toast.warning(t("AnswerAllQuestions"));
+                                                        return;
+                                                    }
                                                     onCheck(
                                                         questions.answers[selectedAnswer].answer_text,
                                                         selectedAnswer,
@@ -686,6 +692,10 @@ const QuestionWindow = ({
                                     <button
                                         onClick={questionIndex == numbers[numbers.length - 1] ? () => {
                                             try {
+                                                if (Object.keys(historyProgress).length < length - 1) {
+                                                    toast.warning(t("AnswerAllQuestions"));
+                                                    return;
+                                                }
                                                 onCheck(
                                                     questions.answers[selectedAnswer].answer_text,
                                                     selectedAnswer,

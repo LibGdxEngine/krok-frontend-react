@@ -15,7 +15,7 @@ const NumberItem = ({ number, answer, examType, isSelected, isSkipped = false, o
     <div
       onClick={onClick}
       className={`flex items-center justify-center my-2 border-2 h-12 md:w-12 w-full cursor-pointer rounded-xl border ${answerState} font-semibold ${isSelected ? "bg-white  text-gray-600" : "text-gray-600"
-        } ${isSkipped ? "bg-red-500 text-white" : ""}`}
+        } ${isSkipped ? "bg-orange-500 text-white" : ""}`}
     >
       {number}
     </div>
