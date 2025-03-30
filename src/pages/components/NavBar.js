@@ -134,6 +134,7 @@ const NavBar = () => {
             <LanguageDropdown />
           </div>
 
+
           <div
             style={{ cursor: "pointer" }}
             onClick={() => {
