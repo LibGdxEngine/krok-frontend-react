@@ -272,7 +272,6 @@ const History = React.memo(({ examObject: defaultExams }) => {
     return <SplashScreen />
   }
 
-  let first_question = null;
   let level = null;
   let language = null;
   let specificity = null;
@@ -335,7 +334,7 @@ const History = React.memo(({ examObject: defaultExams }) => {
           </h1>
           <div className="space-y-4">
             {[...sortedStudies].map((item, index) => {
-                first_question = examObject[index]['first_question'];
+                const first_question = item.first_question;
                 level = first_question?.level;
                 language = first_question?.language;
                 specificity = first_question?.specificity;
