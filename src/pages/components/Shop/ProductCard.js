@@ -7,7 +7,7 @@ import { useCartContext } from "@/context/CartContext";
 
 const ProductCard = ({ product }) => {
   const notify = () => toast("Product added to cart!");
-  const product_id = product.id;
+  const product_id = product?.id;
   const { token } = useAuth();
   const { addItemToCart } = useCartContext();
   const handleAddToCart = async () => {
@@ -21,16 +21,16 @@ const ProductCard = ({ product }) => {
     <div key={0} className="border rounded-lg p-4 space-y-2">
       <div className="relative h-[300px] bg-gray-100">
         <Image
-          src={`https://krokplus.com${product.img}` || '/placeholder.svg'}
-          alt={product.name}
+          src={`https://krokplus.com${product?.img}` || '/placeholder.svg'}
+          alt={product?.name}
           fill
           className="object-cover"
         />
       </div>
-      <h2 className="font-medium text-black">{product.name}</h2>
-      <p className="text-gray-500">{product.description}</p>
+      <h2 className="font-medium text-black">{product?.name}</h2>
+      <p className="text-gray-500">{product?.description}</p>
       <div className="flex justify-between items-center">
-        <span className="font-bold text-black">${product.price}</span>
+        <span className="font-bold text-black">${product?.price}</span>
         <button
           className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700"
           onClick={handleAddToCart}

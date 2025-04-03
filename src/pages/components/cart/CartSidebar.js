@@ -5,7 +5,7 @@ import axiosInstance from "@/components/axiosInstance";
 import Image from "next/image";
 import { useCartContext } from "@/context/CartContext";
 
-export function CartSidebar() {
+export default function CartSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();

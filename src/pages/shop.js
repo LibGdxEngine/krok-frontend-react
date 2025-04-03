@@ -3,7 +3,7 @@ import { useState } from "react";
 import Pagination from "./components/Shop/Pagination";
 import ProductCard from "./components/Shop/ProductCard";
 import { ToastContainer } from "react-toastify";
-import { CartSidebar } from "./components/cart/CartSidebar";
+import  CartSidebar from "./components/cart/CartSidebar";
 import ChatWidget from "./components/Shop/MessageWidget";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
