@@ -180,9 +180,11 @@ export default function CartSidebar() {
               {cart?.map((item) => (
                 <li key={item.id} className="flex gap-4 py-4 border-b">
                   <div className="h-20 w-20 rounded-md overflow-hidden bg-gray-100 flex-shrink-0">
+              {JSON.stringify(`https://krokplus.com${item?.product_img}`)}
+                    
                     <Image
                       src={`https://krokplus.com${item?.product_img}` || "/placeholder.svg"}
-                      alt={item.product_name}
+                      alt={item?.product_name}
                       width={80}
                       height={80}
                       className="h-full w-full object-cover"
@@ -195,7 +197,6 @@ export default function CartSidebar() {
                         className="text-gray-500 hover:text-red-500"
                         onClick={() => {
                           removeItemFromCart(item.product);
-                          console.log(item.product);
                         }}
                       >
                         <svg
