@@ -31,9 +31,11 @@ const Start = () => {
     const [specificities, setSpecificities] = useState([]);
     const [levels, setLevels] = useState([]);
     let userProfilePhoto = userIcon;
+    
     if (user) {
         userProfilePhoto = user.profile_photo?.toString().length <= 50 ? userIcon : user.profile_photo;
     }
+
     useEffect(() => {
         const existingState = JSON.parse(localStorage.getItem("state"));
         if(existingState){
