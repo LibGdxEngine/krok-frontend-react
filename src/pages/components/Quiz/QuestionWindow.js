@@ -18,6 +18,7 @@ import CountUpTimer from "@/pages/components/Quiz/CountUpTimer";
 import ReportsModal from "@/pages/components/utils/ReportsModal";
 import SplashScreen from "@/pages/components/SplashScreen";
 import { useTranslation } from "react-i18next";
+import HintDisplay from "./HintDisplay";
 
 const QuestionWindow = ({
     examJourneyId,
@@ -403,7 +404,7 @@ const QuestionWindow = ({
                         </div>
                     )}
                 </div>
-                {showHint ? (
+                {/* {showHint ? (
                     <div className="w-full  rounded-xl p-4 mx-4 text-3xl text-center text-gray-500">
                         {questions.hint === "" ? (
                             t("NoHintAvailable")
@@ -452,7 +453,8 @@ const QuestionWindow = ({
                     </div>
                 ) : (
                     ""
-                )}
+                )} */}
+                <HintDisplay questions={questions} showHint={showHint} />
                 {showVideoHint ? (
                     <div className="w-full  rounded-xl p-4 mx-4 text-3xl text-center text-gray-500">
                         {questions.video_hint === "" ? (
