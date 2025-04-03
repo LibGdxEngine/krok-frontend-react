@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComments, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,8 +48,7 @@ const ChatWidget = () => {
 
     const payload = isAuthenticated ? { message: form.message } : form;
 
-    console.log("Sending message:", payload);
-    alert("Message sent!");
+    toast.success('Message Sent!');
 
     setForm({ name: "", email: "", message: "" });
     setIsOpen(false);
