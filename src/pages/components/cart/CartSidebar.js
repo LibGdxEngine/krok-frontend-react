@@ -180,7 +180,6 @@ export default function CartSidebar() {
               {cart?.map((item) => (
                 <li key={item.id} className="flex gap-4 py-4 border-b">
                   <div className="h-20 w-20 rounded-md overflow-hidden bg-gray-100 flex-shrink-0">
-              {JSON.stringify(`https://krokplus.com${item?.product_img}`)}
                     
                     <Image
                       src={`https://krokplus.com${item?.product_img}` || "/placeholder.svg"}
