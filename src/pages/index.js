@@ -18,7 +18,6 @@ const Home = () => {
     const [video, setVideo] = useState(null);
     useEffect(() => {
         getHomeData().then((data) => {
-            console.log(data);
             setFaqs(data.faqs);
             setVideo(data.video_url);
         });

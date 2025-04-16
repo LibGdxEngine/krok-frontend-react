@@ -8,7 +8,6 @@ export const getCart = async (token) => {
         Authorization: `Token ${token}`,
       },
     });
-    console.log(response.data);
     
     return response.data;
   } catch (error) {
@@ -48,7 +47,6 @@ export const updateCartItem = async (product_id, quantity, token) => {
         },
       }
     );
-    console.log(product_id, quantity);
     return response.data;
   } catch (error) {
     toast.error("Failed to update product in cart.");

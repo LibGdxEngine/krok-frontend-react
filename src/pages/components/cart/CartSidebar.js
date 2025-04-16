@@ -182,7 +182,7 @@ export default function CartSidebar() {
                   <div className="h-20 w-20 rounded-md overflow-hidden bg-gray-100 flex-shrink-0">
                     
                     <Image
-                      src={`https://krokplus.com${item?.product_img}` || "/placeholder.svg"}
+                      src={item.product.img ? `https://krokplus.com${item?.product_img}` : "/placeholder.svg"}
                       alt={item?.product_name}
                       width={80}
                       height={80}

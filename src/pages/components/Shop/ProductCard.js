@@ -21,9 +21,10 @@ const ProductCard = ({ product }) => {
     <div key={0} className="border rounded-lg p-4 space-y-2">
       <div className="relative h-[300px] bg-gray-100">
         <Image
-          src={`https://krokplus.com${product?.img}` || '/placeholder.svg'}
+          src={product.img ? `https://krokplus.com${product?.img}` : '/placeholder.svg'}
           alt={product?.name}
           fill
+        
           className="object-cover"
         />
       </div>

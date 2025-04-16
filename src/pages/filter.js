@@ -76,10 +76,14 @@ const Filter = () => {
     };
 
     const handleFilterChange = (updatedState) => {
+        
         const newState = {
             ...state,
-            is_used: updatedState['Unused Questions'] && !updatedState['Used Questions'] ? 'False' : updatedState['Used Questions'] && !updatedState['Unused Questions'] ? 'True' : undefined,
-            is_correct: updatedState['Correct Questions'] && !updatedState['Incorrect Questions'] ? 'True' : updatedState['Incorrect Questions'] && !updatedState['Correct Questions'] ? 'False' : undefined
+            apply_status_filters: 'true',
+            filter_used: updatedState['Used Questions'] ? 'true': 'false',
+            filter_unused: updatedState['Unused Questions'] ? 'true': 'false',
+            filter_correct: updatedState['Correct Questions'] ? 'true': 'false',
+            filter_incorrect: updatedState['Incorrect Questions'] ? 'true': 'false',
         };
         setState(newState);
     };
