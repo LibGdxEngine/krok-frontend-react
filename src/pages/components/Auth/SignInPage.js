@@ -63,6 +63,7 @@ function SignInPage() {
     }
     const handleGoogleSignIn = () => {
         // signIn("google", { callbackUrl: "http://localhost:3000/api/auth/callback/google" });
+        // socialLogin('google');
         socialLogin('google');
     };
     return (

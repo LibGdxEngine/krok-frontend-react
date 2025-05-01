@@ -14,8 +14,8 @@ export default NextAuth({
             clientSecret: "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",
         }),
         FacebookProvider({
-            clientId: process.env.FACEBOOK_CLIENT_ID,
-            clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+            clientId: "1407504406920403",
+            clientSecret: "a3899b007bc32b6a50b25d17ed9f45b4",
         }),
         AppleProvider({
             clientId: process.env.APPLE_CLIENT_ID,
@@ -26,6 +26,8 @@ export default NextAuth({
         async signIn({ user, account, profile }) {
             if (account.provider === "google" || account.provider === "facebook" || account.provider === "apple") {
                 try {
+                    console.log('Hello provider');
+                    
                     // Make request to Django backend to authenticate with social provider
                     const response = await axios.post(`${API_URL}/api/v1/auth/${account.provider}/`, {
                         access_token: account.access_token,
