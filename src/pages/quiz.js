@@ -1,208 +1,371 @@
-import QuestionWindow from "@/pages/components/Quiz/QuestionWindow";
-import NavBar from "@/pages/components/NavBar";
-import Footer from "@/pages/components/Footer";
+// src/pages/quiz.js (Refactored)
+
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
-import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
+import NavBarContainer from "./components/NavbarContainer"; // Corrected import path
+import Footer from "./components/Footer";
+import QuestionWindow from "./components/Quiz/QuestionWindow"; // Updated component name/path if needed
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import SplashScreen from "./components/SplashScreen"; // Assuming SplashScreen exists
 
-import {
-  getExamJourney,
-  updateExamJourney,
-} from "@/components/services/questions";
-import SearchBar from "@/pages/components/Home/SearchBar";
-import SectionsHeader from "@/pages/components/SectionsHeader";
-import { useTranslation } from "react-i18next";
-import NavbarContainer from "./components/NavbarContainer";
+import { getExamJourney, updateExamJourney } from "@/components/services/questions";
+import { rearrangeArrayById } from "../pages/components/utils/arrayUtils"; // Import utility
+import { timeToSeconds } from "../pages/components/utils/arrayUtils"; // Import utility
 
 const Quiz = () => {
-  const { t, i18n } = useTranslation("common");
+  const { t } = useTranslation("common");
   const router = useRouter();
-
-
-  const [loading, setLoading] = useState(true);
   const { token } = useAuth();
-  const [examObject, setExamObject] = useState(null);
+  const { id: examJourneyId, q: queryQuestionIndex } = router.query; // Use clearer names
 
-  const [progress, setProgress] = useState(examObject?.progress);
-  const [reviewExam, setReviewExam] = useState(false);
-  let { id, q } = router.query;
-  const [currentQuestionIndex, setcurrentQuestionIndex] = useState(q ? q : 0);
-  let length = examObject ? examObject.questions.length : 1;
-  if (!q) {
-    q = currentQuestionIndex;
-  }
+  // --- State ---
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [examData, setExamData] = useState(null); // Holds the entire exam object { questions, progress, type, time_left, ... }
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Zero-based index
+  const [reviewMode, setReviewMode] = useState(false); // Renamed from reviewExam for clarity
+  const [showResultsPage, setShowResultsPage] = useState(false); // Explicit state for results view
 
-  const rearrangeArrayById = (mainArray, priorityArray) => {
-    // Extract elements from mainArray whose ids match those in priorityArray
-    const prioritized = priorityArray
-      .map((priorityItem) =>
-        mainArray.find((mainItem) => mainItem.id === priorityItem.id)
-      )
-      .filter(Boolean); // Remove undefined values in case of unmatched ids
 
-    // Get the remaining elements in mainArray whose ids are not in priorityArray
-    const remaining = mainArray.filter(
-      (mainItem) =>
-        !priorityArray.some((priorityItem) => priorityItem.id === mainItem.id)
-    );
+  // --- Derived State (using useMemo for efficiency) ---
+  const questions = useMemo(() => examData?.questions || [], [examData]);
+  const progress = useMemo(() => examData?.progress || {}, [examData]);
+  const quizType = useMemo(() => examData?.type, [examData]);
+  const initialTime = useMemo(() => {
+    if (!examData) return 0;
+    const defaultTime = quizType === 'exam' ? (questions.length * 60) : 0; // 1 min per question for exam, 0 for study
+    return timeToSeconds(examData.time_left, defaultTime);
+  }, [examData, questions.length, quizType]);
 
-    // Concatenate prioritized and remaining elements
-    return [...prioritized, ...remaining];
-  };
+  const totalQuestions = useMemo(() => questions.length, [questions]);
+
+  // --- Effects ---
+
+  // Effect to initialize currentQuestionIndex from query param or progress
   useEffect(() => {
-    if (token && id) {
+    if (examData) {
+      const initialIndex = parseInt(queryQuestionIndex, 10);
+      if (!isNaN(initialIndex) && initialIndex >= 0 && initialIndex < totalQuestions) {
+        setCurrentQuestionIndex(initialIndex);
+      } else if (examData.current_question !== undefined && examData.current_question !== null && examData.current_question < totalQuestions) {
+        // Fallback to the last known question from the backend if query param is invalid
+        setCurrentQuestionIndex(examData.current_question);
+      } else {
+          // Default to 0 if nothing else is valid
+          setCurrentQuestionIndex(0);
+      }
+      setLoading(false); // Ensure loading is false after examData is processed
+    }
+  }, [examData, queryQuestionIndex, totalQuestions]);
+
+
+  // Effect to fetch exam data
+  useEffect(() => {
+    if (token && examJourneyId) {
       setLoading(true);
-      getExamJourney(token, id)
+      setError(null); // Reset error on new fetch
+      getExamJourney(token, examJourneyId)
         .then((response) => {
-          const newArrayOfQWuistions = rearrangeArrayById(
-            response.questions,
-            response.progress
-          );
-          response.questions = newArrayOfQWuistions;
+          // Ensure questions and progress exist before rearranging
+           const initialQuestions = response.questions || [];
+           const initialProgress = response.progress || []; // Assuming progress might contain IDs for ordering
 
-          setExamObject(response);
-          // const outPutProgress = makeMyProgress(response.progress);
+           // Prepare progress data for rearrangeArrayById if necessary
+           // This assumes response.progress is an array of objects like [{id: 'someId', ...}, ...]
+           // If response.progress is an object like {'0': {...}, '1': {...}}, adapt this logic
+           // For now, assuming it might be an array from the original rearrange function usage context
+           const progressArrayForSort = Array.isArray(initialProgress)
+                ? initialProgress
+                : Object.values(initialProgress).map((p, idx) => ({ ...p, id: p.id || questions[idx]?.id })); // Adapt based on actual progress structure
 
-          setProgress(response.progress);
-          //setcurrentQuestion(response.questions[0].id);
+
+           const orderedQuestions = rearrangeArrayById(initialQuestions, progressArrayForSort);
+
+            setExamData({
+              ...response,
+              questions: orderedQuestions,
+              // Ensure progress is an object keyed by question index for easier lookup later
+              progress: Array.isArray(response.progress)
+                ? response.progress.reduce((acc, progItem, index) => {
+                    // Find the corresponding question index if progress items don't have it
+                    const questionIndex = orderedQuestions.findIndex(q => q.id === progItem.id);
+                     if (questionIndex !== -1) {
+                        acc[questionIndex] = progItem;
+                    }
+                    // Fallback: use array index if ID mapping fails (less robust)
+                    // else { acc[index] = progItem; }
+                    return acc;
+                  }, {})
+                : response.progress || {}, // Keep as is if already an object
+            });
         })
-        .catch((error) => {
-          console.error("Error fetching exam:", error);
-        })
-        .finally(() => {
+        .catch((err) => {
+          console.error("Error fetching exam:", err);
+          setError(t("ErrorLoadingQuiz")); // User-friendly error message
           setLoading(false);
         });
+        // .finally(() => {
+        // Moved setLoading(false) inside the .then and .catch to ensure it happens after state update or error
+        // setLoading(false);
+        // });
+    } else if (!token) {
+       // Handle case where user is not authenticated
+       setLoading(false);
+       setError(t("PleaseLogin"));
+       // Optional: redirect to login
+       // router.push('/login');
     }
-  }, [token, id]);
+  }, [token, examJourneyId, t]); // Added t to dependency array
 
-  // Function to update the exam object with new progress
-  const handleProgressUpdate = (currentQuestion, updatedProgress) => {
-    setProgress((prev) => ({
-      ...prev,
-      // updatedProgress
-      [currentQuestion.toString()]: updatedProgress,
-    }));
-    setExamObject((prev) => ({
-      ...prev,
-      progress: {
-        ...prev.progress,
-        [currentQuestion.toString()]: updatedProgress,
-      },
-    }));
-  };
+
+  // --- Event Handlers (using useCallback) ---
+
+  // Handles updating the URL and state for navigation
+  const handleNavigate = useCallback((newIndex) => {
+      if (newIndex >= 0 && newIndex < totalQuestions) {
+          setCurrentQuestionIndex(newIndex);
+          // Update URL without page reload
+          router.push(`/quiz?id=${examJourneyId}&q=${newIndex}`, undefined, { shallow: true });
+           setReviewMode(false); // Exit review mode when navigating manually
+      }
+  }, [totalQuestions, router, examJourneyId]);
+
+
+  // Handles submitting an answer
+  const handleAnswerSubmit = useCallback(async (questionIndex, selectedAnswerText, selectedAnswerIndex, timeLeft) => {
+    if (!token || !examJourneyId || !examData || !questions[questionIndex]) {
+      console.error("Cannot submit answer: Missing data");
+      // Optionally show a toast error
+      return; // Exit if essential data is missing
+    }
+
+    const currentQuestion = questions[questionIndex];
+    const currentQuestionId = currentQuestion.id; // Assuming questions have unique IDs
+    const submissionData = {
+        time_left: timeLeft, // Send time left as number of seconds
+        progress: {
+            // Send only the progress for the *current* question being answered
+            [questionIndex.toString()]: {
+                question_id: currentQuestionId, // Include question ID if needed by backend
+                question_text: currentQuestion.text,
+                answer: selectedAnswerText,
+                // is_correct, correct_answer will be added by the backend response
+            },
+        },
+        current_question: questionIndex,
+    };
+
+    try {
+      // Optimistic UI update (optional, makes UI feel faster)
+      // setExamData(prevData => ({
+      //   ...prevData,
+      //   progress: {
+      //       ...prevData.progress,
+      //       [questionIndex.toString()]: {
+      //           ...(prevData.progress?.[questionIndex.toString()] || {}), // Keep existing progress data if any
+      //            question_id: currentQuestionId,
+      //            question_text: currentQuestion.text,
+      //            answer: selectedAnswerText,
+      //            is_disabled: true, // Mark as attempting/disabled
+      //       }
+      //   }
+      // }));
+
+      const response = await updateExamJourney(token, examJourneyId, submissionData);
+
+      // Update state with the response from the backend
+      setExamData(prevData => ({
+        ...prevData,
+        progress: {
+            ...prevData.progress, // Keep existing progress
+            ...response.progress, // Add/overwrite with the updated progress from backend for this question
+             // Ensure the received progress item is marked as disabled visually if needed
+            [questionIndex.toString()]: {
+                ...(response.progress?.[questionIndex.toString()] || {}),
+                is_disabled: true, // Explicitly mark as disabled after successful check
+            }
+        },
+        time_left: response.time_left !== undefined ? response.time_left : prevData.time_left, // Update time if backend sends it
+        current_question: response.current_question !== undefined ? response.current_question : questionIndex, // Update index if backend sends it
+      }));
+
+      
+      
+
+      // Automatic navigation in 'exam' mode after successful submission
+      if (quizType === 'exam' && questionIndex < totalQuestions - 1) {
+          handleNavigate(questionIndex + 1);
+      } else if (quizType === 'exam' && questionIndex === totalQuestions - 1) {
+         // If it was the last question in exam mode, potentially show results
+         // Check if *all* questions are answered before showing results automatically
+         // Note: This check might be complex depending on how progress is structured
+         const allAnswered = Object.keys(examData.progress).length + 1 >= totalQuestions; // +1 for the one just submitted
+         if (allAnswered) {
+             setShowResultsPage(true);
+         }
+      }
+
+    } catch (error) {
+      console.error("Error updating exam:", error);
+      // TODO: Show user-friendly error (e.g., using toast)
+       // Revert optimistic update if it failed (if implemented)
+       // setExamData(prevData => ({ ...prevData })); // Need to store original state to revert properly
+    }
+  }, [token, examJourneyId, examData, questions, quizType, totalQuestions, handleNavigate]); // Dependencies
+
+
+  // Handle finishing the quiz (e.g., clicking Finish/Submit on last question or timer runs out)
+    const handleFinishQuiz = useCallback(async (finalTimeLeft) => {
+        setShowResultsPage(true);
+        // Optional: Send a final update to the backend if needed
+        if (token && examJourneyId && examData && finalTimeLeft !== undefined) {
+             try {
+                await updateExamJourney(token, examJourneyId, {
+                    time_left: finalTimeLeft,
+                    // Optionally send final state if backend requires it
+                    // progress: examData.progress,
+                     current_question: currentQuestionIndex,
+                    // status: 'completed' // If your backend supports a status
+                });
+             } catch (error) {
+                console.error("Error sending final quiz update:", error);
+             }
+        }
+
+    }, [token, examJourneyId, examData, currentQuestionIndex]); // Added currentQuestionIndex
+
+
+  const handleResumeLater = useCallback(() => {
+      // Optionally send current state to backend before navigating away
+      // updateExamJourney(...)
+      router.push('/'); // Navigate home or to dashboard
+  }, [router]);
+
+
+  const handleEnterReviewMode = useCallback(() => {
+      setShowResultsPage(false); // Hide results page
+      setReviewMode(true); // Enter review mode
+      handleNavigate(0); // Start review from the first question
+  }, [handleNavigate]);
+
+
+  // --- Render Logic ---
+  if (loading) {
+    // Consistent Skeleton Loading
+    return (
+      <div className="w-full h-full flex flex-col items-start justify-center bg-white">
+        <NavBarContainer />
+        <div className="w-full p-6 max-w-5xl mx-auto">
+             <Skeleton height={40} width={250} /> {/* Title Area */}
+             <div className="flex justify-between items-center mt-4">
+                <Skeleton height={30} width={150} /> {/* Icons Area */}
+                 <Skeleton height={30} width={100} /> {/* Timer Area */}
+             </div>
+             <div className="flex gap-4 mt-4">
+                 <Skeleton height={400} width={120} /> {/* Number Scroll Area */}
+                 <div className="flex-1">
+                     <Skeleton height={50} /> {/* Question Text */}
+                     <div className="mt-4 space-y-3">
+                         <Skeleton height={40} /> {/* Answer Option */}
+                         <Skeleton height={40} /> {/* Answer Option */}
+                         <Skeleton height={40} /> {/* Answer Option */}
+                         <Skeleton height={40} /> {/* Answer Option */}
+                     </div>
+                 </div>
+             </div>
+             <div className="flex justify-between items-center mt-6">
+                <div className="flex gap-2">
+                    <Skeleton height={40} width={100} /> {/* Prev Button */}
+                    <Skeleton height={40} width={100} /> {/* Next Button */}
+                </div>
+                 <div className="flex gap-2">
+                    <Skeleton height={40} width={120} /> {/* Resume Later */}
+                    <Skeleton height={40} width={120} /> {/* Check/Submit Button */}
+                </div>
+             </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full h-screen flex flex-col items-center justify-center bg-white">
+        <NavBarContainer />
+        <div className="flex-grow flex items-center justify-center text-red-600 text-xl">
+          {error}
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!examData || !questions || questions.length === 0) {
+     return (
+       <div className="w-full h-screen flex flex-col items-center justify-center bg-white">
+         <NavBarContainer />
+         <div className="flex-grow flex items-center justify-center text-gray-600 text-xl">
+           {t("NoQuestionsFound")}
+         </div>
+         <Footer />
+       </div>
+     );
+  }
+
+  // Find the actual question object for the current index
+  const currentQuestionData = questions[currentQuestionIndex];
+
+  if (!currentQuestionData && !loading && totalQuestions > 0) {
+     // Handle case where index might be out of bounds after data load, redirect to first question
+      console.warn(`Question index ${currentQuestionIndex} out of bounds. Redirecting to 0.`);
+      handleNavigate(0);
+      return <SplashScreen />; // Show loading while redirecting
+  }
 
   return (
-    <div className={`w-full h-full flex flex-col items-start justify-center bg-white`}>
-      <NavbarContainer />
+    <div className="w-full h-full min-h-screen flex flex-col items-start justify-center bg-white">
+      <NavBarContainer />
+      <main className="w-full flex-grow flex items-start justify-center">
+        {currentQuestionData ? (
+          <QuestionWindow
+            // --- Core Data ---
+            examJourneyId={examJourneyId}
+            question={currentQuestionData} // Pass the specific question object
+            questionIndex={currentQuestionIndex} // Pass the index
+            totalQuestions={totalQuestions}
+            quizType={quizType}
+            progress={progress} // Pass the whole progress object { '0': {...}, '1': {...} }
+            initialTime={initialTime} // Pass initial time in seconds
+            reviewMode={reviewMode}
+            showResultsPage={showResultsPage} // Control results view visibility
 
-      <div className={`w-full h-full items-start justify-center`}>
-        {loading ? (
-          <div className="w-full p-6">
-            <Skeleton height={50} width={200} />
-            <div className="mt-4">
-              <Skeleton height={20} count={3} />
-            </div>
-            <div className="mt-4">
-              <Skeleton height={300} />
-            </div>
-
-          </div>
+            // --- Callbacks ---
+            onAnswerSubmit={handleAnswerSubmit}
+            onNavigate={handleNavigate} // Pass the navigation handler
+            onFinishQuiz={handleFinishQuiz}
+            onResumeLater={handleResumeLater}
+            onEnterReviewMode={handleEnterReviewMode} // Pass review mode handler
+            // TODO: Add callbacks for modals (Favourites, Notes, Reports) if needed at this level
+          />
         ) : (
-            (examObject) && (
-            <QuestionWindow
-              examJourneyId={id}
-              length={length}
-              questions={Object.entries(examObject.questions).find((question, index) => {
-                return index === parseInt(currentQuestionIndex);
-              })[1]}
-              questionId={currentQuestionIndex} //not important, remove
-              numbers={Object.keys(examObject.questions)}
-              questionIndex={currentQuestionIndex}
-              nextIndex={
-                parseInt(currentQuestionIndex) + 1
-              }
-              prevIndex={
-                  parseInt(currentQuestionIndex) - 1
-              }
-              lastIndex={
-                Object.entries(examObject.questions).length - 1
-              }
-              type={examObject.type}
-              progress={progress}
-              setcurrentQuestion={setcurrentQuestionIndex}
-              reviewExam={reviewExam}
-              setReviewExam={setReviewExam}
-              time={
-                examObject.time_left ? examObject.time_left.toString() : null
-              }
-              onCheck={(
-                selectedAnswerAsText,
-                selectedAnswerIndex,
-                time_left
-              ) => {
-                updateExamJourney(token, id, {
-                  time_left,
-                  progress: {
-                    ...examObject.progress,
-                    [currentQuestionIndex.toString()]: {
-                      question_text: Object.entries(examObject.questions).find((question, index) => {
-                        return index === parseInt(currentQuestionIndex);
-                      })[1].text,
-                      answer: selectedAnswerAsText,
-              
-                    },
-                  },
-                  current_question: parseInt(currentQuestionIndex),
-                })
-                  .then((response) => {
-                    handleProgressUpdate(currentQuestionIndex.toString(), {
-                      question_text: Object.entries(examObject.questions).find((question, index) => {
-                        return index === parseInt(currentQuestionIndex);
-                      })[1].text,
-                      answer: selectedAnswerAsText,
-                      is_correct: response.progress[currentQuestionIndex.toString()].is_correct,
-                      correct_answer:
-                        response.progress[currentQuestionIndex.toString()][
-                          "correct_answer"
-                        ],
-                      is_disabled: true,
-                    });
-                    // if (
-                    //   Object.keys(response.progress).length < length &&
-                    //   examObject?.type === "exam"
-                    // ) {
-                    //   router.push(
-                    //     `/quiz?id=${id}&q=${
-                    //       examObject.questions[
-                    //         examObject.questions.indexOf(
-                    //           examObject.questions.find(
-                    //             (qu) =>
-                    //               parseInt(qu.id) === parseInt(currentQuestionIndex)
-                    //           )
-                    //         ) + 1
-                    //       ].id
-                    //     }`
-                    //   );
-                    // }
-                  })
-                  .catch((error) => {
-                    console.error("Error updating exam:", error);
-                  });
-              }}
-            />
-          )
+           // This case should ideally be handled by the loading/error/no-questions states above
+           // But as a fallback:
+           <div className="flex-grow flex items-center justify-center text-gray-600 text-xl">
+                {t("LoadingQuestion")}
+           </div>
         )}
+      </main>
+      {/* Added some margin-top for spacing before footer */}
+      <div className="mt-16">
+         <Footer />
       </div>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <Footer />
     </div>
   );
 };
+
 export default Quiz;

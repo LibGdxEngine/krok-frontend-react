@@ -14,7 +14,7 @@ function Footer() {
       <>
         <div
           id={`footer `}
-          className={`bg-navyBlue w-full h-fit py-4  z-20 flex sm:flex-col sm:justify-center items-center justify-between`}
+          className={`bg-navyBlue w-screen h-fit py-4  z-20 flex sm:flex-col sm:justify-center items-center justify-between`}
         >
           <div className="w-full flex flex-col  justify-center items-start sm:items-center ">
             <div className=" text-white font-bold ps-10 sm:ps-0 mb-2 sm:mb-0">

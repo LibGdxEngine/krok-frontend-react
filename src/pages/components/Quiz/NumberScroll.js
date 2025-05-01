@@ -16,7 +16,7 @@ const NumberScroll = ({
 
   const handleNumberClick = (number) => {
     onNumberClicked(number);
-    setSelectedNumber(number);
+    // setSelectedNumber(number);
   };
   const itemRefs = useRef([]); // Array of refs to store each NumberItem ref
   const containerRef = useRef(null); // Ref for the parent scrollable container
