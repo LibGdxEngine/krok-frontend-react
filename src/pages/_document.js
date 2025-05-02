@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <link rel="icon" href="/logo.ico" />
-        <title>KROK PLUS</title>
+        {/* <title>KROK PLUS</title> */}
       </Head>
       <body>
         <Main />

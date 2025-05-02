@@ -7,14 +7,19 @@ import { useTranslation } from "react-i18next";
 
 import NavBarContainer from "./components/NavbarContainer"; // Corrected import path
 import Footer from "./components/Footer";
-import QuestionWindow from "./components/Quiz/QuestionWindow"; // Updated component name/path if needed
+import QuestionWindow from "../components/Quiz/QuestionWindow"; // Updated component name/path if needed
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SplashScreen from "./components/SplashScreen"; // Assuming SplashScreen exists
 
 import { getExamJourney, updateExamJourney } from "@/components/services/questions";
-import { rearrangeArrayById } from "../pages/components/utils/arrayUtils"; // Import utility
-import { timeToSeconds } from "../pages/components/utils/arrayUtils"; // Import utility
+// Import the default export from arrayUtils.js
+// You can name it 'rearrangeArrayById' or anything else you prefer
+import rearrangeArrayById from '@/components/utils/arrayUtils';
+
+// Import the default export from timeUtils.js
+// You can name it 'timeToSeconds' or anything else you prefer
+import timeToSeconds from '@/components/utils/timeUtils';
 
 const Quiz = () => {
   const { t } = useTranslation("common");

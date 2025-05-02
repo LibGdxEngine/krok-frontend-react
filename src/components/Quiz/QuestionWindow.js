@@ -9,13 +9,13 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
 // --- Import Sub-Components (Create these files) ---
-import QuizHeader from "../Quiz/QuizHeader";
+import QuizHeader from "../../pages/components/Quiz/QuizHeader";
 // import NumberScroll from "./NumberScroll";
-import QuestionDisplay from "../Quiz/QuestionDisplay";
-import QuizControls from "../Quiz/QuizControls";
-import QuizResults from "../Quiz/QuizResults";
-import HintDisplay from "./HintDisplay"; // Assuming HintDisplay exists and is okay
-
+import QuestionDisplay from "../../pages/components/Quiz/QuestionDisplay";
+import QuizControls from "../../pages/components/Quiz/QuizControls";
+import QuizResults from "../../pages/components/Quiz/QuizResults";
+import HintDisplay from "../../pages/components/Quiz/HintDisplay"; // Assuming HintDisplay exists and is okay
+import YouTubePlayer from "../../pages/components/utils/YouTubePlayer";
 // --- Import Modals & Utils ---
 import FavoritesModal from "@/pages/components/Favourites/FavoritesModal";
 import NotesModal from "@/pages/components/utils/NotesModal";
@@ -61,6 +61,22 @@ const QuestionWindow = ({
    const currentQuestionProgress = useMemo(() => progress?.[questionIndex.toString()], [progress, questionIndex]);
    const isAnswered = useMemo(() => !!currentQuestionProgress?.is_disabled, [currentQuestionProgress]); // Check if backend marked it answered/disabled
    const numbersArray = useMemo(() => Array.from({ length: totalQuestions }, (_, i) => i), [totalQuestions]); // Array [0, 1, 2...]
+    // Calculate results if showResultsPage is true
+    const resultsData = useMemo(() => {
+        if (!showResultsPage) return null;
+
+        const answeredQuestions = Object.values(progress);
+        const correctCount = answeredQuestions.filter(p => p.is_correct === true).length;
+        const totalAnswered = answeredQuestions.length; // Or use totalQuestions if score is based on total
+        // Use totalQuestions for percentage calculation unless specified otherwise
+        const scorePercentage = totalQuestions > 0 ? (correctCount / totalQuestions) * 100 : 0;
+
+        return {
+        score: parseFloat(scorePercentage.toFixed(1)),
+        correctCount: correctCount,
+        totalQuestions: totalQuestions,
+        };
+    }, [showResultsPage, progress, totalQuestions]);
 
 
   // --- Effects ---
@@ -134,6 +150,7 @@ const QuestionWindow = ({
       }
 
   }, [
+      handleNext,
       questionIndex,
       totalQuestions,
       selectedAnswerIndex,
@@ -169,22 +186,6 @@ const QuestionWindow = ({
     return <SplashScreen />;
   }
 
-  // Calculate results if showResultsPage is true
-  const resultsData = useMemo(() => {
-    if (!showResultsPage) return null;
-
-    const answeredQuestions = Object.values(progress);
-    const correctCount = answeredQuestions.filter(p => p.is_correct === true).length;
-    const totalAnswered = answeredQuestions.length; // Or use totalQuestions if score is based on total
-    // Use totalQuestions for percentage calculation unless specified otherwise
-    const scorePercentage = totalQuestions > 0 ? (correctCount / totalQuestions) * 100 : 0;
-
-    return {
-      score: parseFloat(scorePercentage.toFixed(1)),
-      correctCount: correctCount,
-      totalQuestions: totalQuestions,
-    };
-  }, [showResultsPage, progress, totalQuestions]);
 
 
   return (
