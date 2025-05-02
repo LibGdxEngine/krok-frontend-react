@@ -1,12 +1,12 @@
 import LogoWithBlueName from "@/pages/components/utils/LogoWithBlueName";
 import SignupInputs from "@/pages/components/Auth/SignupInputs";
-import ActionButton from "@/pages/components/utils/ActionButton";
+import ActionButton from "@/components/ui/ActionButton";
 import Image from "next/image";
 import LoginWithGoogleBtn from "../../../../public/Login With Google.svg";
 import {useRouter} from "next/router";
 import React, {useState} from "react";
 import {useAuth} from "@/context/AuthContext";
-import SplashScreen from "@/pages/components/SplashScreen";
+import SplashScreen from "@/components/common/SplashScreen";
 import {toast} from "react-toastify";
 import {createUser} from "@/components/services/auth";
 import loginBtn from "../../../../public/login_button.svg";

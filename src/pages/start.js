@@ -1,10 +1,10 @@
-import ActionButton from "@/pages/components/utils/ActionButton";
+import ActionButton from "@/components/ui/ActionButton";
 import {useRouter} from "next/router";
-import CheckButton from "@/pages/components/utils/CheckButton";
-import Footer from "@/pages/components/Footer";
+import CheckButton from "@/components/ui/CheckButton";
+import Footer from "@/components/layout/Footer";
 import NavBar from "@/pages/components/NavBar";
 import {useAuth} from "@/context/AuthContext";
-import SplashScreen from "@/pages/components/SplashScreen";
+import SplashScreen from "@/components/common/SplashScreen";
 import {useEffect, useState} from "react";
 import {getLanguages, getSpecificities, getLevels} from "@/components/services/questions";
 import {toast} from "react-toastify";
@@ -14,7 +14,7 @@ import {useTranslation} from "react-i18next";
 import Image from "next/image";
 import notificationsIcon from "../../public/🦆 icon _bell notification_.svg";
 import userIcon from "../../public/profile.svg";
-import NavbarContainer from "./components/NavbarContainer";
+import NavbarContainer from "../components/layout/NavbarContainer";
 
 
 const Start = () => {

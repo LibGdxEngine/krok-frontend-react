@@ -1,6 +1,6 @@
 import {useState} from "react";
-import unchecked from "../../../../public/tickcircle.svg";
-import checked from "../../../../public/tickcircleunchecked.svg";
+import unchecked from "../../../public/tickcircle.svg";
+import checked from "../../../public/tickcircleunchecked.svg";
 import Image from "next/image";
 
 function CheckButton({text, onClick = null, isSelected = false}) {

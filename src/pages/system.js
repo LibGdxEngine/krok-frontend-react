@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 
-import ActionButton from "@/pages/components/utils/ActionButton";
-import CheckButton from "@/pages/components/utils/CheckButton";
-import Footer from "@/pages/components/Footer";
+import ActionButton from "@/components/ui/ActionButton";
+import CheckButton from "@/components/ui/CheckButton";
+import Footer from "@/components/layout/Footer";
 import NavBar from "@/pages/components/NavBar";
 import StepBar from "@/pages/components/utils/StepBar";
 import { useAuth } from "@/context/AuthContext";
@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import SearchBar from "@/pages/components/Home/SearchBar";
 import SectionsHeader from "@/pages/components/SectionsHeader";
 import { useTranslation } from "react-i18next";
-import NavbarContainer from "./components/NavbarContainer";
+import NavbarContainer from "../components/layout/NavbarContainer";
 const System = () => {
   const { t, i18n } = useTranslation("common");
   const router = useRouter();

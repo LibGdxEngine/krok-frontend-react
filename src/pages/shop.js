@@ -9,7 +9,7 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef } from "react";
 import { useEffect } from "react";
-import SplashScreen from "@/pages/components/SplashScreen";
+import SplashScreen from "@/components/common/SplashScreen";
 import axiosInstance from "@/components/axiosInstance";
 import { useAuth } from "@/context/AuthContext";
 

@@ -20,7 +20,7 @@ import YouTubePlayer from "../../pages/components/utils/YouTubePlayer";
 import FavoritesModal from "@/pages/components/Favourites/FavoritesModal";
 import NotesModal from "@/pages/components/utils/NotesModal";
 import ReportsModal from "@/pages/components/utils/ReportsModal";
-import SplashScreen from "@/pages/components/SplashScreen"; // For missing question case
+import SplashScreen from "@/components/common/SplashScreen"; // For missing question case
 
 
 const QuestionWindow = ({

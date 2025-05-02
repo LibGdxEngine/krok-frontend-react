@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import NavBar from "@/pages/components/NavBar";
-import Footer from "@/pages/components/Footer";
+import Footer from "@/components/layout/Footer";
 
 import { useAuth } from "@/context/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
@@ -11,7 +11,7 @@ import SectionsHeader from "@/pages/components/SectionsHeader";
 import { useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
 import { searchForquestions } from "@/components/services/questions";
-import NavbarContainer from "@/pages/components/NavbarContainer";
+import NavbarContainer from "@/components/layout/NavbarContainer";
 
 const Search = () => {
   const { t } = useTranslation("common");

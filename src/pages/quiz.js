@@ -5,12 +5,12 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import { useTranslation } from "react-i18next";
 
-import NavBarContainer from "./components/NavbarContainer"; // Corrected import path
-import Footer from "./components/Footer";
+import NavBarContainer from "../components/layout/NavbarContainer"; // Corrected import path
+import Footer from "../components/layout/Footer";
 import QuestionWindow from "../components/Quiz/QuestionWindow"; // Updated component name/path if needed
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import SplashScreen from "./components/SplashScreen"; // Assuming SplashScreen exists
+import SplashScreen from "../components/common/SplashScreen"; // Assuming SplashScreen exists
 
 import { getExamJourney, updateExamJourney } from "@/components/services/questions";
 // Import the default export from arrayUtils.js

@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
 
-import ActionButton from "@/pages/components/utils/ActionButton";
-import CheckButton from "@/pages/components/utils/CheckButton";
-import Footer from "@/pages/components/Footer";
+import ActionButton from "@/components/ui/ActionButton";
+import CheckButton from "@/components/ui/CheckButton";
+import Footer from "@/components/layout/Footer";
 import StepBar from "@/pages/components/utils/StepBar";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { getYears } from "@/components/services/questions";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
-import NavbarContainer from "./components/NavbarContainer";
+import NavbarContainer from "@/components/layout/NavbarContainer";
 const Year = () => {
   const { t } = useTranslation("common");
   const router = useRouter();

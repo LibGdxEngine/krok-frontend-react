@@ -1,8 +1,10 @@
 import HomePage from "@/pages/components/Home/HomePage";
 import HomeFAQs from "@/pages/components/Home/HomeFAQs";
-import Footer from "@/pages/components/Footer";
+import TopStudentsThisMonth from "@/pages/components/Home/TopStudentsThisMonth";
+import Footer from "@/components/layout/Footer";
 import VideoPlayer from "@/pages/components/utils/VideoPlayer";
 import { useEffect, useState } from "react";
+
 import {
     getHomeData,
 } from "@/components/services/questions";
@@ -55,6 +57,10 @@ const Home = () => {
           <HomePage />
           <br />
           <br />
+       
+          {/* Add the leaderboard section */}
+          <TopStudentsThisMonth maxStudents={10} /> {/* Show top 10 */}
+
           <div >
             <br />
           </div>

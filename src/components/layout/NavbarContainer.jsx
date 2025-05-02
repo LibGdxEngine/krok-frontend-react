@@ -1,13 +1,14 @@
 import React from "react";
-import NavBar from "./NavBar";
+import NavBar from "../../pages/components/NavBar";
 import Image from "next/image";
-import SearchBar from "./Home/SearchBar";
-import SectionsHeader from "./SectionsHeader";
+import SearchBar from "../../pages/components/Home/SearchBar";
+import SectionsHeader from "../../pages/components/SectionsHeader";
 import { useAuth } from "@/context/AuthContext";
 import userIcon from "../../../public/profile.svg";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+
 const NavbarContainer = ({with_search_bar = true}) => {
   const { token, user } = useAuth();
   const {t, i18n} = useTranslation("common");

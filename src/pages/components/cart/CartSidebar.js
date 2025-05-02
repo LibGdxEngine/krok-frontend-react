@@ -306,6 +306,7 @@ export default function CartSidebar() {
             >
               Checkout
             </button>
+            
           </div>
         )}
       </div>

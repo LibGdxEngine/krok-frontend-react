@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import {passwordResetVerify} from "@/components/services/auth";
-import NavbarContainer from "./components/NavbarContainer";
+import NavbarContainer from "../components/layout/NavbarContainer";
 import { FaArrowLeft } from "react-icons/fa";
 
 const ResetPassword = () => {

@@ -3,7 +3,7 @@ import nextI18NextConfig from './next-i18next.config.mjs';
 
 const nextConfig = {
   images: {
-    domains: ['krokplus.com'],
+    domains: ['krokplus.com', 'plus.unsplash.com', 'images.unsplash.com'],
   },
   reactStrictMode: true,
   swcMinify: true,  // Use SWC for minification instead of Terser

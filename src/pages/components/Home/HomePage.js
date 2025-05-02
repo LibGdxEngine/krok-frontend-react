@@ -20,7 +20,7 @@ import VideoPlayer from "@/pages/components/utils/VideoPlayer";
 import { useTranslation } from 'react-i18next';
 import userIcon from "../../../../public/profile.svg";
 import { useAuth } from "@/context/AuthContext";
-import NavbarContainer from "../NavbarContainer";
+import NavbarContainer from "../../../components/layout/NavbarContainer";
 
 
 function HomeSlider({ onClick }) {

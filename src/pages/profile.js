@@ -4,10 +4,10 @@ import Sidebar from "/src/pages/components/Profile/Sidebar"
 import Image from "next/image";
 import profilePlaceHolder from "../../public/profile.svg";
 import NavBar from "@/pages/components/NavBar";
-import Footer from "@/pages/components/Footer";
+import Footer from "@/components/layout/Footer";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
-import SplashScreen from "@/pages/components/SplashScreen";
+import SplashScreen from "@/components/common/SplashScreen";
 import {
   deleteExamJourney, deleteFavouritesList,
   getNotes,
@@ -24,7 +24,7 @@ import SectionsHeader from "@/pages/components/SectionsHeader";
 import userIcon from "../../public/profile.svg";
 import LoadingSpinner from "@/pages/components/utils/LoadingSpinner";
 import { useTranslation } from "react-i18next";
-import NavbarContainer from './components/NavbarContainer';
+import NavbarContainer from '../components/layout/NavbarContainer';
 import { parsePhoneNumber } from 'libphonenumber-js'; // Ensure you have this installed: npm install libphonenumber-js
 
 

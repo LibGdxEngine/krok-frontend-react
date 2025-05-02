@@ -6,13 +6,13 @@ import { createExamJourney, getQuestionsCount } from "@/components/services/ques
 import ActionButtons from "@/pages/components/Questions/ActionButtons";
 import QuestionsPractice from "@/pages/components/Questions/QuestionsPractice";
 import QuestionsFilter from "@/pages/components/Questions/QuestionsFilter";
-import Footer from "@/pages/components/Footer";
+import Footer from "@/components/layout/Footer";
 import NavBar from "@/pages/components/NavBar";
 import KrokSpecifics from "@/pages/components/Questions/KrokSpecifics";
 import SearchBar from "@/pages/components/Home/SearchBar";
 import SectionsHeader from "@/pages/components/SectionsHeader";
 import { useTranslation } from "react-i18next";
-import NavbarContainer from "./components/NavbarContainer";
+import NavbarContainer from "../components/layout/NavbarContainer";
 
 const Filter = () => {
     const { t, i18n } = useTranslation("common");
