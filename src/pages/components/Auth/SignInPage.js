@@ -66,6 +66,9 @@ function SignInPage() {
         // socialLogin('google');
         socialLogin('google');
     };
+    const handleFBSignIn = () => {
+        socialLogin('facebook');
+    };
     return (
         <div id={`signup-page`} className={`w-full h-full my-10 flex flex-col items-center justify-start bg-white`}>
             <LogoWithBlueName />
@@ -84,8 +87,8 @@ function SignInPage() {
             </div>
             <div className={`w-full flex flex-col items-center justify-center mt-4 px-10`}>
                 <Image onClick={handleGoogleSignIn} style={{cursor: "pointer"}} src={loginBtn} alt={``} width={400} height={40}/>
-                {/*<Image style={{cursor: "pointer"}} className={`my-4`}*/}
-                {/*       src={loginFace} alt={``} width={400} height={40}/>*/}
+                <Image  onClick={handleFBSignIn} style={{cursor: "pointer"}} className={`my-4`}
+                       src={loginFace} alt={``} width={400} height={40}/>
                 {/*<Image style={{cursor: "pointer"}} className={`my-0 mb-2`} src={loginApple} alt={``} width={400} height={40}/>*/}
 
             </div>

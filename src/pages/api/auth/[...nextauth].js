@@ -26,8 +26,6 @@ export default NextAuth({
         async signIn({ user, account, profile }) {
             if (account.provider === "google" || account.provider === "facebook" || account.provider === "apple") {
                 try {
-                    console.log('Hello provider');
-                    
                     // Make request to Django backend to authenticate with social provider
                     const response = await axios.post(`${API_URL}/api/v1/auth/${account.provider}/`, {
                         access_token: account.access_token,
@@ -35,7 +33,8 @@ export default NextAuth({
                     });
                     // Save the token to the user object to be used in the session
                     user.token = response.data.token;
-
+                    console.log('Hello ' + response.data.token);
+                    
                     return true;
                 } catch (error) {
                     console.error("Error during social sign in:", error);
@@ -50,10 +49,14 @@ export default NextAuth({
             if (user) {
                 token.token = user.token;
             }
+            console.log("Why " + token.token);
+            
             return token;
         },
         async session({ session, token }) {
             // Add the token to the session that will be available client-side
+            console.log("Session got Hello");
+            
             session.token = token.token;
             return session;
         },

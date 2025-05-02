@@ -124,12 +124,12 @@ const HintDisplay = ({ questions, showHint }) => {
                             <h3 className="text-black font-bold text-[24px] text-center">
                                 {hint?.hint || questions.hint || "No hint available"}
                             </h3>
-                            {hint?.relevant_answers && (
+                            {/* {hint?.relevant_answers && (
                                 <div className="mt-4">
                                     <p className="text-gray-700 text-[18px] font-medium">Consider these answers:</p>
                                     <p className="text-gray-600 text-[16px]">{hint.relevant_answers}</p>
                                 </div>
-                            )}
+                            )} */}
                             <div className="absolute top-0 end-0 p-2">
                                 <div
                                     onClick={closeHintModal}

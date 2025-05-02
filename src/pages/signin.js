@@ -39,6 +39,11 @@ const Signin = () => {
         socialLogin('google');
     };
 
+    const handleFBSignIn = () => {
+        // signIn("facebook", { callbackUrl: "http://localhost:3000/api/auth/callback/facebook" });
+        socialLogin('facebook');
+    };
+
     const handleSignIn = async (e) => {
         e.preventDefault();
         try {
@@ -104,11 +109,12 @@ const Signin = () => {
                             {t("SignIn")}
                         </h1>
                         <div className={`w-full flex flex-col items-center justify-center`}>
-                            {/*<SocialLoginButton*/}
-                            {/*    provider="facebook"*/}
-                            {/*    clientId="337527847157-rf90dg46v3vgf1i8pivqjer9mujl2urk.apps.googleusercontent.com"*/}
-                            {/*    redirectUri="http://localhost:3000/signin/"*/}
-                            {/*/>*/}
+                            <SocialLoginButton
+                            onClick={handleFBSignIn}
+                                provider="facebook"
+                                clientId="337527847157-rf90dg46v3vgf1i8pivqjer9mujl2urk.apps.googleusercontent.com"
+                                redirectUri="https://krokplus.com"
+                            />
 
                             <SocialLoginButton
                                 onClick={handleGoogleSignIn}
