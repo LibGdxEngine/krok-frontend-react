@@ -78,7 +78,12 @@ const QuestionWindow = ({
         };
     }, [showResultsPage, progress, totalQuestions]);
 
-
+    const handleNext = useCallback(() => {
+        if (questionIndex < totalQuestions - 1) {
+             onNavigate(questionIndex + 1);
+        }
+   }, [questionIndex, totalQuestions, onNavigate]);
+ 
   // --- Effects ---
   // Reset local state when the question changes
   useEffect(() => {
@@ -150,7 +155,6 @@ const QuestionWindow = ({
       }
 
   }, [
-      handleNext,
       questionIndex,
       totalQuestions,
       selectedAnswerIndex,
@@ -163,11 +167,6 @@ const QuestionWindow = ({
       progress // progress needed to check if all answered
   ]);
 
-  const handleNext = useCallback(() => {
-       if (questionIndex < totalQuestions - 1) {
-            onNavigate(questionIndex + 1);
-       }
-  }, [questionIndex, totalQuestions, onNavigate]);
 
   const handlePrev = useCallback(() => {
       if (questionIndex > 0) {
