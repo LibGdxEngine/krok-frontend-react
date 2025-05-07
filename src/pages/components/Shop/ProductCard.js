@@ -5,7 +5,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import { useCartContext } from "@/context/CartContext";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product , onClick}) => {
   const notify = () => toast("Product added to cart!");
   const product_id = product?.id;
   const { token } = useAuth();
@@ -18,13 +18,13 @@ const ProductCard = ({ product }) => {
 
 
   return (
-    <div key={0} className="border rounded-lg p-4 space-y-2">
+    <div onClick={onClick} key={0} className="border rounded-lg p-4 space-y-2">
       <div className="relative h-[300px] bg-gray-100">
         <Image
           src={product?.img ? `https://krokplus.com${product?.img}` : '/placeholder.svg'}
           alt={product?.name}
           fill
-        
+          style={{cursor: "pointer"}}
           className="object-cover"
         />
       </div>
