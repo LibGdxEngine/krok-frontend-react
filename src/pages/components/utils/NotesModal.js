@@ -11,6 +11,8 @@ const NotesModal = ({isOpen, onClose, question}) => {
         const {token, loading} = useAuth();
         const [note, setNote] = useState('');
         const handleSaveNote = () => {
+          console.log(token, note, question);
+          
             createNewNote(token, note, question).then((response) => {
                 toast.success('Note saved successfully');
             }).catch((error) => {

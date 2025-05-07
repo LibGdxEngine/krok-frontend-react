@@ -2,7 +2,7 @@
 
 const nextI18NextConfig = {
     i18n: {
-        defaultLocale: 'en',
+        defaultLocale: 'uk',
         locales: ['en', 'uk'], // Supported languages
     },
 };

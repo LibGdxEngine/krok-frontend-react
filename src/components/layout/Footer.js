@@ -34,33 +34,42 @@ function Footer() {
           <div
             className={`w-fit  bg-white rounded-xl items-end justify-end mx-10 hidden sm:flex mt-2`}
           >
-            <LanguageDropdown />
+            {/* <LanguageDropdown /> */}
           </div>
           <div className="w-56 flex flex-col items-center justify-center mx-20 sm:mx-0">
-            <div className="w-56 sm:text-center text-white  font-base mb-2 px-4">{t("FOLLOWUS")}</div>
+            <div className="w-56  text-center sm:text-center text-white font-base mb-2 px-4">{t("FOLLOWUS")}</div>
             <div
-              className={`w-fit  h-full flex items-center justify-center `}
+              className={`w-56 h-full flex items-center justify-center `}
             >
               <Image
                 src={telegram}
                 alt="Telegram Icon"
                 width={49}
                 height={49}
+              
                 className="object-contain mx-1"
+                style={{cursor: 'pointer'}}
+                onClick={()=>{
+                  window.open('https://t.me/drkrok', '_blank')
+                }}
               />
-              <Image
+              {/* <Image
                 className={`mx-1`}
                 src={facebook}
                 alt={``}
                 width={49}
                 height={49}
-              />
+              /> */}
               <Image
                 className={`mx-1`}
                 src={insta}
                 alt={``}
                 width={49}
                 height={49}
+                style={{cursor: 'pointer'}}
+                onClick={()=>{
+                  window.open('https://www.instagram.com/krok.plus?igsh=bmd5Y3M0dTdsYWF6', '_blank')
+                }}
               />
               <Image
                 className={`mx-1`}
@@ -68,6 +77,10 @@ function Footer() {
                 alt={``}
                 width={49}
                 height={49}
+                style={{cursor: 'pointer'}}
+                onClick={()=>{
+                  window.open('https://m.youtube.com/@dr.krok1', '_blank')
+                }}
               />
             </div>
           </div>

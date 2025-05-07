@@ -4,8 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { SessionProvider } from "next-auth/react";
 import { AuthProvider } from "@/context/AuthContext";
-import i18n from "../../i18n";
 import { CartProvider } from "@/context/CartContext";
+import i18n from '../../i18n';
 
 function App({ Component, pageProps }) {
   return (

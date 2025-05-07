@@ -11,7 +11,7 @@ i18n
     .use(initReactI18next) // Passes i18n instance to react-i18next
     .init({
         ...nextI18NextConfig.i18n, // Use your next-i18next config for initialization
-        fallbackLng: 'en', // Fallback language
+        fallbackLng: 'uk', // Fallback language
         debug: process.env.NODE_ENV === 'development', // Enable debug mode in development
         resources: {
             en: {

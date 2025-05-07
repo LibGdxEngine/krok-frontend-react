@@ -466,7 +466,7 @@ const Notes = React.memo(() => {
                   >
                     <div className={`w-full `}>
                       <div
-                        className={`w-full bg-blue-100 rounded-full px-4 text-black`}
+                        className={`w-full bg-blue-100 rounded-lg px-4 text-black`}
                       >{`Q- ${note.question.text}`}</div>
 
                       <p className="mt-4 text-green-700">

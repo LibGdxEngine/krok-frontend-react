@@ -69,7 +69,7 @@ function HomePage() {
                 className={`w-full px-28 lg:px-8 h-full flex flex-col justify-between pb-28 pt-6`}
               >
                 <div
-                  style={{ fontWeight: "700", fontFamily: "Calibri" }}
+                  style={{ fontWeight: "700"}}
                   className={`responsive-font text-white text-opacity-40 font-extrabold`}
                 >
                   KROK +
@@ -77,13 +77,13 @@ function HomePage() {
                 </div>
 
                 <div
-                  style={{ fontFamily: "Calibri" }}
+                  style={{ fontFamily: "" }}
                   className={`sm-responsive-font text-white font-bold text-5xl`}
                 >
                   {t("GetMotivatedInMinutes")}
                 </div>
                 <div
-                  style={{ fontFamily: "Calibri", lineHeight: "50px" }}
+                  style={{ lineHeight: "50px" }}
                   className={`xs-responsive-font text-white mt-4 font-semibold text-4xl`}
                 >
                   “{t("TheEarlier")}.”

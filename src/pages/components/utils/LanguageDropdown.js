@@ -15,7 +15,9 @@ const LanguageDropdown = () => {
 
     useEffect(() => {
         // Retrieve language preference from localStorage on initial load
-        const storedLanguage = localStorage.getItem('language');
+        const storedLanguage = localStorage.getItem('language', 'uk');
+        
+        
         if (storedLanguage && storedLanguage !== i18n.language) {
             i18n.changeLanguage(storedLanguage);
         }

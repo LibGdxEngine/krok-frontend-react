@@ -8,6 +8,7 @@ import userIcon from "../../../public/profile.svg";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import LanguageDropdown from "@/pages/components/utils/LanguageDropdown";
 
 const NavbarContainer = ({with_search_bar = true}) => {
   const { token, user } = useAuth();
@@ -30,6 +31,8 @@ const NavbarContainer = ({with_search_bar = true}) => {
           <div
             className={`w-full h-full flex items-center justify-between px-4 mt-1`}
           >
+
+  
             <div>
               <Link
                 style={{ cursor: "pointer" }}
@@ -65,6 +68,7 @@ const NavbarContainer = ({with_search_bar = true}) => {
                 </div>
               </Link>
             </div>
+            <LanguageDropdown />
             <div>
               {/* <Image width={20} height={20} src={notificationsIcon} alt={`profile`} objectFit={`cover`}
                            className={`w-4 h-4 rounded-full m-2`}/> */}

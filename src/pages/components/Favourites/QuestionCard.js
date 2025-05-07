@@ -44,7 +44,7 @@ const QuestionCard = ({number, question, answers}) => {
         return <div>Loading...</div>
     }
     return (
-        <div className="w-full px-10 mx-20 bg-white shadow-md rounded-lg p-6">
+        <div className="w-full px-8 mx-8 bg-white shadow-md rounded-lg p-6">
             {/* Loading state */}
             {loading && <div>Loading...</div>}
 
