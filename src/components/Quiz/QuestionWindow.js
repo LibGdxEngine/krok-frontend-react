@@ -59,6 +59,8 @@ const QuestionWindow = ({
 
   // --- Derived Data (useMemo) ---
    const currentQuestionProgress = useMemo(() => progress?.[questionIndex.toString()], [progress, questionIndex]);
+
+   
    const isAnswered = useMemo(() => !!currentQuestionProgress?.is_disabled, [currentQuestionProgress]); // Check if backend marked it answered/disabled
    const numbersArray = useMemo(() => Array.from({ length: totalQuestions }, (_, i) => i), [totalQuestions]); // Array [0, 1, 2...]
     // Calculate results if showResultsPage is true
@@ -190,7 +192,6 @@ const QuestionWindow = ({
   return (
     <div className="w-full max-w-5xl p-4 flex flex-col items-center justify-center bg-white">
         {/* --- Modals --- */}
-        {JSON.stringify(question.id)}
         <FavoritesModal isOpen={isFavModalOpen} onClose={closeModal(setFavModalOpen)} question={question} />
         <NotesModal isOpen={isNotesModalOpen} onClose={closeModal(setNotesModalOpen)} question={question.id} />
         <ReportsModal isOpen={isReportsModalOpen} onClose={closeModal(setReportsModalOpen)} questionId={question.id} />
