@@ -50,13 +50,13 @@ const NavBar = () => {
             height={50}
           />
 
-          <div className="w-full flex flex-row items-center justify-between px-20 xl:px-4  ">
+          <div className={`w-full flex flex-row items-center justify-between ${i18n.language === "en" ? "px-20" : "px-4"} xl:px-4 `}>
             <div
               style={{ cursor: "pointer" }}
               onClick={() => {
                 router.replace("/");
               }}
-              className={`text-base font-bold lg:text-xs lg group relative ${
+              className={` text-base font-bold lg:text-xs lg group relative ${
                 isActive("/") ? "text-gray-300" : "text-white"
               }`}
             >
@@ -72,7 +72,7 @@ const NavBar = () => {
               onClick={() => {
                 router.replace("/shop");
               }}
-              className={`text-base font-bold lg:text-xs group relative ${
+              className={` text-base font-bold lg:text-xs group relative ${
                 isActive("/shop") ? "text-gray-300" : "text-white"
               }`}
             >
@@ -113,12 +113,11 @@ const NavBar = () => {
                 className="w-full h-full bg-white text-black py-2 focus:border-lightDark outline-none rounded-full lg:text-xs px-2 ps-12"
                 placeholder={`${t("Search")} ....`}
               />
-                <FontAwesomeIcon
-                    className="absolute p-1 left-8 top-[28%] -translate-x-[50%] text-blue-600"
-                    icon={faSearch}
-                    style={{ fontSize: "16px", width: "16px", height: "16px" }} // Set a fixed size
-                />
-
+              <FontAwesomeIcon
+                className="absolute p-1 left-8 top-[28%] -translate-x-[50%] text-blue-600"
+                icon={faSearch}
+                style={{ fontSize: "16px", width: "16px", height: "16px" }} // Set a fixed size
+              />
             </div>
             {inputValue && (
               <button
@@ -167,7 +166,6 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-
     );
 }
 

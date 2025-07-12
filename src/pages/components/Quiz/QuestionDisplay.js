@@ -65,6 +65,7 @@ const QuestionDisplay = ({ question, showHint, selectedAnswerIndex, onAnswerSele
                             isSelected={isSelected || (progressForQuestion?.answer === option.answer_text)}
                             // Disable clicking if already answered/submitted
                             is_disabled={isDisabled}
+                            is_pending={progressForQuestion?.is_pending} // Use is_pending from progress
                             onAnswer={onAnswerSelect} // Pass the selection handler
                         />
                     );

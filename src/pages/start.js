@@ -101,8 +101,8 @@ const Start = () => {
 
     return (
       <div className="w-full h-full flex flex-col items-start justify-center ">
-        <NavbarContainer/>
-       
+        <NavbarContainer />
+
         <div
           className="w-full h-screen  flex flex-col
         items-center justify-center px-10 py-10"
@@ -118,10 +118,10 @@ const Start = () => {
               id="lang"
               className="sm:w-full  flex sm:flex-col sm:items-start items-center justify-center my-10"
             >
-              <div className="w-32 sm:mx-4 font-semibold text-2xl text-ldarkBlue">
+              <div className="w-64  sm:mx-4 font-semibold text-2xl text-ldarkBlue">
                 {t("Language")}
               </div>
-              <div className="w-full sm:w-full  grid grid-cols-3 lg:grid-cols-2 mx-10 sm:mx-0">
+              <div className="w-full sm:w-full  grid grid-cols-3 lg:grid-cols-2 sm:mx-0">
                 {languages.map((language, index) => {
                   return (
                     <div key={index}>
@@ -146,10 +146,10 @@ const Start = () => {
               id="spec"
               className="sm:w-full flex sm:flex-col sm:items-start items-center justify-center mb-10"
             >
-              <div className="w-32 sm:w-full sm:mx-4 font-semibold text-2xl text-ldarkBlue">
+              <div className="w-60  sm:w-full sm:mx-4 font-semibold text-2xl text-ldarkBlue">
                 {t("Specialty")}
               </div>
-              <div className="w-full sm:w-full grid grid-cols-4 lg:grid-cols-2 mx-10 sm:mx-0">
+              <div className="w-full sm:w-full grid grid-cols-4 lg:grid-cols-2 sm:mx-0">
                 {specificities.map((specific, index) => (
                   <CheckButton
                     key={index}
@@ -164,10 +164,10 @@ const Start = () => {
               id="level"
               className=" sm:w-full  flex sm:flex-col sm:items-start items-center justify-center my-0"
             >
-              <div className="w-32 sm:w-full sm:mx-4 font-semibold text-2xl text-ldarkBlue">
+              <div className="w-64  sm:w-full sm:mx-4 font-semibold text-2xl text-ldarkBlue">
                 {t("Level")}
               </div>
-              <div className="w-full  sm:w-full  grid grid-cols-4 lg:grid-cols-2 mx-10 sm:mx-0">
+              <div className="w-full  sm:w-full  grid grid-cols-4 lg:grid-cols-2  sm:mx-0">
                 {levels.map((level, index) => (
                   <CheckButton
                     key={index}
@@ -182,7 +182,7 @@ const Start = () => {
               onClick={handleNext}
               id="next-btn"
               style={{
-                  cursor: 'pointer',
+                cursor: "pointer",
               }}
               className="w-2/3  sm:w-full mt-10 "
             >
@@ -190,7 +190,7 @@ const Start = () => {
             </div>
           </div>
         </div>
-       
+
         <Footer />
       </div>
     );

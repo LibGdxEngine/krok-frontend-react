@@ -116,8 +116,6 @@ const QuestionWindow = ({
   // --- Button Actions ---
   const handleCheckOrSubmit = useCallback(() => {
       const isLast = questionIndex === totalQuestions - 1;
-
-
       
       if (selectedAnswerIndex === null && !isAnswered) {
           toast.dismiss(); // Dismiss previous toasts if any
@@ -130,6 +128,7 @@ const QuestionWindow = ({
            const selectedAnswerText = question?.answers?.[selectedAnswerIndex]?.answer_text;
                  
            if (selectedAnswerText !== undefined) {
+                
                onAnswerSubmit(questionIndex, selectedAnswerText, selectedAnswerIndex, timeLeft);
            } else {
                console.error("Selected answer text not found!");

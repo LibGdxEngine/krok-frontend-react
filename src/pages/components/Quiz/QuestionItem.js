@@ -9,6 +9,7 @@ const QuestionItem = ({
   isSelected,
   onAnswer,
   answerState,
+  is_pending = false,
   is_disabled = false,
 }) => {
 
@@ -41,12 +42,14 @@ const QuestionItem = ({
       >
         <Image
           className="mx-2"
-          src={isSelected ? checked : unchecked}
+          src={isSelected && !is_pending ? checked : unchecked}
           alt=""
           width={25}
           height={25}
         />
-        <div className={`font-bold ${textStyle}`}>{question}</div>
+        <div className={`font-bold text-start ${is_pending ? "" : textStyle}`}>
+          {question}
+        </div>
       </button>
 
       {image && (
@@ -55,7 +58,6 @@ const QuestionItem = ({
         </div>
       )}
     </div>
-
   );
 };
 

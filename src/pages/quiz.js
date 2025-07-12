@@ -195,6 +195,7 @@ const Quiz = () => {
               question_text: currentQuestion.text,
               answer: selectedAnswerText,
               is_disabled: true, // Mark as attempting/disabled
+              is_pending: true,
             },
           },
         }));
@@ -215,6 +216,7 @@ const Quiz = () => {
             [questionIndex.toString()]: {
               ...(response.progress?.[questionIndex.toString()] || {}),
               is_disabled: true, // Explicitly mark as disabled after successful check
+              is_pending: false,
             },
           },
           time_left:
@@ -245,9 +247,19 @@ const Quiz = () => {
         }
       } catch (error) {
         console.error("Error updating exam:", error);
-        // TODO: Show user-friendly error (e.g., using toast)
-        // Revert optimistic update if it failed (if implemented)
-        // setExamData(prevData => ({ ...prevData })); // Need to store original state to revert properly
+        // Revert optimistic update on failure
+        setExamData((prevData) => ({
+          ...prevData,
+          progress: {
+            ...prevData.progress,
+            [questionIndex.toString()]: {
+              ...(prevData.progress?.[questionIndex.toString()] || {}),
+              is_disabled: false, // Re-enable selection
+              is_pending: false, // Remove pending status
+              // Remove is_correct if it was set optimistically (unlikely for this scenario)
+            },
+          },
+        }));
       }
     },
     [
@@ -258,6 +270,7 @@ const Quiz = () => {
       quizType,
       totalQuestions,
       handleNavigate,
+      t,
     ]
   ); // Dependencies
 
