@@ -45,7 +45,7 @@ const Year = () => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col items-start justify-between bg-white">
+    <div className="w-full h-screen flex flex-col items-start justify-between bg-white">
       {/* Simple Navbar with back button */}
       <NavbarContainer with_search_bar={true} />
 

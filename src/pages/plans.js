@@ -10,6 +10,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import NavbarContainer from "@/components/layout/NavbarContainer";
+import Footer from "@/components/layout/Footer";
 export default function SubscriptionPlans() {
   const [billingCycle, setBillingCycle] = useState("monthly");
   const [hoveredPlan, setHoveredPlan] = useState(null);
@@ -17,16 +18,18 @@ export default function SubscriptionPlans() {
   const plans = [
     {
       name: "Basic",
-      description: "Perfect for beginners starting their learning journey",
-      monthlyPrice: 29,
+      description:
+        "FREE PLAN - Perfect for beginners starting their learning journey",
+      monthlyPrice: 0,
       yearlyPrice: 290,
       features: [
-        "Access to 50+ courses",
-        "Basic video quality",
-        "Community forum access",
-        "Mobile app access",
-        "Basic progress tracking",
-        "Email support",
+        "Search functionality",
+        "Save questions",
+        "Comment on questions",
+        "Copy questions",
+        "Access explanation videos",
+        "View hints",
+        "Save exams for later",
       ],
       color: "lightGreen",
       icon: BookOpen,
@@ -34,18 +37,20 @@ export default function SubscriptionPlans() {
     },
     {
       name: "Plus",
-      description: "Ideal for serious learners and professionals",
-      monthlyPrice: 79,
+      description:
+        "Everything is open for 6 months ,Ideal for serious learners and professionals",
+      monthlyPrice: 30,
       yearlyPrice: 790,
       features: [
-        "Access to 500+ courses",
-        "HD video quality",
-        "Priority community support",
-        "Mobile & desktop apps",
-        "Advanced analytics",
-        "Live Q&A sessions",
-        "Downloadable resources",
-        "Certificate of completion",
+        "Unlimited course access",
+        "4K video quality",
+        "Search functionality",
+        "Save questions",
+        "Comment on questions",
+        "Copy questions",
+        "Access explanation videos",
+        "View hints",
+        "Save exams for later",
       ],
       color: "greenCard",
       icon: Zap,
@@ -53,8 +58,9 @@ export default function SubscriptionPlans() {
     },
     {
       name: "Prime",
-      description: "Comprehensive solution for teams and organizations",
-      monthlyPrice: 149,
+      description:
+        "Everything is open for 1 year, Comprehensive solution for teams and organizations",
+      monthlyPrice: 40,
       yearlyPrice: 1490,
       features: [
         "Unlimited course access",
@@ -108,51 +114,13 @@ export default function SubscriptionPlans() {
             Select the perfect plan to accelerate your growth and achieve your
             goals.
           </p>
-
-          {/* Billing Toggle */}
-          <div className="flex items-center justify-center space-x-4 mb-12">
-            <span
-              className={`text-lg font-medium transition-colors ${
-                billingCycle === "monthly" ? "text-darkGreen" : "text-mildGray"
-              }`}
-            >
-              Monthly
-            </span>
-            <button
-              onClick={() =>
-                setBillingCycle(
-                  billingCycle === "monthly" ? "yearly" : "monthly"
-                )
-              }
-              className="relative w-16 h-8 bg-lightGray rounded-full transition-all duration-300 hover:shadow-3"
-            >
-              <div
-                className={`absolute top-1 w-6 h-6 bg-gradient-to-r from-greenCard to-darkGreen rounded-full transition-transform duration-300 ${
-                  billingCycle === "yearly" ? "translate-x-8" : "translate-x-1"
-                }`}
-              ></div>
-            </button>
-            <span
-              className={`text-lg font-medium transition-colors ${
-                billingCycle === "yearly" ? "text-darkGreen" : "text-mildGray"
-              }`}
-            >
-              Yearly
-            </span>
-            {billingCycle === "yearly" && (
-              <span className="px-3 py-1 bg-gradient-to-r from-greenCard to-darkGreen text-white text-sm rounded-full animate-pulse">
-                Save up to 20%
-              </span>
-            )}
-          </div>
         </div>
 
         {/* Plans Grid */}
         <div className=" grid grid-cols-3 gap-8 max-w-7xl mx-auto">
           {plans.map((plan, index) => {
             const IconComponent = plan.icon;
-            const price =
-              billingCycle === "monthly" ? plan.monthlyPrice : plan.yearlyPrice;
+            const price = plan.monthlyPrice;
             const isHovered = hoveredPlan === index;
 
             return (
@@ -210,9 +178,6 @@ export default function SubscriptionPlans() {
                     <span className="text-5xl font-bold font-Poppins text-darkGreen">
                       ${price}
                     </span>
-                    <span className="text-mildGray ml-2">
-                      /{billingCycle === "monthly" ? "month" : "year"}
-                    </span>
                   </div>
 
                   {billingCycle === "yearly" && plan.name !== "Starter" && (
@@ -267,7 +232,7 @@ export default function SubscriptionPlans() {
         </div>
 
         {/* Bottom Section */}
-        <div className="text-center mt-16 max-w-4xl mx-auto">
+        {/* <div className="text-center mt-16 max-w-4xl mx-auto">
           <div className="bg-white rounded-35 p-8 shadow-2">
             <div className="flex items-center justify-center space-x-8 mb-6">
               <div className="flex items-center space-x-2">
@@ -305,7 +270,18 @@ export default function SubscriptionPlans() {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     </div>
   );
