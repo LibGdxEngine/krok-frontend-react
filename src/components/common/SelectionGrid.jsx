@@ -4,6 +4,7 @@ import React from 'react';
 import CheckButton from '@/components/ui/CheckButton'; // Assuming CheckButton is moved
 
 /**
+ * 
  * Generates Tailwind grid column classes based on configuration.
  * Example config: { base: 2, sm: 3, md: 4, lg: 5 }
  * Output: "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
