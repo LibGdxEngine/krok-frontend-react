@@ -111,7 +111,7 @@ const NavBar = () => {
                   {t("plans")}
                   <div
                       className={`absolute bottom-0 left-0 w-full h-0.5 bg-gray-300 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left ${
-                          isActive("/") ? "scale-x-100" : ""
+                          isActive("/plans") ? "scale-x-100" : ""
                       }`}
                   ></div>
               </div>

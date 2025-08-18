@@ -5,6 +5,7 @@ import {
   Zap,
   BookOpen,
   Users,
+    Baby,
   Award,
   ArrowRight,
   Sparkles,
@@ -16,20 +17,42 @@ export default function SubscriptionPlans() {
   const [hoveredPlan, setHoveredPlan] = useState(null);
 
   const plans = [
+      {
+          name: "FREE",
+          description:
+              "FREE PLAN - Perfect for beginners starting their learning journey",
+          monthlyPrice: 0,
+          yearlyPrice: 290,
+          features: [
+              "Search functionality",
+              "Save questions",
+              "Comment on questions",
+              "Copy questions",
+              "Access explanation videos",
+              "View hints",
+              "Save exams for later",
+          ],
+          color: "lightGreen",
+          icon: Baby,
+          popular: false,
+      },
     {
       name: "Basic",
       description:
-        "FREE PLAN - Perfect for beginners starting their learning journey",
-      monthlyPrice: 0,
+        "3 Months - Everything is open",
+      monthlyPrice: 20,
       yearlyPrice: 290,
       features: [
-        "Search functionality",
-        "Save questions",
-        "Comment on questions",
-        "Copy questions",
-        "Access explanation videos",
-        "View hints",
-        "Save exams for later",
+          "Unlimited course access",
+          "4K video quality",
+          "Dedicated account manager",
+          "Custom learning paths",
+          "Team management tools",
+          "Advanced reporting",
+          "API access",
+          "White-label options",
+          "Priority support",
+          "Custom integrations",
       ],
       color: "lightGreen",
       icon: BookOpen,
@@ -38,19 +61,20 @@ export default function SubscriptionPlans() {
     {
       name: "Plus",
       description:
-        "Everything is open for 6 months ,Ideal for serious learners and professionals",
+          "6 Months - Everything is open",
       monthlyPrice: 30,
       yearlyPrice: 790,
       features: [
-        "Unlimited course access",
-        "4K video quality",
-        "Search functionality",
-        "Save questions",
-        "Comment on questions",
-        "Copy questions",
-        "Access explanation videos",
-        "View hints",
-        "Save exams for later",
+          "Unlimited course access",
+          "4K video quality",
+          "Dedicated account manager",
+          "Custom learning paths",
+          "Team management tools",
+          "Advanced reporting",
+          "API access",
+          "White-label options",
+          "Priority support",
+          "Custom integrations",
       ],
       color: "greenCard",
       icon: Zap,
@@ -59,7 +83,7 @@ export default function SubscriptionPlans() {
     {
       name: "Prime",
       description:
-        "Everything is open for 1 year, Comprehensive solution for teams and organizations",
+          "12 Months - Everything is open",
       monthlyPrice: 40,
       yearlyPrice: 1490,
       features: [
@@ -117,7 +141,7 @@ export default function SubscriptionPlans() {
         </div>
 
         {/* Plans Grid */}
-        <div className=" grid grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className=" grid grid-cols-4  md:grid-cols-1 gap-8 max-w-7xl mx-auto ">
           {plans.map((plan, index) => {
             const IconComponent = plan.icon;
             const price = plan.monthlyPrice;
@@ -139,7 +163,7 @@ export default function SubscriptionPlans() {
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <div className="bg-gradient-to-r from-greenCard to-darkGreen text-white px-6 py-2 rounded-full text-sm font-semibold flex items-center space-x-1">
                       <Star className="w-4 h-4 fill-current" />
-                      <span>Most Popular</span>
+                      <span>Best Deal</span>
                     </div>
                   </div>
                 )}
@@ -176,7 +200,7 @@ export default function SubscriptionPlans() {
                 <div className="text-center mb-8">
                   <div className="flex items-baseline justify-center mb-2">
                     <span className="text-5xl font-bold font-Poppins text-darkGreen">
-                      ${price}
+                      €{price}
                     </span>
                   </div>
 
