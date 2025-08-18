@@ -1,0 +1,218 @@
+import NavBar from "./components/NavBar";
+import { useState } from "react";
+import Image from "next/image";
+import Pagination from "./components/Shop/Pagination";
+import ProductCard from "./components/Shop/ProductCard";
+import { ToastContainer } from "react-toastify";
+import  CartSidebar from "./components/cart/CartSidebar";
+import ChatWidget from "./components/Shop/MessageWidget";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRef } from "react";
+import { useEffect } from "react";
+import SplashScreen from "@/components/common/SplashScreen";
+import axiosInstance from "@/components/axiosInstance";
+import { useAuth } from "@/context/AuthContext";
+import { toast } from "react-toastify";
+import { useCartContext } from "@/context/CartContext";
+
+const Shop = () => {
+  const notify = () => toast("Product added to cart!");
+  const { token } = useAuth();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const options = ["Option 1", "Option 2", "Option 3"];
+  const [selected, setSelected] = useState(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const { addItemToCart } = useCartContext();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axiosInstance.get("/v1/products/");
+        setProducts(response.data.results);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleSelect = (option) => {
+    setSelected(option);
+    setIsDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+  if (loading) {
+    return <SplashScreen />;
+  }
+
+  const handleAddToCart = async (product_id, token) => {
+    addItemToCart(product_id, token).then(() =>
+      notify("Product added to cart!")
+    );
+  };
+
+  return (
+    <div className="w-full min-h-screen">
+      <NavBar />
+      <div className="relative ml-auto m-10 w-40" ref={dropdownRef}>
+        {/* Dropdown Button */}
+        {/* <button
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          className="w-full flex justify-between items-center text-gray-700 px-4 py-2 rounded-lg border transition-all"
+        >
+          {selected ? selected : "Sort by"}
+          <FontAwesomeIcon
+            icon={faChevronDown}
+            className={`transition-transform ${
+              isDropdownOpen ? "rotate-180" : "rotate-0"
+            }`}
+          />
+        </button> */}
+
+        {/* Dropdown Menu */}
+        {/* {isDropdownOpen && (
+          <ul className="absolute z-10 w-full mt-2 bg-white border rounded-lg shadow-lg overflow-hidden animate-slide-down">
+            {options.map((option, index) => (
+              <li
+                key={index}
+                onClick={() => handleSelect(option)}
+                className="px-4 py-2 text-gray-700 hover:bg-navyBlue hover:text-white cursor-pointer transition"
+              >
+                {option}
+              </li>
+            ))}
+          </ul>
+        )} */}
+      </div>
+      <div className="grid grid-cols-4 gap-x-10 gap-y-16 w-[90%] mx-auto mt-10 lg:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1">
+        {loading ? (
+          <p>Loading</p>
+        ) : (
+          products.map((product, index) => {
+            
+            return (
+              <>
+                <ProductCard 
+                  product={product} 
+                  key={index} 
+                  onClick={() => setIsModalOpen(true)}
+                />
+                
+                {isModalOpen && (
+                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex flex-col">
+                        <h2 className="text-2xl font-bold">{product.name}</h2>
+                        <h6 className="text-2xl font-base">{product.description}</h6>
+                        </div>
+                        <button 
+                          onClick={() => setIsModalOpen(false)}
+                          className="text-gray-500 hover:text-gray-700"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-6">
+                        <div className="relative">
+                          <div className="flex overflow-x-hidden">
+                            <div className="flex transition-transform duration-300 ease-in-out">
+                            <Image
+                                    key={0}
+                                    src={product?.img ? `https://krokplus.com${product?.img}` : '/placeholder.svg'}
+                                    alt={`${product?.name} - Image ${0}`}
+                                    width={200}
+                                    height={200}
+                                    style={{cursor: "pointer"}}
+                                    className="object-cover flex-shrink-0"
+                                  />
+                              {product?.product_images?.length > 0 ? (
+                                product.product_images.map((image, idx) => (
+                                  <Image
+                                    key={idx}
+                                    src={image? `https://krokplus.com${image}` : '/placeholder.svg'}
+                                    // alt={`${product?.name} - Image ${idx + 1}`}
+                                    width={200}
+                                    height={200}
+                                    style={{cursor: "pointer"}}
+                                    className="object-cover flex-shrink-0"
+                                  />
+                                ))
+                              ) : (
+                              ""
+                              )}
+                            </div>
+                          </div>
+                          {product?.product_images?.length > 1 && (
+                            <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-2">
+                              {product.product_images.map((_, idx) => (
+                                <button
+                                  key={idx}
+                                  className="w-2 h-2 rounded-full bg-gray-300 hover:bg-gray-500"
+                                  onClick={() => {
+                                    const slider = document.querySelector('.flex.transition-transform');
+                                    slider.style.transform = `translateX(-${idx * 100}%)`;
+                                  }}
+                                />
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        
+                        <div>
+                          <p className="text-2xl font-bold mb-4">${product.price}</p>
+                          
+                          <div className="space-y-2 h-20">
+                            <p><span className="font-semibold">Category:</span> {product.category}</p>
+                            {/* <p><span className="font-semibold">Stock:</span> {product.stock}</p> */}
+                          </div>
+                          
+                          <button onClick={()=>{
+                            handleAddToCart(product.id, token);
+                          }} className="mt-6 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                            Add to Cart
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
+            );
+          })
+        )}
+      </div>
+      <Pagination products={products} />
+      <ToastContainer />
+      <ChatWidget />
+      {token && <CartSidebar />}
+    </div>
+  );
+};
+
+export default Shop;

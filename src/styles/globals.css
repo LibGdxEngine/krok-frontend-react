@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    @keyframes flow-0 {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-30px); }
+    }
+
+    @keyframes flow-1 {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-30px); }
+    }
+    @keyframes flow-2 {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-30px); }
+    }
+    @keyframes flow-3 {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-30px); }
+    }
+
+    .animate-flow-0 {
+        animation: flow-0 4s ease-in-out infinite;
+    }
+    .animate-flow-1 {
+        animation: flow-1 5s ease-in-out infinite;
+    }
+    .animate-flow-2 {
+        animation: flow-2 6s ease-in-out infinite;
+    }
+    .animate-flow-3 {
+        animation: flow-3 7s ease-in-out infinite;
+    }
+}
+:root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
+}
+
+body {
+    overflow-x: hidden;
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+            to bottom,
+            transparent,
+            rgb(var(--background-end-rgb))
+    ) rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}
+
+.splash-background {
+    background: linear-gradient(106.62deg, #4DD4B2 10.89%, #4EAACA 44.44%, rgba(78, 158, 209, 0.756757) 71.01%, rgba(78, 172, 201, 0.559853) 78.1%, rgba(77, 185, 193, 0.375936) 86.26%, rgba(77, 212, 178, 0) 93.29%);
+}
+
+.navbar{
+    background: linear-gradient(96.18deg, #4DD4B2 16.05%, #4EAACA 32.91%, #4E8CDB 48.67%, rgba(78, 158, 209, 0.756757) 71.77%, rgba(77, 212, 178, 0) 89.37%);
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: rgba(102, 178, 241, 0.15);
+    border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #1292FB26;
+    border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #7DB3DF26;
+
+}
+
+.faq-background {
+    box-shadow: 0 30px 60px 20px rgba(138, 149, 158, 0.15);
+}
+
+.transition-container {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+.transition-container.show {
+    opacity: 1;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #3F72B2; /* Light blue */
+    border-radius: 10px;
+    border: 3px solid #f0f0f0; /* Matches the track background */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #3F72B2; /* Darker blue for hover */
+}
+
+::-webkit-scrollbar-corner {
+    background: #f0f0f0; /* Corner of the scrollbar (bottom-right) */
+}
+
+.responsive-font {
+    font-size: 128px;
+}
+
+@media (max-width: 1330px) {
+    .responsive-font {
+        font-size: 96px; /* adjust as needed */
+    }
+}
+
+@media (max-width: 1190px) {
+    .responsive-font {
+        font-size: 64px; /* adjust as needed */
+    }
+}
+
+@media (max-width: 480px) {
+    .responsive-font {
+        font-size: 48px; /* adjust as needed */
+    }
+}
+
+.sm-responsive-font {
+    font-size: 60.45px;
+}
+
+@media (max-width: 1330px) {
+    .sm-responsive-font {
+        font-size: 50.45px; /* adjust as needed */
+    }
+}
+
+@media (max-width: 1190px) {
+    .sm-responsive-font {
+        font-size: 45px; /* adjust as needed */
+    }
+}
+
+@media (max-width: 480px) {
+    .sm-responsive-font {
+        font-size: 30px; /* adjust as needed */
+    }
+}
+
+.xs-responsive-font {
+    font-size: 50.45px;
+}
+
+@media (max-width: 1330px) {
+    .xs-responsive-font {
+        font-size: 40.45px; /* adjust as needed */
+    }
+}
+
+@media (max-width: 1190px) {
+    .xs-responsive-font {
+        font-size: 30px; /* adjust as needed */
+    }
+}
+
+@media (max-width: 480px) {
+    .xs-responsive-font {
+        font-size: 30px; /* adjust as needed */
+    }
+}
