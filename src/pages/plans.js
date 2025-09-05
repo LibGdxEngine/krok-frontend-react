@@ -1,313 +1,308 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axiosInstance from "@/components/axiosInstance";
 import {
-    Check,
-    Star,
-    Zap,
-    BookOpen,
-    Users,
-    Baby,
-    Award,
-    ArrowRight,
-    Sparkles,
+  Check,
+  Star,
+  Zap,
+  BookOpen,
+  Users,
+  Baby,
+  Award,
+  ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import NavbarContainer from "@/components/layout/NavbarContainer";
 import Footer from "@/components/layout/Footer";
-import {useAuth} from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import SplashScreen from "@/components/common/SplashScreen";
-import {useRouter} from "next/router";
-import {toast} from "react-toastify";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 export default function SubscriptionPlans() {
-    const router = useRouter();
-    const [billingCycle, setBillingCycle] = useState("monthly");
-    const [hoveredPlan, setHoveredPlan] = useState(null);
+  const router = useRouter();
+  const [billingCycle, setBillingCycle] = useState("monthly");
+  const [hoveredPlan, setHoveredPlan] = useState(null);
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const {token, authLoading} = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { token, authLoading } = useAuth();
 
+  if (authLoading) {
+    return <SplashScreen />;
+  }
 
-    if (authLoading) {
-        return <SplashScreen/>;
+  const handleSubscribe = async (planId) => {
+    if (!token) {
+      toast.warning("You need to sign in first");
+      router.push("/signin");
+      return;
     }
-
-    const handleSubscribe = async (planId) => {
-        if (!token) {
-            toast.warning("You need to sing in first");
-            router.push("/signin");
-            return;
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axiosInstance.post(
+        "/v1/create-subscription/",
+        {
+          plan_id: planId,
+        },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+            "Content-Type": "application/json",
+          },
         }
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await axiosInstance.post("/v1/payments/create-subscription/", {
-                    plan_id: planId,
-                },
-                {
-                    headers: {
-                        Authorization: `Token ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                });
-            // redirect user to Stripe checkout
-            window.location.href = response.data.checkout_url;
-        } catch (err) {
-            setError(err.response?.data?.error || err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+      );
+      // redirect user to Stripe checkout
+      window.location.href = response.data.checkout_url;
+    } catch (err) {
+      setError(err.response?.data?.error || err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  const plans = [
+    {
+      name: "FREE",
+      description:
+        "FREE PLAN - Perfect for beginners starting their learning journey",
+      monthlyPrice: 0,
+      yearlyPrice: 290,
+      features: [
+        "Search functionality",
+        "Save questions",
+        "Comment on questions",
+        "Copy questions",
+        "Access explanation videos",
+        "View hints",
+        "Save exams for later",
+      ],
+      color: "lightGreen",
+      icon: Baby,
+      popular: false,
+    },
+    {
+      name: "Basic",
+      description: "3 Months - Everything is open",
+      monthlyPrice: 20,
+      yearlyPrice: 290,
+      features: [
+        "Unlimited course access",
+        "4K video quality",
+        "Dedicated account manager",
+        "Custom learning paths",
+        "Team management tools",
+        "Advanced reporting",
+        "API access",
+        "White-label options",
+        "Priority support",
+        "Custom integrations",
+      ],
+      color: "lightGreen",
+      icon: BookOpen,
+      popular: false,
+    },
+    {
+      name: "Plus",
+      description: "6 Months - Everything is open",
+      monthlyPrice: 30,
+      yearlyPrice: 790,
+      features: [
+        "Unlimited course access",
+        "4K video quality",
+        "Dedicated account manager",
+        "Custom learning paths",
+        "Team management tools",
+        "Advanced reporting",
+        "API access",
+        "White-label options",
+        "Priority support",
+        "Custom integrations",
+      ],
+      color: "greenCard",
+      icon: Zap,
+      popular: true,
+    },
+    {
+      name: "Prime",
+      description: "12 Months - Everything is open",
+      monthlyPrice: 40,
+      yearlyPrice: 1490,
+      features: [
+        "Unlimited course access",
+        "4K video quality",
+        "Dedicated account manager",
+        "Custom learning paths",
+        "Team management tools",
+        "Advanced reporting",
+        "API access",
+        "White-label options",
+        "Priority support",
+        "Custom integrations",
+      ],
+      color: "darkGreen",
+      icon: Award,
+      popular: false,
+    },
+  ];
 
-    const plans = [
-        {
-            name: "FREE",
-            description:
-                "FREE PLAN - Perfect for beginners starting their learning journey",
-            monthlyPrice: 0,
-            yearlyPrice: 290,
-            features: [
-                "Search functionality",
-                "Save questions",
-                "Comment on questions",
-                "Copy questions",
-                "Access explanation videos",
-                "View hints",
-                "Save exams for later",
-            ],
-            color: "lightGreen",
-            icon: Baby,
-            popular: false,
-        },
-        {
-            name: "Basic",
-            description:
-                "3 Months - Everything is open",
-            monthlyPrice: 20,
-            yearlyPrice: 290,
-            features: [
-                "Unlimited course access",
-                "4K video quality",
-                "Dedicated account manager",
-                "Custom learning paths",
-                "Team management tools",
-                "Advanced reporting",
-                "API access",
-                "White-label options",
-                "Priority support",
-                "Custom integrations",
-            ],
-            color: "lightGreen",
-            icon: BookOpen,
-            popular: false,
-        },
-        {
-            name: "Plus",
-            description:
-                "6 Months - Everything is open",
-            monthlyPrice: 30,
-            yearlyPrice: 790,
-            features: [
-                "Unlimited course access",
-                "4K video quality",
-                "Dedicated account manager",
-                "Custom learning paths",
-                "Team management tools",
-                "Advanced reporting",
-                "API access",
-                "White-label options",
-                "Priority support",
-                "Custom integrations",
-            ],
-            color: "greenCard",
-            icon: Zap,
-            popular: true,
-        },
-        {
-            name: "Prime",
-            description:
-                "12 Months - Everything is open",
-            monthlyPrice: 40,
-            yearlyPrice: 1490,
-            features: [
-                "Unlimited course access",
-                "4K video quality",
-                "Dedicated account manager",
-                "Custom learning paths",
-                "Team management tools",
-                "Advanced reporting",
-                "API access",
-                "White-label options",
-                "Priority support",
-                "Custom integrations",
-            ],
-            color: "darkGreen",
-            icon: Award,
-            popular: false,
-        },
-    ];
+  const savings = {
+    Professional: Math.round(((79 * 12 - 790) / (79 * 12)) * 100),
+    Enterprise: Math.round(((149 * 12 - 1490) / (149 * 12)) * 100),
+  };
 
-    const savings = {
-        Professional: Math.round(((79 * 12 - 790) / (79 * 12)) * 100),
-        Enterprise: Math.round(((149 * 12 - 1490) / (149 * 12)) * 100),
-    };
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-mintyGreen via-white to-lightGray">
+      <NavbarContainer with_search_bar={false} />
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-lightGreen rounded-full opacity-20 animate-flow-0"></div>
+        <div className="absolute top-40 right-20 w-24 h-24 bg-greenCard rounded-full opacity-30 animate-flow-1"></div>
+        <div className="absolute bottom-32 left-1/4 w-40 h-40 bg-darkGreen rounded-full opacity-15 animate-flow-2"></div>
+        <div className="absolute bottom-20 right-1/3 w-28 h-28 bg-midGreen rounded-full opacity-25 animate-flow-3"></div>
+      </div>
 
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-mintyGreen via-white to-lightGray">
-            <NavbarContainer with_search_bar={false}/>
-            {/* Animated Background Elements */}
-            <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                <div
-                    className="absolute top-20 left-10 w-32 h-32 bg-lightGreen rounded-full opacity-20 animate-flow-0"></div>
-                <div
-                    className="absolute top-40 right-20 w-24 h-24 bg-greenCard rounded-full opacity-30 animate-flow-1"></div>
-                <div
-                    className="absolute bottom-32 left-1/4 w-40 h-40 bg-darkGreen rounded-full opacity-15 animate-flow-2"></div>
-                <div
-                    className="absolute bottom-20 right-1/3 w-28 h-28 bg-midGreen rounded-full opacity-25 animate-flow-3"></div>
+      <div className="relative z-10  mx-auto px-4 py-16">
+        {/* Header Section */}
+        <div className="text-center mb-16">
+          <div className="flex justify-center mb-6">
+            <div className="p-4 bg-gradient-to-r from-greenCard to-darkGreen rounded-full shadow-6">
+              <Sparkles className="w-8 h-8 text-white" />
             </div>
+          </div>
 
-            <div className="relative z-10  mx-auto px-4 py-16">
-                {/* Header Section */}
-                <div className="text-center mb-16">
-                    <div className="flex justify-center mb-6">
-                        <div className="p-4 bg-gradient-to-r from-greenCard to-darkGreen rounded-full shadow-6">
-                            <Sparkles className="w-8 h-8 text-white"/>
-                        </div>
+          <h1 className="text-5xl md:text-6xl font-bold font-Poppins mb-6 bg-gradient-to-r from-darkGreen via-midGreen to-greenCard bg-clip-text text-transparent">
+            Choose Your Learning Path
+          </h1>
+
+          <p className="text-xl text-mildGray max-w-3xl mx-auto mb-12 leading-relaxed">
+            Unlock unlimited potential with our comprehensive learning platform.
+            Select the perfect plan to accelerate your growth and achieve your
+            goals.
+          </p>
+        </div>
+
+        {/* Plans Grid */}
+        <div className=" grid grid-cols-4  md:grid-cols-1 gap-8 max-w-7xl mx-auto ">
+          {plans.map((plan, index) => {
+            const IconComponent = plan.icon;
+            const price = plan.monthlyPrice;
+            const isHovered = hoveredPlan === index;
+
+            return (
+              <div
+                key={plan.name}
+                onMouseEnter={() => setHoveredPlan(index)}
+                onMouseLeave={() => setHoveredPlan(null)}
+                className={` flex flex-col items-center justify-between  relative bg-white rounded-35 p-8 transition-all duration-500 hover:scale-105 ${
+                  plan.popular
+                    ? "shadow-6 border-2 border-greenCard"
+                    : "shadow-2 hover:shadow-5"
+                } ${isHovered ? "transform -translate-y-2" : ""}`}
+              >
+                {/* Popular Badge */}
+                {plan.popular && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <div className="bg-gradient-to-r from-greenCard to-darkGreen text-white px-6 py-2 rounded-full text-sm font-semibold flex items-center space-x-1">
+                      <Star className="w-4 h-4 fill-current" />
+                      <span>Best Deal</span>
                     </div>
+                  </div>
+                )}
 
-                    <h1 className="text-5xl md:text-6xl font-bold font-Poppins mb-6 bg-gradient-to-r from-darkGreen via-midGreen to-greenCard bg-clip-text text-transparent">
-                        Choose Your Learning Path
-                    </h1>
+                {/* Plan Header */}
+                <div className="text-center mb-8">
+                  <div
+                    className={`inline-flex p-4 rounded-full mb-4 ${
+                      plan.color === "lightGreen"
+                        ? "bg-lightGreen"
+                        : plan.color === "greenCard"
+                        ? "bg-greenCard"
+                        : "bg-darkGreen"
+                    }`}
+                  >
+                    <IconComponent
+                      className={`w-8 h-8 ${
+                        plan.color === "lightGreen"
+                          ? "text-darkGreen"
+                          : "text-white"
+                      }`}
+                    />
+                  </div>
 
-                    <p className="text-xl text-mildGray max-w-3xl mx-auto mb-12 leading-relaxed">
-                        Unlock unlimited potential with our comprehensive learning platform.
-                        Select the perfect plan to accelerate your growth and achieve your
-                        goals.
-                    </p>
+                  <h3 className="text-2xl font-bold font-Poppins text-primary mb-2">
+                    {plan.name}
+                  </h3>
+                  <p className="text-mildGray text-sm leading-relaxed">
+                    {plan.description}
+                  </p>
                 </div>
 
-                {/* Plans Grid */}
-                <div className=" grid grid-cols-4  md:grid-cols-1 gap-8 max-w-7xl mx-auto ">
-                    {plans.map((plan, index) => {
-                        const IconComponent = plan.icon;
-                        const price = plan.monthlyPrice;
-                        const isHovered = hoveredPlan === index;
-
-                        return (
-                            <div
-                                key={plan.name}
-                                onMouseEnter={() => setHoveredPlan(index)}
-                                onMouseLeave={() => setHoveredPlan(null)}
-                                className={` flex flex-col items-center justify-between  relative bg-white rounded-35 p-8 transition-all duration-500 hover:scale-105 ${
-                                    plan.popular
-                                        ? "shadow-6 border-2 border-greenCard"
-                                        : "shadow-2 hover:shadow-5"
-                                } ${isHovered ? "transform -translate-y-2" : ""}`}
-                            >
-                                {/* Popular Badge */}
-                                {plan.popular && (
-                                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                        <div
-                                            className="bg-gradient-to-r from-greenCard to-darkGreen text-white px-6 py-2 rounded-full text-sm font-semibold flex items-center space-x-1">
-                                            <Star className="w-4 h-4 fill-current"/>
-                                            <span>Best Deal</span>
-                                        </div>
-                                    </div>
-                                )}
-
-                                {/* Plan Header */}
-                                <div className="text-center mb-8">
-                                    <div
-                                        className={`inline-flex p-4 rounded-full mb-4 ${
-                                            plan.color === "lightGreen"
-                                                ? "bg-lightGreen"
-                                                : plan.color === "greenCard"
-                                                    ? "bg-greenCard"
-                                                    : "bg-darkGreen"
-                                        }`}
-                                    >
-                                        <IconComponent
-                                            className={`w-8 h-8 ${
-                                                plan.color === "lightGreen"
-                                                    ? "text-darkGreen"
-                                                    : "text-white"
-                                            }`}
-                                        />
-                                    </div>
-
-                                    <h3 className="text-2xl font-bold font-Poppins text-primary mb-2">
-                                        {plan.name}
-                                    </h3>
-                                    <p className="text-mildGray text-sm leading-relaxed">
-                                        {plan.description}
-                                    </p>
-                                </div>
-
-                                {/* Pricing */}
-                                <div className="text-center mb-8">
-                                    <div className="flex items-baseline justify-center mb-2">
+                {/* Pricing */}
+                <div className="text-center mb-8">
+                  <div className="flex items-baseline justify-center mb-2">
                     <span className="text-5xl font-bold font-Poppins text-darkGreen">
                       €{price}
                     </span>
-                                    </div>
+                  </div>
 
-                                    {billingCycle === "yearly" && plan.name !== "Starter" && (
-                                        <div className="text-sm text-greenCard font-medium">
-                                            Save {savings[plan.name]}% annually
-                                        </div>
-                                    )}
-                                </div>
+                  {billingCycle === "yearly" && plan.name !== "Starter" && (
+                    <div className="text-sm text-greenCard font-medium">
+                      Save {savings[plan.name]}% annually
+                    </div>
+                  )}
+                </div>
 
-                                {/* Features */}
-                                <div className="space-y-4 mb-8">
-                                    {plan.features.map((feature, featureIndex) => (
-                                        <div
-                                            key={featureIndex}
-                                            className="flex items-start space-x-3"
-                                        >
-                                            <div
-                                                className="flex-shrink-0 w-5 h-5 bg-lightGreen rounded-full flex items-center justify-center mt-0.5">
-                                                <Check className="w-3 h-3 text-darkGreen"/>
-                                            </div>
-                                            <span className="text-black text-sm leading-relaxed">
+                {/* Features */}
+                <div className="space-y-4 mb-8">
+                  {plan.features.map((feature, featureIndex) => (
+                    <div
+                      key={featureIndex}
+                      className="flex items-start space-x-3"
+                    >
+                      <div className="flex-shrink-0 w-5 h-5 bg-lightGreen rounded-full flex items-center justify-center mt-0.5">
+                        <Check className="w-3 h-3 text-darkGreen" />
+                      </div>
+                      <span className="text-black text-sm leading-relaxed">
                         {feature}
                       </span>
-                                        </div>
-                                    ))}
-                                </div>
+                    </div>
+                  ))}
+                </div>
 
-                                {/* CTA Button */}
-                                <button
-                                    onClick={() => handleSubscribe(index)}
-                                    className={`w-full ${index === 0 ? "hidden" : ""} py-4 px-6 rounded-35 font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 ${
-                                        plan.popular
-                                            ? "bg-gradient-to-r from-greenCard to-darkGreen text-white shadow-6 hover:shadow-7"
-                                            : "bg-lightGreen text-darkGreen hover:bg-greenCard hover:text-white shadow-2 hover:shadow-5"
-                                    }`}
-                                >
-                                    <span>Get Started</span>
-                                    <ArrowRight
-                                        className={`w-5 h-5 transition-transform duration-300 ${
-                                            isHovered ? "translate-x-1" : ""
-                                        }`}
-                                    />
-                                </button>
+                {/* CTA Button */}
+                <button
+                  onClick={() => handleSubscribe(index)}
+                  disabled={loading}
+                  className={`w-full ${
+                    index === 0 ? "hidden" : ""
+                  } py-4 px-6 rounded-35 font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 ${
+                    plan.popular
+                      ? "bg-gradient-to-r from-greenCard to-darkGreen text-white shadow-6 hover:shadow-7"
+                      : "bg-lightGreen text-darkGreen hover:bg-greenCard hover:text-white shadow-2 hover:shadow-5"
+                  }`}
+                >
+                  <span>Get Started</span>
+                  <ArrowRight
+                    className={`w-5 h-5 transition-transform duration-300 ${
+                      isHovered ? "translate-x-1" : ""
+                    }`}
+                  />
+                </button>
 
-                                {/* Money Back Guarantee */}
-                                <div className="text-center mt-4">
+                {/* Money Back Guarantee */}
+                <div className="text-center mt-4">
                   <span className="text-2xs text-mildGray">
                     {/*30-day money-back guarantee*/}
                   </span>
-                                </div>
-                            </div>
-                        );
-                    })}
                 </div>
+              </div>
+            );
+          })}
+        </div>
 
-                {/* Bottom Section */}
-                {/* <div className="text-center mt-16 max-w-4xl mx-auto">
+        {/* Bottom Section */}
+        {/* <div className="text-center mt-16 max-w-4xl mx-auto">
           <div className="bg-white rounded-35 p-8 shadow-2">
             <div className="flex items-center justify-center space-x-8 mb-6">
               <div className="flex items-center space-x-2">
@@ -346,19 +341,18 @@ export default function SubscriptionPlans() {
             </div>
           </div>
         </div> */}
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-
-            </div>
-        </div>
-    );
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+      </div>
+    </div>
+  );
 }
