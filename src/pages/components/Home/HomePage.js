@@ -9,7 +9,7 @@ import logo from "../../../../public/logo.svg";
 import TopBar from "@/pages/components/Home/TopBar";
 import SearchBar from "@/pages/components/Home/SearchBar";
 import { useState } from "react";
-import notificationsIcon from "../../../../public/🦆 icon _bell notification_.svg";
+// import notificationsIcon from "../../../../public/🦆 icon _bell notification_.svg";
 
 import HomeFAQs from "@/pages/components/Home/HomeFAQs";
 import { useRouter } from "next/router";

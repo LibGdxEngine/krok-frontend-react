@@ -21,7 +21,7 @@ export default function CartSidebar() {
   const applyCoupon = async (order_id) => {
     try {
       const response = await axiosInstance.post(
-        "/v1/orders/apply-coupon/",
+        `/v1/orders/${order_id}/apply_coupon/`,
         {
           coupon_code: couponCode,
           order_id: order_id,
@@ -42,7 +42,7 @@ export default function CartSidebar() {
     try {
       console.log("order_id", order_id);
       const response = await axiosInstance.post(
-        "/v1/payments/create-checkout-session/",
+        "/v1/create-checkout-session/",
         {
           order_id,
         },
@@ -62,8 +62,8 @@ export default function CartSidebar() {
   const makeOrder = async () => {
     try {
       const response = await axiosInstance.post(
-        "/v1/orders/create/",
-        {},
+        "/v1/orders/",
+        { cart },
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -180,9 +180,12 @@ export default function CartSidebar() {
               {cart?.map((item) => (
                 <li key={item.id} className="flex gap-4 py-4 border-b">
                   <div className="h-20 w-20 rounded-md overflow-hidden bg-gray-100 flex-shrink-0">
-                    
                     <Image
-                      src={item?.product?.img ? `https://krokplus.com${item?.product_img}` : "/placeholder.svg"}
+                      src={
+                        item?.product?.img
+                          ? `${item?.product_img}`
+                          : "/placeholder.svg"
+                      }
                       alt={item?.product_name}
                       width={80}
                       height={80}
@@ -306,7 +309,6 @@ export default function CartSidebar() {
             >
               Checkout
             </button>
-            
           </div>
         )}
       </div>

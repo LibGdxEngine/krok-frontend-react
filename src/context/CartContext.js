@@ -23,7 +23,7 @@ export const CartProvider = ({ children }) => {
     const getCartItems = async () => {
       getCart(token)
         .then((data) => {
-          setCart(data.items);
+          setCart(data?.items);
         })
         .finally(() => {
           setIsLoading(false);

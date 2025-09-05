@@ -48,7 +48,7 @@ function SignInPage() {
         try {
             const response = await getToken({ email, password });
             login(response.token);
-            router.replace("/");
+            router.replace("/plans");
         } catch (error) {
             toast.error("Invalid credentials", error.toString());
             console.error('Error during signup:', error);

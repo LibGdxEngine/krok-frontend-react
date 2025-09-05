@@ -12,7 +12,7 @@ import SearchBar from "@/pages/components/Home/SearchBar";
 import SectionsHeader from "@/pages/components/SectionsHeader";
 import {useTranslation} from "react-i18next";
 import Image from "next/image";
-import notificationsIcon from "../../public/🦆 icon _bell notification_.svg";
+// import notificationsIcon from "../../public/🦆 icon _bell notification_.svg";
 import userIcon from "../../public/profile.svg";
 import NavbarContainer from "../components/layout/NavbarContainer";
 

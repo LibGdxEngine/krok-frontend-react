@@ -4,7 +4,7 @@ import Image from "next/image";
 import Pagination from "./components/Shop/Pagination";
 import ProductCard from "./components/Shop/ProductCard";
 import { ToastContainer } from "react-toastify";
-import  CartSidebar from "./components/cart/CartSidebar";
+import CartSidebar from "./components/cart/CartSidebar";
 import ChatWidget from "./components/Shop/MessageWidget";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,6 +15,92 @@ import axiosInstance from "@/components/axiosInstance";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "react-toastify";
 import { useCartContext } from "@/context/CartContext";
+import { ShoppingCart, X } from "lucide-react";
+
+function ProductModal({ onClose, product, addToCart }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const limit = 200; // character limit
+
+  const shouldTruncate = product.description.length > limit;
+  const displayText = isExpanded
+    ? product.description
+    : product.description.substring(0, limit) + (shouldTruncate ? "..." : "");
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div className="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl animate-in fade-in-0 zoom-in-95 duration-300">
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-background/80 hover:bg-background transition-colors"
+          aria-label="Close modal"
+        >
+          <X className="h-5 w-5 text-black" />
+        </button>
+
+        <div className="p-6">
+          {/* Header */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-2"></div>
+            <h2 className="text-2xl font-bold text-black text-balance">
+              {product.name}
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-1 grid-cols-2 gap-6">
+            {/* Product Image */}
+            <div className="aspect-[1/1] bg-black rounded-lg overflow-hidden bg-muted">
+              <Image
+                src={product.img || "/placeholder.svg"}
+                alt={product.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Product Details */}
+            <div className="flex flex-col justify-between">
+              <div className="space-y-4">
+                {/* Price */}
+                <div className="text-3xl font-bold text-primary">
+                  ${product.price}
+                </div>
+
+                {/* Description */}
+                <div>
+                  <p className="text-black leading-relaxed">{displayText}</p>
+
+                  {shouldTruncate && (
+                    <button
+                      onClick={() => setIsExpanded(!isExpanded)}
+                      className="text-blue-600 hover:underline text-sm mt-1"
+                    >
+                      {isExpanded ? "See less" : "See more"}
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Call to Action */}
+              <div className="mt-6 space-y-3">
+                <button
+                  className="w-full flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md"
+                  size="lg"
+                  onClick={() => {
+                    addToCart(product.id);
+                    onClose();
+                  }}
+                >
+                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const Shop = () => {
   const notify = () => toast("Product added to cart!");
@@ -26,7 +112,7 @@ const Shop = () => {
   const options = ["Option 1", "Option 2", "Option 3"];
   const [selected, setSelected] = useState(null);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const dropdownRef = useRef(null);
 
   const { addItemToCart } = useCartContext();
@@ -78,131 +164,29 @@ const Shop = () => {
   return (
     <div className="w-full min-h-screen">
       <NavBar />
-      <div className="relative ml-auto m-10 w-40" ref={dropdownRef}>
-        {/* Dropdown Button */}
-        {/* <button
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className="w-full flex justify-between items-center text-gray-700 px-4 py-2 rounded-lg border transition-all"
-        >
-          {selected ? selected : "Sort by"}
-          <FontAwesomeIcon
-            icon={faChevronDown}
-            className={`transition-transform ${
-              isDropdownOpen ? "rotate-180" : "rotate-0"
-            }`}
-          />
-        </button> */}
-
-        {/* Dropdown Menu */}
-        {/* {isDropdownOpen && (
-          <ul className="absolute z-10 w-full mt-2 bg-white border rounded-lg shadow-lg overflow-hidden animate-slide-down">
-            {options.map((option, index) => (
-              <li
-                key={index}
-                onClick={() => handleSelect(option)}
-                className="px-4 py-2 text-gray-700 hover:bg-navyBlue hover:text-white cursor-pointer transition"
-              >
-                {option}
-              </li>
-            ))}
-          </ul>
-        )} */}
-      </div>
       <div className="grid grid-cols-4 gap-x-10 gap-y-16 w-[90%] mx-auto mt-10 lg:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1">
         {loading ? (
           <p>Loading</p>
         ) : (
           products.map((product, index) => {
-            
+            console.log("Product:", product);
             return (
-              <>
-                <ProductCard 
-                  product={product} 
-                  key={index} 
-                  onClick={() => setIsModalOpen(true)}
+              <div key={index}>
+                <ProductCard
+                  product={product}
+                  key={index}
+                  onClickAction={() => setSelectedProduct(product)}
                 />
-                
-                {isModalOpen && (
-                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                      <div className="flex justify-between items-start mb-4">
-                        <div className="flex flex-col">
-                        <h2 className="text-2xl font-bold">{product.name}</h2>
-                        <h6 className="text-2xl font-base">{product.description}</h6>
-                        </div>
-                        <button 
-                          onClick={() => setIsModalOpen(false)}
-                          className="text-gray-500 hover:text-gray-700"
-                        >
-                          ✕
-                        </button>
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-6">
-                        <div className="relative">
-                          <div className="flex overflow-x-hidden">
-                            <div className="flex transition-transform duration-300 ease-in-out">
-                            <Image
-                                    key={0}
-                                    src={product?.img ? `https://krokplus.com${product?.img}` : '/placeholder.svg'}
-                                    alt={`${product?.name} - Image ${0}`}
-                                    width={200}
-                                    height={200}
-                                    style={{cursor: "pointer"}}
-                                    className="object-cover flex-shrink-0"
-                                  />
-                              {product?.product_images?.length > 0 ? (
-                                product.product_images.map((image, idx) => (
-                                  <Image
-                                    key={idx}
-                                    src={image? `https://krokplus.com${image}` : '/placeholder.svg'}
-                                    // alt={`${product?.name} - Image ${idx + 1}`}
-                                    width={200}
-                                    height={200}
-                                    style={{cursor: "pointer"}}
-                                    className="object-cover flex-shrink-0"
-                                  />
-                                ))
-                              ) : (
-                              ""
-                              )}
-                            </div>
-                          </div>
-                          {product?.product_images?.length > 1 && (
-                            <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-2">
-                              {product.product_images.map((_, idx) => (
-                                <button
-                                  key={idx}
-                                  className="w-2 h-2 rounded-full bg-gray-300 hover:bg-gray-500"
-                                  onClick={() => {
-                                    const slider = document.querySelector('.flex.transition-transform');
-                                    slider.style.transform = `translateX(-${idx * 100}%)`;
-                                  }}
-                                />
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                        
-                        <div>
-                          <p className="text-2xl font-bold mb-4">${product.price}</p>
-                          
-                          <div className="space-y-2 h-20">
-                            <p><span className="font-semibold">Category:</span> {product.category}</p>
-                            {/* <p><span className="font-semibold">Stock:</span> {product.stock}</p> */}
-                          </div>
-                          
-                          <button onClick={()=>{
-                            handleAddToCart(product.id, token);
-                          }} className="mt-6 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
-                            Add to Cart
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+
+                {selectedProduct && (
+                  <ProductModal
+                    isOpen={!!selectedProduct}
+                    onClose={() => setSelectedProduct(null)}
+                    product={selectedProduct}
+                    addToCart={handleAddToCart}
+                  />
                 )}
-              </>
+              </div>
             );
           })
         )}

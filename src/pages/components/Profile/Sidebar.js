@@ -17,6 +17,7 @@ const Sidebar = React.memo(({user, onTapClicked, currentTap}) => {
     const navItems = [
         {name: 'Profile', href: 'profile'},
         {name: 'History', href: 'history'},
+        {name: 'My Plan', href: 'myPlan'},
         {name: 'Favourite', href: 'favorite'},
         {name: 'Notes', href: 'notes'},
         // {name: 'Logout', href: 'logout'},
