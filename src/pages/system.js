@@ -45,6 +45,7 @@ const System = () => {
 
       return;
     }
+      ["subjects", "systems", "topics", "years"].forEach(k => delete state[k]);
     localStorage.setItem("state", JSON.stringify({ ...state, "systems": selectedSystems }));
     router.push("/filter");
   }
