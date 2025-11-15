@@ -513,7 +513,7 @@ const Favourites = React.memo(({ favourites: myFav }) => {
   return (
     <>
       {showQuestions ? (
-        <div className="w-full  bg-white my-10 flex-1 flex flex-row flex-wrap justify-center gap-6 items-center">
+        <div className="w-full h-full bg-white my-10 flex-1 flex flex-row flex-wrap justify-center gap-6 items-center">
           <div className={`w-full `}>
             <button
               onClick={() => {
@@ -538,7 +538,7 @@ const Favourites = React.memo(({ favourites: myFav }) => {
           })}
         </div>
       ) : (
-        <div className="w-full h-fit  mt-10 flex-1 flex flex-row flex-wrap justify-center gap-6 items-start">
+        <div className="w-full h-full  mt-10 flex-1 flex flex-row flex-wrap justify-center gap-6 items-start">
           {favourites.length === 0 ? (
             <div className="w-full h-full flex flex-col items-center justify-center">
               <h1 className={`text-3xl mt-20 text-black`}>{t("NoFavourite")}</h1>

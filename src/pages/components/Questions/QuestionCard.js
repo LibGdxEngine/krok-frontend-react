@@ -93,7 +93,7 @@ const QuestionCard = ({ question, searchTerm }) => {
                     {question.all_answers.map((answer) => (
                         <div
                             key={answer.id}
-                            className="p-3 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors"
+                            className="text-black p-3 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors"
                         >
                             <HighlightedText
                                 text={answer.text}
@@ -106,7 +106,7 @@ const QuestionCard = ({ question, searchTerm }) => {
             </div>
             <div className="font-bold text-lg mb-2 text-black">Correct Answer</div>
             <div
-                className="p-3 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors"
+                className="text-black p-3 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors"
             >
                 <HighlightedText
                     text={question.correct_answer}
