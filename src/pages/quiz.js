@@ -95,9 +95,9 @@ const Quiz = () => {
           const progressArrayForSort = Array.isArray(initialProgress)
             ? initialProgress
             : Object.values(initialProgress).map((p, idx) => ({
-                ...p,
-                id: p.id || questions[idx]?.id,
-              })); // Adapt based on actual progress structure
+              ...p,
+              id: p.id || questions[idx]?.id,
+            })); // Adapt based on actual progress structure
 
           const orderedQuestions = rearrangeArrayById(
             initialQuestions,
@@ -107,15 +107,21 @@ const Quiz = () => {
           setExamData({
             ...response,
             questions: orderedQuestions,
-            // Ensure progress is an object keyed by question index for easier lookup later
-            progress: Array.isArray(response.progress)
-              ? response.progress.map((item) => {
-                  return {
-                    ...item, // This spreads all existing properties of the item
-                    is_disabled: true, // This adds the new 'is_disabled' attribute with a value of true
-                  };
-                })
-              : response.progress || {}, // Keep as is if already an object
+            // Map progress from ID-keys to Index-keys
+            progress: orderedQuestions.reduce((acc, question, index) => {
+              const questionId = question.id;
+              // Check if there is progress for this question ID in the response
+              // The response.progress might be an object keyed by ID string
+              const progressItem = response.progress ? response.progress[questionId] : undefined;
+
+              if (progressItem) {
+                acc[index] = {
+                  ...progressItem,
+                  is_disabled: true,
+                };
+              }
+              return acc;
+            }, {}),
           });
         })
         .catch((err) => {
@@ -207,27 +213,34 @@ const Quiz = () => {
         );
 
         // Update state with the response from the backend
-        setExamData((prevData) => ({
-          ...prevData,
-          progress: {
-            ...prevData.progress, // Keep existing progress
-            ...response.progress, // Add/overwrite with the updated progress from backend for this question
-            // Ensure the received progress item is marked as disabled visually if needed
-            [questionIndex.toString()]: {
-              ...(response.progress?.[questionIndex.toString()] || {}),
-              is_disabled: true, // Explicitly mark as disabled after successful check
-              is_pending: false,
+        setExamData((prevData) => {
+          // Extract the updated progress for the current question from backend response
+          // Backend returns { progress: { [questionId]: { ... } } }
+          const updatedProgressItem = response.progress ? response.progress[currentQuestionId] : null;
+
+          return {
+            ...prevData,
+            progress: {
+              ...prevData.progress, // Keep existing progress
+              // Update the specific index with the new data from backend (which is keyed by ID in response)
+              ...(updatedProgressItem ? {
+                [questionIndex.toString()]: {
+                  ...updatedProgressItem,
+                  is_disabled: true, // Explicitly mark as disabled after successful check
+                  is_pending: false,
+                }
+              } : {}),
             },
-          },
-          time_left:
-            response.time_left !== undefined
-              ? response.time_left
-              : prevData.time_left, // Update time if backend sends it
-          current_question:
-            response.current_question !== undefined
-              ? response.current_question
-              : questionIndex, // Update index if backend sends it
-        }));
+            time_left:
+              response.time_left !== undefined
+                ? response.time_left
+                : prevData.time_left, // Update time if backend sends it
+            current_question:
+              response.current_question !== undefined
+                ? response.current_question
+                : questionIndex, // Update index if backend sends it
+          };
+        });
 
         // Automatic navigation in 'exam' mode after successful submission
         if (quizType === "exam" && questionIndex < totalQuestions - 1) {
@@ -406,7 +419,7 @@ const Quiz = () => {
             onFinishQuiz={handleFinishQuiz}
             onResumeLater={handleResumeLater}
             onEnterReviewMode={handleEnterReviewMode} // Pass review mode handler
-            // TODO: Add callbacks for modals (Favourites, Notes, Reports) if needed at this level
+          // TODO: Add callbacks for modals (Favourites, Notes, Reports) if needed at this level
           />
         ) : (
           // This case should ideally be handled by the loading/error/no-questions states above
