@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axiosInstance from "@/components/axiosInstance";
 import {
     Check,
@@ -13,23 +13,47 @@ import {
 } from "lucide-react";
 import NavbarContainer from "@/components/layout/NavbarContainer";
 import Footer from "@/components/layout/Footer";
-import {useAuth} from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import SplashScreen from "@/components/common/SplashScreen";
-import {useRouter} from "next/router";
-import {toast} from "react-toastify";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 export default function SubscriptionPlans() {
     const router = useRouter();
     const [billingCycle, setBillingCycle] = useState("monthly");
     const [hoveredPlan, setHoveredPlan] = useState(null);
+    const [fetchedPlans, setFetchedPlans] = useState([]);
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true); // Start loading true
     const [error, setError] = useState(null);
-    const {token, authLoading} = useAuth();
+    const { token, authLoading } = useAuth();
+
+    // Fetch plans from backend
+    React.useEffect(() => {
+        const fetchPlans = async () => {
+            try {
+                const response = await axiosInstance.get("/v1/payments/plans/", {
+                    headers: {
+                        Authorization: token ? `Token ${token}` : undefined
+                    }
+                });
+                setFetchedPlans(response.data);
+            } catch (err) {
+                console.error("Failed to fetch plans:", err);
+                // Fallback or error handling
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (!authLoading) {
+            fetchPlans();
+        }
+    }, [token, authLoading]);
 
 
     if (authLoading) {
-        return <SplashScreen/>;
+        return <SplashScreen />;
     }
 
     const handleSubscribe = async (planId) => {
@@ -42,8 +66,8 @@ export default function SubscriptionPlans() {
         setError(null);
         try {
             const response = await axiosInstance.post("/v1/payments/create-subscription/", {
-                    plan_id: planId,
-                },
+                plan_id: planId,
+            },
                 {
                     headers: {
                         Authorization: `Token ${token}`,
@@ -60,93 +84,56 @@ export default function SubscriptionPlans() {
     };
 
 
-    const plans = [
-        {
-            name: "FREE",
-            description:
-                "FREE PLAN - Perfect for beginners starting their learning journey",
-            monthlyPrice: 0,
-            yearlyPrice: 290,
-            features: [
-                "Search functionality",
-                "Save questions",
-                "Comment on questions",
-                "Copy questions",
-                "Access explanation videos",
-                "View hints",
-                "Save exams for later",
-            ],
-            color: "lightGreen",
-            icon: Baby,
-            popular: false,
-        },
-        {
-            name: "Basic",
-            description:
-                "3 Months - Everything is open",
-            monthlyPrice: 20,
-            yearlyPrice: 290,
-            features: [
-                "Unlimited course access",
-                "4K video quality",
-                "Dedicated account manager",
-                "Custom learning paths",
-                "Team management tools",
-                "Advanced reporting",
-                "API access",
-                "White-label options",
-                "Priority support",
-                "Custom integrations",
-            ],
-            color: "lightGreen",
-            icon: BookOpen,
-            popular: false,
-        },
-        {
-            name: "Plus",
-            description:
-                "6 Months - Everything is open",
-            monthlyPrice: 30,
-            yearlyPrice: 790,
-            features: [
-                "Unlimited course access",
-                "4K video quality",
-                "Dedicated account manager",
-                "Custom learning paths",
-                "Team management tools",
-                "Advanced reporting",
-                "API access",
-                "White-label options",
-                "Priority support",
-                "Custom integrations",
-            ],
-            color: "greenCard",
-            icon: Zap,
-            popular: true,
-        },
-        {
-            name: "Prime",
-            description:
-                "12 Months - Everything is open",
-            monthlyPrice: 40,
-            yearlyPrice: 1490,
-            features: [
-                "Unlimited course access",
-                "4K video quality",
-                "Dedicated account manager",
-                "Custom learning paths",
-                "Team management tools",
-                "Advanced reporting",
-                "API access",
-                "White-label options",
-                "Priority support",
-                "Custom integrations",
-            ],
-            color: "darkGreen",
-            icon: Award,
-            popular: false,
-        },
-    ];
+    // Process fetched plans to group them
+    const plans = React.useMemo(() => {
+        const grouped = {};
+
+        fetchedPlans.forEach(plan => {
+            if (!grouped[plan.name]) {
+                grouped[plan.name] = {
+                    name: plan.name,
+                    description: plan.description,
+                    features: plan.features || [],
+                    color: plan.color || "lightGreen",
+                    iconName: plan.icon || "Baby",
+                    popular: plan.popular || false,
+                    monthlyPrice: 0,
+                    yearlyPrice: 0,
+                    monthlyPlanId: null,
+                    yearlyPlanId: null
+                };
+            }
+
+            if (plan.interval === 'month') {
+                grouped[plan.name].monthlyPrice = parseFloat(plan.price);
+                grouped[plan.name].monthlyPlanId = plan.id;
+            } else if (plan.interval === 'year') {
+                grouped[plan.name].yearlyPrice = parseFloat(plan.price);
+                grouped[plan.name].yearlyPlanId = plan.id;
+            }
+        });
+
+        // Icon mapping
+        const iconMap = {
+            "Baby": Baby,
+            "BookOpen": BookOpen,
+            "Zap": Zap,
+            "Award": Award,
+            // Add fallbacks
+        };
+
+        return Object.values(grouped).map(p => ({
+            ...p,
+            icon: iconMap[p.iconName] || Star // Default icon
+        })).sort((a, b) => a.monthlyPrice - b.monthlyPrice); // Sort by price
+    }, [fetchedPlans]);
+
+    // Fallback if no plans fetched yet (or empty) to avoid breaking UI during loading or if empty
+    if (plans.length === 0 && !loading && fetchedPlans.length === 0) {
+        // Optionally render empty state or keep existing static as fallback?
+        // For now let's assume if array is empty it just renders nothing or we can keep the static list as initial state if preferred.
+        // But the requirement is to use backend plans. 
+    }
 
     const savings = {
         Professional: Math.round(((79 * 12 - 790) / (79 * 12)) * 100),
@@ -155,7 +142,7 @@ export default function SubscriptionPlans() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-mintyGreen via-white to-lightGray">
-            <NavbarContainer with_search_bar={false}/>
+            <NavbarContainer with_search_bar={false} />
             {/* Animated Background Elements */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
                 <div
@@ -173,7 +160,7 @@ export default function SubscriptionPlans() {
                 <div className="text-center mb-16">
                     <div className="flex justify-center mb-6">
                         <div className="p-4 bg-gradient-to-r from-greenCard to-darkGreen rounded-full shadow-6">
-                            <Sparkles className="w-8 h-8 text-white"/>
+                            <Sparkles className="w-8 h-8 text-white" />
                         </div>
                     </div>
 
@@ -200,18 +187,17 @@ export default function SubscriptionPlans() {
                                 key={plan.name}
                                 onMouseEnter={() => setHoveredPlan(index)}
                                 onMouseLeave={() => setHoveredPlan(null)}
-                                className={` flex flex-col items-center justify-between  relative bg-white rounded-35 p-8 transition-all duration-500 hover:scale-105 ${
-                                    plan.popular
-                                        ? "shadow-6 border-2 border-greenCard"
-                                        : "shadow-2 hover:shadow-5"
-                                } ${isHovered ? "transform -translate-y-2" : ""}`}
+                                className={` flex flex-col items-center justify-between  relative bg-white rounded-35 p-8 transition-all duration-500 hover:scale-105 ${plan.popular
+                                    ? "shadow-6 border-2 border-greenCard"
+                                    : "shadow-2 hover:shadow-5"
+                                    } ${isHovered ? "transform -translate-y-2" : ""}`}
                             >
                                 {/* Popular Badge */}
                                 {plan.popular && (
                                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                                         <div
                                             className="bg-gradient-to-r from-greenCard to-darkGreen text-white px-6 py-2 rounded-full text-sm font-semibold flex items-center space-x-1">
-                                            <Star className="w-4 h-4 fill-current"/>
+                                            <Star className="w-4 h-4 fill-current" />
                                             <span>Best Deal</span>
                                         </div>
                                     </div>
@@ -220,20 +206,18 @@ export default function SubscriptionPlans() {
                                 {/* Plan Header */}
                                 <div className="text-center mb-8">
                                     <div
-                                        className={`inline-flex p-4 rounded-full mb-4 ${
-                                            plan.color === "lightGreen"
-                                                ? "bg-lightGreen"
-                                                : plan.color === "greenCard"
-                                                    ? "bg-greenCard"
-                                                    : "bg-darkGreen"
-                                        }`}
+                                        className={`inline-flex p-4 rounded-full mb-4 ${plan.color === "lightGreen"
+                                            ? "bg-lightGreen"
+                                            : plan.color === "greenCard"
+                                                ? "bg-greenCard"
+                                                : "bg-darkGreen"
+                                            }`}
                                     >
                                         <IconComponent
-                                            className={`w-8 h-8 ${
-                                                plan.color === "lightGreen"
-                                                    ? "text-darkGreen"
-                                                    : "text-white"
-                                            }`}
+                                            className={`w-8 h-8 ${plan.color === "lightGreen"
+                                                ? "text-darkGreen"
+                                                : "text-white"
+                                                }`}
                                         />
                                     </div>
 
@@ -248,9 +232,9 @@ export default function SubscriptionPlans() {
                                 {/* Pricing */}
                                 <div className="text-center mb-8">
                                     <div className="flex items-baseline justify-center mb-2">
-                    <span className="text-5xl font-bold font-Poppins text-darkGreen">
-                      €{price}
-                    </span>
+                                        <span className="text-5xl font-bold font-Poppins text-darkGreen">
+                                            €{price}
+                                        </span>
                                     </div>
 
                                     {billingCycle === "yearly" && plan.name !== "Starter" && (
@@ -269,37 +253,38 @@ export default function SubscriptionPlans() {
                                         >
                                             <div
                                                 className="flex-shrink-0 w-5 h-5 bg-lightGreen rounded-full flex items-center justify-center mt-0.5">
-                                                <Check className="w-3 h-3 text-darkGreen"/>
+                                                <Check className="w-3 h-3 text-darkGreen" />
                                             </div>
                                             <span className="text-black text-sm leading-relaxed">
-                        {feature}
-                      </span>
+                                                {feature}
+                                            </span>
                                         </div>
                                     ))}
                                 </div>
 
                                 {/* CTA Button */}
                                 <button
-                                    onClick={() => handleSubscribe(index)}
-                                    className={`w-full ${index === 0 ? "hidden" : ""} py-4 px-6 rounded-35 font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 ${
-                                        plan.popular
-                                            ? "bg-gradient-to-r from-greenCard to-darkGreen text-white shadow-6 hover:shadow-7"
-                                            : "bg-lightGreen text-darkGreen hover:bg-greenCard hover:text-white shadow-2 hover:shadow-5"
-                                    }`}
+                                    onClick={() => {
+                                        const planId = billingCycle === 'monthly' ? plan.monthlyPlanId : plan.yearlyPlanId;
+                                        if (planId) handleSubscribe(planId);
+                                    }}
+                                    className={`w-full ${index === 0 ? "hidden" : ""} py-4 px-6 rounded-35 font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 ${plan.popular
+                                        ? "bg-gradient-to-r from-greenCard to-darkGreen text-white shadow-6 hover:shadow-7"
+                                        : "bg-lightGreen text-darkGreen hover:bg-greenCard hover:text-white shadow-2 hover:shadow-5"
+                                        }`}
                                 >
                                     <span>Get Started</span>
                                     <ArrowRight
-                                        className={`w-5 h-5 transition-transform duration-300 ${
-                                            isHovered ? "translate-x-1" : ""
-                                        }`}
+                                        className={`w-5 h-5 transition-transform duration-300 ${isHovered ? "translate-x-1" : ""
+                                            }`}
                                     />
                                 </button>
 
                                 {/* Money Back Guarantee */}
                                 <div className="text-center mt-4">
-                  <span className="text-2xs text-mildGray">
-                    {/*30-day money-back guarantee*/}
-                  </span>
+                                    <span className="text-2xs text-mildGray">
+                                        {/*30-day money-back guarantee*/}
+                                    </span>
                                 </div>
                             </div>
                         );
@@ -346,17 +331,17 @@ export default function SubscriptionPlans() {
             </div>
           </div>
         </div> */}
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
 
             </div>
         </div>
