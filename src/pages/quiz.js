@@ -216,7 +216,7 @@ const Quiz = () => {
         setExamData((prevData) => {
           // Extract the updated progress for the current question from backend response
           // Backend returns { progress: { [questionId]: { ... } } }
-          const updatedProgressItem = response.progress ? response.progress[currentQuestionId] : null;
+          const updatedProgressItem = response.progress ? response.progress[questionIndex.toString()] : null;
 
           return {
             ...prevData,
