@@ -56,13 +56,21 @@ export default function SubscriptionPlans() {
 
     const handleSubscribe = async (planId) => {
         if (!token) {
-            toast.warning("You need to sing in first");
+            toast.warning("You need to sign in first");
             router.push("/signin");
             return;
         }
+
+        if (!planId) {
+            console.error("No plan ID provided");
+            toast.error("Invalid plan selected. Please try again.");
+            return;
+        }
+
         setLoading(true);
         setError(null);
         try {
+            console.log("Initiating subscription for plan:", planId);
             const response = await axiosInstance.post("/v1/payments/create-subscription/", {
                 plan_id: planId,
             },
@@ -72,10 +80,22 @@ export default function SubscriptionPlans() {
                         "Content-Type": "application/json",
                     },
                 });
-            // redirect user to Stripe checkout
-            window.location.href = response.data.checkout_url;
+
+            console.log("Subscription response:", response.data);
+
+            if (response.data.checkout_url) {
+                // redirect user to Stripe checkout
+                window.location.href = response.data.checkout_url;
+            } else {
+                console.error("No checkout URL in response");
+                toast.error("Failed to start checkout. Please try again.");
+            }
+
         } catch (err) {
-            setError(err.response?.data?.error || err.message);
+            console.error("Subscription error:", err);
+            const errorMessage = err.response?.data?.error || "Failed to initiate checkout";
+            setError(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setLoading(false);
         }
