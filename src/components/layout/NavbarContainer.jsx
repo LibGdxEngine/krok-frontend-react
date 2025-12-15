@@ -10,9 +10,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import LanguageDropdown from "@/pages/components/utils/LanguageDropdown";
 
-const NavbarContainer = ({with_search_bar = true}) => {
+const NavbarContainer = ({ with_search_bar = true }) => {
   const { token, user } = useAuth();
-  const {t, i18n} = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   let userProfilePhoto = userIcon;
   const router = useRouter();
   if (user) {
@@ -29,16 +29,16 @@ const NavbarContainer = ({with_search_bar = true}) => {
       <div className="hidden lg:block bg-[url('/home_background.svg')] w-full pt-4 pb-4">
         <div className="pt-4 mb-0  bg-cover ">
           <div
-            className={`w-full h-full flex items-center justify-between px-4 mt-1`}
+            className={`w-full h-full flex items-center justify-between px-4 mt-1 gap-4`}
           >
 
-  
+
             <div>
               <Link
                 style={{ cursor: "pointer" }}
-                href={token ?`/profile`: `/signin`}
+                href={token ? `/profile` : `/signin`}
                 id={`profile-icon-container`}
-                className={`w-full  flex items-center justify-end pe-10`}
+                className={`w-auto flex items-center justify-end pe-10`}
               >
                 <Image
                   width={35}
