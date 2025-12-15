@@ -38,7 +38,7 @@ export default function FacebookCallback() {
         };
 
         handleCallback();
-    }, [router.isReady]);
+    }, [router.isReady, router]);
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">

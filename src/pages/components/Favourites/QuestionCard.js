@@ -1,40 +1,42 @@
 // components/QuestionCard.js
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axiosInstance from "../../../../src/components/axiosInstance";
 
-const QuestionCard = ({number, question, answers}) => {
+const QuestionCard = ({ number, question, answers }) => {
 
 
     const [searchQuery, setSearchQuery] = useState(question);
     const [questionData, setQuestionData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const handleSearch = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await axiosInstance.get(
-                `v1/questions/search/?q=${searchQuery}`
-            );
-
-            const data = response.data.results;
-
-
-            if (data && data.length > 0) {
-                // Assuming the API returns an array of questions, and you want to use the first one
-                setQuestionData(data[0]);
-
-            } else {
-                setError("No questions found");
-            }
-        } catch (err) {
-            setError("Error fetching data");
-        } finally {
-            setLoading(false);
-        }
-    };
+    // handleSearch moved inside useEffect
 
     useEffect(() => {
+        const handleSearch = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await axiosInstance.get(
+                    `v1/questions/search/?q=${searchQuery}`
+                );
+
+                const data = response.data.results;
+
+
+                if (data && data.length > 0) {
+                    // Assuming the API returns an array of questions, and you want to use the first one
+                    setQuestionData(data[0]);
+
+                } else {
+                    setError("No questions found");
+                }
+            } catch (err) {
+                setError("Error fetching data");
+            } finally {
+                setLoading(false);
+            }
+        };
+
         if (searchQuery) {
             handleSearch();
         }

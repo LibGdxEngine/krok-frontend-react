@@ -4,7 +4,7 @@ import Image from "next/image";
 import Pagination from "./components/Shop/Pagination";
 import ProductCard from "./components/Shop/ProductCard";
 import { ToastContainer } from "react-toastify";
-import  CartSidebar from "./components/cart/CartSidebar";
+import CartSidebar from "./components/cart/CartSidebar";
 import ChatWidget from "./components/Shop/MessageWidget";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -113,58 +113,58 @@ const Shop = () => {
           <p>Loading</p>
         ) : (
           products.map((product, index) => {
-            
+
             return (
               <>
-                <ProductCard 
-                  product={product} 
-                  key={index} 
+                <ProductCard
+                  product={product}
+                  key={index}
                   onClick={() => setIsModalOpen(true)}
                 />
-                
+
                 {isModalOpen && (
                   <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                       <div className="flex justify-between items-start mb-4">
                         <div className="flex flex-col">
-                        <h2 className="text-2xl font-bold">{product.name}</h2>
-                        <h6 className="text-2xl font-base">{product.description}</h6>
+                          <h2 className="text-2xl font-bold">{product.name}</h2>
+                          <h6 className="text-2xl font-base">{product.description}</h6>
                         </div>
-                        <button 
+                        <button
                           onClick={() => setIsModalOpen(false)}
                           className="text-gray-500 hover:text-gray-700"
                         >
                           ✕
                         </button>
                       </div>
-                      
+
                       <div className="grid grid-cols-2 gap-6">
                         <div className="relative">
                           <div className="flex overflow-x-hidden">
                             <div className="flex transition-transform duration-300 ease-in-out">
-                            <Image
-                                    key={0}
-                                    src={product?.img ? `https://krokplus.com${product?.img}` : '/placeholder.svg'}
-                                    alt={`${product?.name} - Image ${0}`}
-                                    width={200}
-                                    height={200}
-                                    style={{cursor: "pointer"}}
-                                    className="object-cover flex-shrink-0"
-                                  />
+                              <Image
+                                key={0}
+                                src={product?.img ? `https://krokplus.com${product?.img}` : '/placeholder.svg'}
+                                alt={`${product?.name} - Image ${0}`}
+                                width={200}
+                                height={200}
+                                style={{ cursor: "pointer" }}
+                                className="object-cover flex-shrink-0"
+                              />
                               {product?.product_images?.length > 0 ? (
                                 product.product_images.map((image, idx) => (
                                   <Image
                                     key={idx}
-                                    src={image? `https://krokplus.com${image}` : '/placeholder.svg'}
-                                    // alt={`${product?.name} - Image ${idx + 1}`}
+                                    src={image ? `https://krokplus.com${image}` : '/placeholder.svg'}
+                                    alt={`${product?.name} - Image ${idx + 1}`}
                                     width={200}
                                     height={200}
-                                    style={{cursor: "pointer"}}
+                                    style={{ cursor: "pointer" }}
                                     className="object-cover flex-shrink-0"
                                   />
                                 ))
                               ) : (
-                              ""
+                                ""
                               )}
                             </div>
                           </div>
@@ -183,16 +183,16 @@ const Shop = () => {
                             </div>
                           )}
                         </div>
-                        
+
                         <div>
                           <p className="text-2xl font-bold mb-4">${product.price}</p>
-                          
+
                           <div className="space-y-2 h-20">
                             <p><span className="font-semibold">Category:</span> {product.category}</p>
                             {/* <p><span className="font-semibold">Stock:</span> {product.stock}</p> */}
                           </div>
-                          
-                          <button onClick={()=>{
+
+                          <button onClick={() => {
                             handleAddToCart(product.id, token);
                           }} className="mt-6 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
                             Add to Cart

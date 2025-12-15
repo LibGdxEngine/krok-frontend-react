@@ -52,9 +52,7 @@ export default function SubscriptionPlans() {
     }, [token, authLoading]);
 
 
-    if (authLoading) {
-        return <SplashScreen />;
-    }
+
 
     const handleSubscribe = async (planId) => {
         if (!token) {
@@ -133,6 +131,10 @@ export default function SubscriptionPlans() {
         // Optionally render empty state or keep existing static as fallback?
         // For now let's assume if array is empty it just renders nothing or we can keep the static list as initial state if preferred.
         // But the requirement is to use backend plans. 
+    }
+
+    if (authLoading) {
+        return <SplashScreen />;
     }
 
     const savings = {

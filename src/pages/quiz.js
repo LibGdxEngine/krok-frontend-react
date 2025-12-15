@@ -96,7 +96,7 @@ const Quiz = () => {
             ? initialProgress
             : Object.values(initialProgress).map((p, idx) => ({
               ...p,
-              id: p.id || questions[idx]?.id,
+              id: p.id || initialQuestions[idx]?.id,
             })); // Adapt based on actual progress structure
 
           const orderedQuestions = rearrangeArrayById(
@@ -283,7 +283,7 @@ const Quiz = () => {
       quizType,
       totalQuestions,
       handleNavigate,
-      t,
+      // t, // Removed unused dependency
     ]
   ); // Dependencies
 

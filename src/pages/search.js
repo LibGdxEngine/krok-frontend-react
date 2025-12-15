@@ -38,16 +38,16 @@ const Search = () => {
     try {
       setLoading(true);
       const response = await searchForquestions(token, searchQuery);
-      
+
       setResults(response.results);
       // Apply current filter to new results
       applyFilter(response.results, activeFilter);
-      
+
       if (response.results.length === 0) {
         handleError(t("no_Results"));
       }
     } catch (error) {
-      console.log('error: searching' , error);
+      console.log('error: searching', error);
     } finally {
       setLoading(false);
     }
@@ -72,10 +72,13 @@ const Search = () => {
   };
 
   // Debounced search function to prevent making API requests on every keystroke
+  // Debounced search function to prevent making API requests on every keystroke
+  /* eslint-disable react-hooks/exhaustive-deps */
   const debouncedSearch = useCallback(
     debounce((value) => performSearch(value), 500),
     []
   );
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Effect to watch query parameter from the URL and trigger search
   useEffect(() => {
@@ -83,6 +86,7 @@ const Search = () => {
       setQuery(router.query.query); // Correctly set the query from the URL
       performSearch(router.query.query); // Perform initial search
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.query]); // Watch for changes in query and token
 
   // Effect to perform search when the query state changes
@@ -107,7 +111,7 @@ const Search = () => {
 
       {/* NavBar */}
       <NavbarContainer with_search_bar={false} />
-      
+
 
       {/* Search Section */}
       <div className="w-full hidden lg:block mt-8">
@@ -128,12 +132,12 @@ const Search = () => {
                 key={option.id}
                 onClick={() => handleFilterChange(option.id)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors
-                  ${activeFilter === option.id 
-                    ? 'bg-blue-600 text-white' 
+                  ${activeFilter === option.id
+                    ? 'bg-blue-600 text-white'
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
               >
                 {option.label}
-                {activeFilter === option.id && filteredResults.length > 0 && 
+                {activeFilter === option.id && filteredResults.length > 0 &&
                   <span className="ml-2 bg-white text-blue-600 px-2 py-0.5 rounded-full text-xs">
                     {filteredResults.length}
                   </span>
@@ -160,8 +164,8 @@ const Search = () => {
         ) : (
           query && (
             <p className="text-white text-center">
-              {activeFilter !== "all" 
-                ? t("No results match the selected filter") 
+              {activeFilter !== "all"
+                ? t("No results match the selected filter")
                 : t("no_Results")}
             </p>
           )
